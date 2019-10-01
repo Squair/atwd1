@@ -1,0 +1,15 @@
+* {
+	font-family: 'Big Shoulders Text', cursive;
+
+}
+
+#form-container {
+	margin: 0 auto;
+	width: 30%;
+	border: 1px solid red;
+}
+
+#form-container input,
+#form-container textarea {
+	width: 100%;
+}
