@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<Currencies>
+	<Currency type="GBP"><Country>England</Country><Symbol>&#xA3;</Symbol><Rate>1.1</Rate></Currency>
+</Currencies>

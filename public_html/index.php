@@ -1,12 +1,18 @@
 <?php
+require_once("../resources/libary/XMLFunctions.php");
 
+CurrencyWriter::write(function($f){
+	return $f
+		->setFilePath("../resources/xml/test.xml")
+		->replaceXmlElement("(//Currency[@type='GBP'])[1]", createNewCurrency("GBP", "England", "£", 1.1));
+});
 
 ?>
 
 <html>
 
 <head>
-	<link rel="stylesheet" href="../css/stylesheet.css">
+	<link rel="stylesheet" href="css/stylesheet.css">
 	<link href="https://fonts.googleapis.com/css?family=Big+Shoulders+Text&display=swap" rel="stylesheet">
 </head>
 
