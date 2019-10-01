@@ -1,10 +1,10 @@
 <?php
 require_once("../resources/libary/XMLFunctions.php");
 
-CurrencyWriter::write(function($f){
+CurrencyWriter::invoke(function($f){
 	return $f
 		->setFilePath("../resources/xml/test.xml")
-		->replaceXmlElement("(//Currency[@type='GBP'])[1]", createNewCurrency("GBP", "England", "£", 1.1));
+		->writeNewCurrency("XSM", "Lithuania", "?", 0.5);
 });
 
 ?>
