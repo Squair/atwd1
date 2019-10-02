@@ -1,10 +1,20 @@
 <?php
 require_once("../resources/libary/XMLFunctions.php");
+require_once ("../resources/libary/currencyFunctions.php");
 
-CurrencyWriter::invoke(function($f){
-	return $f
-		->setFilePath("../resources/xml/test.xml")
-		->writeNewCurrency("XSM", "Lithuania", "?", 0.5);
+XMLUpdate::invoke(function($f){
+	$filePath = "../resources/xml/test.xml";
+	$xpathQuery = "(/Currencies/Currency[@type='XSM'])[1]";
+		return $f
+			->setFilePath($filePath)
+			->replaceXmlElement($xpathQuery, createNewCurrency("USD", "United states", "$", 1.2));
+});
+
+XMLAppend::invoke(function($f){
+	$newCurrency = createNewCurrency("AFN", "Afghanistan", "???", 0.75);
+		return $f
+			->setFilePath("../resources/xml/test.xml")
+			->writeNewElement($newCurrency);
 });
 
 ?>
