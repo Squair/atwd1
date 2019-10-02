@@ -1,5 +1,5 @@
 <?php
-	abstract class XMLOperation {
+	class XMLOperation {
 		public $dom;
 		public $filePath;
 		
@@ -14,6 +14,26 @@
 		
 		public function setFilePath($filePath){
 			$this->filePath = $filePath;
+			$this->setDom();
+			return $this;
+		}
+		
+		public function replaceXmlElement($xpathQuery, $newDom) {
+			$xpath = new domxpath($this->dom);
+			$elements = $xpath->query($xpathQuery);
+			
+			if (!is_null($elements->item(0)))
+			{
+				$oldnode = $elements->item(0);
+				$newnode = $this->dom->importNode($newDom, true);
+				$oldnode->parentNode->replaceChild($newnode, $oldnode);
+			}
+			return $this;
+		}
+		
+		public function writeNewElement($newNode){
+			$this->dom->documentElement->appendChild($this->dom->importNode($newNode, true));
+			
 			return $this;
 		}
 				
@@ -30,32 +50,9 @@
 		}
 	}
 	
-	class XMLUpdate extends XMLOperation {
-		public function replaceXmlElement($xpathQuery, $newDom) {
-			$this->setDom();
-			$xpath = new domxpath($this->dom);
-			$elements = $xpath->query($xpathQuery);
-			
-			if (!is_null($elements->item(0)))
-			{
-				$oldnode = $elements->item(0);
-				$newnode = $this->dom->importNode($newDom, true);
-				$oldnode->parentNode->replaceChild($newnode, $oldnode);
-			}
-			return $this;
-		}
-	}
 
-	class XMLAppend extends XMLOperation {
-		public function writeNewElement($newNode){
-			if (is_null($this->dom)){
-				$this->setDom();
-			}
-			
-			$this->dom->documentElement->appendChild($this->dom->importNode($newNode, true));
-			return $this;
-		}
-	}
+
+
 
 
 ?>
