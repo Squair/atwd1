@@ -19,8 +19,8 @@
 		}
 		
 		public function replaceXmlElement($xpathQuery, $newDom) {
-			$xpath = new domxpath($this->dom);
-			$elements = $xpath->query($xpathQuery);
+			
+			$elements = $this->findElements($xpathQuery);
 			
 			if (!is_null($elements->item(0)))
 			{
@@ -36,7 +36,23 @@
 			
 			return $this;
 		}
-				
+		
+		public function deleteElement($xpathQuery){
+			$elements = iterator_to_array($this->findElements($xpathQuery));
+			
+			$removeFunc = function($element){
+				$element->parentNode->removeChild($element);
+			};
+			
+			array_map($removeFunc, $elements);
+			return $this;
+		}
+			
+		private function findElements($xpathquery){
+			$xpath = new domxpath($this->dom);
+			return $xpath->query($xpathquery);
+		}
+		
 		protected function setDom()
 		{
 			$this->dom = new domdocument();
@@ -49,10 +65,4 @@
 			$this->dom->save($this->filePath);
 		}
 	}
-	
-
-
-
-
-
 ?>
