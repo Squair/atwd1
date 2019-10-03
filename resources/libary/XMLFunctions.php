@@ -37,7 +37,7 @@
 			return $this;
 		}
 		
-		public function deleteElement($xpathQuery){
+		public function deleteElements($xpathQuery){
 			$elements = iterator_to_array($this->findElements($xpathQuery));
 			
 			$removeFunc = function($element){
@@ -45,6 +45,24 @@
 			};
 			
 			array_map($removeFunc, $elements);
+			return $this;
+		}
+		
+		public function getElements($xpathQuery)
+		{
+			$elements = $this->findElements($xpathQuery);
+			$newDom = new DomDocument();
+			$rootElement = $newDom->createElement($this->dom->documentElement->nodeName);
+			$newDom->appendChild($rootElement);
+			
+			foreach($elements as $element){
+				$newDom->documentElement->appendChild($newDom->importNode($element, true));
+			}
+			$newDom->formatOutput = true;
+			
+			header('Content-type: text/xml');
+			echo $newDom->saveXML();
+			
 			return $this;
 		}
 			

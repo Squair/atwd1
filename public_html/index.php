@@ -4,11 +4,12 @@ require_once ("../resources/libary/currencyFunctions.php");
 
 XMLOperation::invoke(function($f){
 	$filePath = "../resources/xml/test.xml";
-	$xpathQuery = "(/Currencies/Currency[@type='USD'])";
+	$xpathQuery = "(/Currencies/Currency[@type='AFN'])";
 	$newCurrency = createNewCurrency("AFN", "Afghanistan", "???", 0.75);
 		return $f
 			->setFilePath($filePath)
-			->deleteElement($xpathQuery);
+			->writeNewElement($newCurrency)
+			->getElements($xpathQuery);
 });
 
 ?>
