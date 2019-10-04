@@ -52,13 +52,10 @@
 		{
 			$elements = $this->findElements($xpathQuery);
 			$newDom = new DomDocument();
-			$rootElement = $newDom->createElement($this->dom->documentElement->nodeName);
-			$newDom->appendChild($rootElement);
 			
 			foreach($elements as $element){
-				$newDom->documentElement->appendChild($newDom->importNode($element, true));
+				$newDom->appendChild($newDom->importNode($element, true));
 			}
-			$newDom->formatOutput = true;
 			
 			header('Content-type: text/xml');
 			echo $newDom->saveXML();
