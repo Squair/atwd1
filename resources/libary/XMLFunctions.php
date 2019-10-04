@@ -18,14 +18,14 @@
 			return $this;
 		}
 		
-		public function replaceXmlElement($xpathQuery, $newDom) {
+		public function updateXmlElement($xpathQuery, $newElement) {
 			
 			$elements = $this->findElements($xpathQuery);
 			
 			if (!is_null($elements->item(0)))
 			{
 				$oldnode = $elements->item(0);
-				$newnode = $this->dom->importNode($newDom, true);
+				$newnode = $this->dom->importNode($newElement, true);
 				$oldnode->parentNode->replaceChild($newnode, $oldnode);
 			}
 			return $this;

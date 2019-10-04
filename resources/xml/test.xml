@@ -1,68 +1,88 @@
 <?xml version="1.0"?>
 <Currencies>
-	<Currency type="AFN">
-		<Country>Afghanistan</Country>
-		<Symbol>???</Symbol>
-		<Rate>0.75</Rate>
-	</Currency>
-	<Currency type="AFN">
-		<Country>Afghanistan</Country>
-		<Symbol>???</Symbol>
-		<Rate>0.75</Rate>
-	</Currency>
-	<Currency type="AFN">
-		<Country>Afghanistan</Country>
-		<Symbol>???</Symbol>
-		<Rate>0.75</Rate>
-	</Currency>
-	<Currency type="AFN">
-		<Country>Afghanistan</Country>
-		<Symbol>???</Symbol>
-		<Rate>0.75</Rate>
-	</Currency>
-	<Currency type="AFN">
-		<Country>Afghanistan</Country>
-		<Symbol>???</Symbol>
-		<Rate>0.75</Rate>
-	</Currency>
-	<Currency type="AFN">
-		<Country>Afghanistan</Country>
-		<Symbol>???</Symbol>
-		<Rate>0.75</Rate>
-	</Currency>
-	<Currency type="AFN">
-		<Country>Afghanistan</Country>
-		<Symbol>???</Symbol>
-		<Rate>0.75</Rate>
-	</Currency>
-	<Currency type="AFN">
-		<Country>Afghanistan</Country>
-		<Symbol>???</Symbol>
-		<Rate>0.75</Rate>
-	</Currency>
-	<Currency type="AFN">
-		<Country>Afghanistan</Country>
-		<Symbol>???</Symbol>
-		<Rate>0.75</Rate>
-	</Currency>
-	<Currency type="AFN">
-		<Country>Afghanistan</Country>
-		<Symbol>???</Symbol>
-		<Rate>0.75</Rate>
-	</Currency>
-	<Currency type="AFN">
-		<Country>Afghanistan</Country>
-		<Symbol>???</Symbol>
-		<Rate>0.75</Rate>
-	</Currency>
-	<Currency type="AFN">
-		<Country>Afghanistan</Country>
-		<Symbol>???</Symbol>
-		<Rate>0.75</Rate>
-	</Currency>
-	<Currency type="AFN">
-		<Country>Afghanistan</Country>
-		<Symbol>???</Symbol>
-		<Rate>0.75</Rate>
-	</Currency>
-<Currency type="GBP"><Country>England</Country><Symbol>&#xA3;</Symbol><Rate>1</Rate></Currency><Currency type="GBP"><Country>England</Country><Symbol>&#xA3;</Symbol><Rate>1</Rate></Currency><Currency type="GBP"><Country>England</Country><Symbol>&#xA3;</Symbol><Rate>1</Rate></Currency><Currency type="GBP"><Country>England</Country><Symbol>&#xA3;</Symbol><Rate>1</Rate></Currency><Currency type="GBP"><Country>England</Country><Symbol>&#xA3;</Symbol><Rate>1</Rate></Currency><Currency type="GBP"><Country>England</Country><Symbol>&#xA3;</Symbol><Rate>1</Rate></Currency><Currency type="GBP"><Country>England</Country><Symbol>&#xA3;</Symbol><Rate>1</Rate></Currency><Currency type="GBP"><Country>England</Country><Symbol>&#xA3;</Symbol><Rate>1</Rate></Currency><Currency type="GBP"><Country>England</Country><Symbol>&#xA3;</Symbol><Rate>1</Rate></Currency></Currencies>
+  <Currency type="SPN">
+    <Country>Spain</Country>
+    <Symbol>$</Symbol>
+    <Rate>1.3</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+  <Currency type="GBP">
+    <Country>United Kingdom</Country>
+    <Symbol>&#xA3;</Symbol>
+    <Rate>1.0</Rate>
+  </Currency>
+</Currencies>

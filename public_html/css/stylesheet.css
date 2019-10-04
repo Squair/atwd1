@@ -1,11 +1,11 @@
 * {
-	font-family: 'Big Shoulders Text', cursive;
+	font-family: 'Roboto Mono', monospace;
 
 }
 
 #form-container {
 	margin: 0 auto;
-	width: 30%;
+	width: 50%;
 	border: 1px solid red;
 }
 
