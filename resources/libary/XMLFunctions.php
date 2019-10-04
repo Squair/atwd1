@@ -51,13 +51,17 @@
 		public function getElements($xpathQuery)
 		{
 			$elements = $this->findElements($xpathQuery);
-			$newDom = new DomDocument();
+			$newDom = new DomDocument('1.0');
+			$newDom->preserveWhiteSpace = false;
+			$newDom->formatOutput = true;
 			
 			foreach($elements as $element){
 				$newDom->appendChild($newDom->importNode($element, true));
 			}
 			
 			header('Content-type: text/xml');
+			
+
 			echo $newDom->saveXML();
 			
 			return $this;
@@ -70,8 +74,11 @@
 		
 		protected function setDom()
 		{
-			$this->dom = new domdocument();
+			$this->dom = new domdocument('1.0');
+			$this->dom->preserveWhiteSpace = false;
+			$this->dom->formatOutput = true;
 			$this->dom->load($this->filePath);
+
 			return $this;
 		}
 		
