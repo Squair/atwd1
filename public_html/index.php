@@ -1,3 +1,15 @@
+<?php
+    $key = "97341f9a29a6e2c9e44153ef98fb52bb";
+    $array = json_decode(file_get_contents("http://data.fixer.io/api/latest?access_key=" . $key . "&format=1"));
+
+    foreach ($array as $key => $jsons){
+        foreach ($jsons as $key => $value){
+            echo $key . " -> " . $value . "<br>";
+        }
+    }
+    print_r($json);
+?>
+
 <html>
 
 <head>
