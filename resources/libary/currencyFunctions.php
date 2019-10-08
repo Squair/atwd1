@@ -71,7 +71,7 @@
 		} else if ($format == "xml") {
 			return XMLOperation::invoke(function($f) use ($response){
 				return $f
-					->createXmlFromJson(json_encode($conversion))
+					->createXmlFromJson(json_encode($response))
 					->printElements($f->dom);
 			});
 		}

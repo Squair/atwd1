@@ -16,7 +16,7 @@
 		}
 		
 		public function setFilePath($filePathType){
-			$filePathLocs = getFilePathsFromConfig();
+			$filePathLocs = getItemFromConfig("filepaths");
 			$filePath = $filePathLocs->xml->{$filePathType};
 			$this->setDom();
 			$this->filePath = $filePath;

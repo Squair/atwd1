@@ -3,14 +3,7 @@
 		return file_get_contents(__DIR__ . "\config.json");
 	}
 
-	function getFilePathsFromConfig(){
-		$config = json_decode(getConfig());
-		return $config->filepaths;
+	function getItemFromConfig($item){
+		return json_decode(getConfig())->{$item};
 	}
-
-	function getApiEndpointsFromConfig(){
-		$config = json_decode(getConfig());
-		return $config->api;
-	}
-
 ?>

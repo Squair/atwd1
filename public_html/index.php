@@ -3,8 +3,7 @@ require_once("../resources/libary/currencyFunctions.php");
 require_once("../resources/libary/XMLFunctions.php");
 require_once("../resources/libary/config/configReader.php");
 
-
-	$apiConfig = getApiEndpointsFromConfig();
+	$apiConfig = getItemFromConfig("api");
 	$currencyJson = file_get_contents($apiConfig->fixer->endpoint);
 
 	if (currencyNeedsUpdate()){
