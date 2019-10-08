@@ -1,21 +1,4 @@
-<?php
-require_once("../resources/libary/currencyFunctions.php");
-require_once("../resources/libary/XMLFunctions.php");
-require_once("../resources/libary/config/configReader.php");
-
-	$apiConfig = getItemFromConfig("api");
-	$currencyJson = file_get_contents($apiConfig->fixer->endpoint);
-
-	if (currencyNeedsUpdate()){
-		XMLOperation::invoke(function($f) use ($currencyJson){
-			return $f
-				->setFilePath("rates")
-				->createXmlFromJson(convertBaseRate($currencyJson));
-		});
-	}
-
-?>
-
+<?php ?>
 <html>
 
 <head>
@@ -49,17 +32,17 @@ require_once("../resources/libary/config/configReader.php");
 	<h1>Currency Conversion API</h1>
 	<div id="form-container">
 		<form id="paramsForm" action="#">
-			<input id="radioSelect" type="radio" name="requestType" value="get.php"> GET <br>
+			<input id="radioSelect" type="radio" name="requestType" checked value="get.php"> GET <br>
 			<input id="radioSelect" type="radio" name="requestType" value="delete.php"> DELETE <br>
 			<input id="radioSelect" type="radio" name="requestType" value="post.php"> POST <br>
 			<input id="radioSelect" type="radio" name="requestType" value="update.php"> UPDATE <br>
 
 			<input type="text" name="xpath" placeholder="xpath query">
 
-			<input type="text" name="country" placeholder="country">
-			<input type="text" name="symbol" placeholder="symbol">
-			<input type="text" name="type" placeholder="type">
-			<input type="text" name="rate" placeholder="rate">
+			<input type="text" name="to" placeholder="to">
+			<input type="text" name="from" placeholder="from">
+			<input type="text" name="amnt" placeholder="amnt">
+			<input type="text" name="format" placeholder="format">
 
 			<input id="but" type="submit" name="submitRequest" value="Submit">
 

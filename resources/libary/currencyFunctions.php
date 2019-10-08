@@ -67,7 +67,7 @@
 		);
 		
 		if ($format == "json"){
-			return json_encode($response);
+			return json_encode($response, JSON_PRETTY_PRINT);
 		} else if ($format == "xml") {
 			return XMLOperation::invoke(function($f) use ($response){
 				return $f
@@ -78,17 +78,17 @@
 	}
 
 	function convertBaseRate($jsonData, $newBaseType = "GBP"){
-		$newJsonData = json_decode($jsonData);
+		$incomingJsonData = json_decode($jsonData);
 		
-		$newBaseRate = $newJsonData->rates->{$newBaseType};
+		$newBaseRate = $incomingJsonData->rates->{$newBaseType};
 		$multiplier = 1 / $newBaseRate;
+
+		$incomingJsonData->base = $newBaseType;
 		
-		$newJsonData->base = $newBaseType;
-		
-		foreach ($newJsonData->rates as $rate => $value){
-			$newJsonData->rates->{$rate} = $value * $multiplier;
+		foreach ($incomingJsonData->rates as $rate => $value){
+			$incomingJsonData->rates->{$rate} = $value * $multiplier;
 		}
 		
-		return json_encode($newJsonData);
+		return json_encode($incomingJsonData);
 	}
 ?>

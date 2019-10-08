@@ -62,6 +62,8 @@
 		
 		public function printElements($dom){
 			header('Content-type: text/xml');
+			$dom->preserveWhiteSpace = false;
+			$dom->formatOutput = true;
 			echo $dom->saveXML();
 		}
 		
