@@ -1,9 +1,13 @@
 {
 	"filepaths": {
 		"xml": {
-
 			"rates": "C:\\xamppLatest\\htdocs\\CurrencyConversionAPI\\resources\\xml\\rates.xml"
-
+		}
+	},
+	"api": {
+		"fixer": {
+			"endpoint": "http://data.fixer.io//api//latest?access_key=97341f9a29a6e2c9e44153ef98fb52bb&format=1"
 		}
 	}
+
 }

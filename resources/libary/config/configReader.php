@@ -8,4 +8,9 @@
 		return $config->filepaths;
 	}
 
+	function getApiEndpointsFromConfig(){
+		$config = json_decode(getConfig());
+		return $config->api;
+	}
+
 ?>
