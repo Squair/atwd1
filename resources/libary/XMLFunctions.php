@@ -12,6 +12,7 @@
 				$f->formatDom();
 				$f->saveDom();
 			}
+			return $f;
 		}
 		
 		public function setFilePath($filePathType){
@@ -59,7 +60,12 @@
 			return $this;
 		}
 		
-		public function getElements($xpathQuery)
+		public function printElements($dom){
+			header('Content-type: text/xml');
+			echo $dom->saveXML();
+		}
+		
+		public function getElements($xpathQuery = "//*")
 		{
 			$elements = $this->findElements($xpathQuery);
 			$newDom = new DomDocument('1.0');
@@ -69,12 +75,8 @@
 			foreach($elements as $element){
 				$newDom->appendChild($newDom->importNode($element, true));
 			}
-			
-			header('Content-type: text/xml');
-			
-			echo $newDom->saveXML();
-			
-			return $this;
+
+			return $newDom;
 		}
 		
 		public function createXmlFromJson($jsonData){
@@ -84,27 +86,33 @@
 			return $this;
 		}
 		
-		//Not my code, found on stackoverflow at: https://stackoverflow.com/questions/1397036/how-to-convert-array-to-simplexml (second answer)
+		//Not my code, although slightly edited from the original found on stackoverflow at: https://stackoverflow.com/questions/1397036/how-to-convert-array-to-simplexml (second answer)
 		public function array_to_xml($data, $xml = false){
-			if ($xml === false){
-				$xml = new SimpleXMLElement('<root/>');
-			}
-			
 			foreach( $data as $key => $value ) {
 				if( is_numeric($key) ){
 					$key = 'item'.$key; //dealing with <0/>..<n/> issues
 				}
+				
 				if( is_array($value) ) {
-					$subnode = $xml->addChild($key);
-					$this->array_to_xml($value, $subnode);
-				} else {
+					//if first item is array use it as root node otherwise, create a root node
+					if ($xml === false){
+						$xml = new SimpleXMLElement("<" . $key . "/>");
+						$this->array_to_xml($value, $xml);					
+					} else {
+						$subnode = $xml->addChild($key);
+						$this->array_to_xml($value, $subnode);
+					}
+				} else if ($xml === false){
+					$xml = new SimpleXMLElement("<root/>");
 					$xml->addChild("$key",htmlspecialchars("$value"));
+				} else {
+				   $xml->addChild("$key",htmlspecialchars("$value"));
 				}
 			 }
 			return $xml;
 		}
 
-		private function findElements($xpathquery){
+		public function findElements($xpathquery){
 			$xpath = new domxpath($this->dom);
 			return $xpath->query($xpathquery);
 		}

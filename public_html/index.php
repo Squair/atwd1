@@ -2,18 +2,15 @@
 require_once("../resources/libary/currencyFunctions.php");
 require_once("../resources/libary/XMLFunctions.php");
 
-	XMLOperation::invoke(function($f){
-		$apiKey = "97341f9a29a6e2c9e44153ef98fb52bb";
-		$currencyJson = file_get_contents("http://data.fixer.io/api/latest?access_key=" . $apiKey . "&format=1");
-		
+	$apiKey = "97341f9a29a6e2c9e44153ef98fb52bb";
+	$currencyJson = file_get_contents("http://data.fixer.io/api/latest?access_key=" . $apiKey . "&format=1");
+
+	XMLOperation::invoke(function($f) use ($currencyJson){
 		return $f
 			->setFilePath("rates")
 			->createXmlFromJson(convertBaseRate($currencyJson));
-			
 	});
 
-
-	//echo getBaseRateMultiplier($rates["GBP"]);
 ?>
 
 <html>
@@ -28,7 +25,7 @@ require_once("../resources/libary/XMLFunctions.php");
 			$('#paramsForm').submit(function(event) {
 				event.preventDefault();
 				$.ajax({
-					type: "POST",
+					type: "GET",
 					data: $(this).serialize(),
 					contextType: "text/plain",
 					dataType: "text",
