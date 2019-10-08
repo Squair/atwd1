@@ -1,4 +1,5 @@
 <?php
+	require_once("XMLFunctions.php");
 
 	function createNewCurrency($type, $country, $symbol, $rate){
 		
@@ -35,15 +36,22 @@
 		return $curr->item(0)->nodeValue;
 	}
 
-	function getBaseRateMultiplier($newBaseRate){
-		return 1 / $newBaseRate;
+	function currencyNeedsUpdate(){
+		$timestamp = XMLOperation::invoke(function($f){
+			return $f
+				->setFilePath("rates")
+				->findElements("/root/timestamp");
+		});
+		//7200 = 2hours
+		return time() - $timestamp->item(0)->nodeValue >= 7200 ? true : false;
 	}
+
 
 	function getConversionResponse($fromCode, $toCode, $amount, $format){
 		$fromRate = getRateData($fromCode);
 		$toRate = getRateData($toCode);
 		
-		$conversion = array(
+		$response = array(
 			'conv' => array(
 				'at' => "test",
 				'rate' => $toRate,
@@ -59,10 +67,9 @@
 		);
 		
 		if ($format == "json"){
-			return json_encode($conversion);
-			
+			return json_encode($response);
 		} else if ($format == "xml") {
-			return XMLOperation::invoke(function($f) use ($conversion){
+			return XMLOperation::invoke(function($f) use ($response){
 				return $f
 					->createXmlFromJson(json_encode($conversion))
 					->printElements($f->dom);
@@ -74,7 +81,7 @@
 		$newJsonData = json_decode($jsonData);
 		
 		$newBaseRate = $newJsonData->rates->{$newBaseType};
-		$multiplier = getBaseRateMultiplier($newBaseRate);
+		$multiplier = 1 / $newBaseRate;
 		
 		$newJsonData->base = $newBaseType;
 		
@@ -84,5 +91,4 @@
 		
 		return json_encode($newJsonData);
 	}
-
 ?>

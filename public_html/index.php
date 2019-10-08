@@ -5,11 +5,14 @@ require_once("../resources/libary/XMLFunctions.php");
 	$apiKey = "97341f9a29a6e2c9e44153ef98fb52bb";
 	$currencyJson = file_get_contents("http://data.fixer.io/api/latest?access_key=" . $apiKey . "&format=1");
 
-	XMLOperation::invoke(function($f) use ($currencyJson){
-		return $f
-			->setFilePath("rates")
-			->createXmlFromJson(convertBaseRate($currencyJson));
-	});
+	if (currencyNeedsUpdate()){
+		XMLOperation::invoke(function($f) use ($currencyJson){
+			return $f
+				->setFilePath("rates")
+				->createXmlFromJson(convertBaseRate($currencyJson));
+		});
+		echo "Updated!";
+	}
 
 ?>
 
