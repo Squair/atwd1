@@ -1,4 +1,6 @@
 <?php
+	require_once("config/configReader.php");
+
 	class XMLOperation {
 		public $dom;
 		public $filePath;
@@ -7,14 +9,23 @@
 			$f = $fn(new static());
 			
 			if (isset($f->dom) && isset($f->filePath)){
-				$f->formatOutput = true;
-				$f->saveDom($f->filePath);
+				$f->formatDom();
+				$f->saveDom();
 			}
 		}
 		
-		public function setFilePath($filePath){
-			$this->filePath = $filePath;
+		public function setFilePath($filePathType){
+			$filePathLocs = getFilePathsFromConfig();
+			$filePath = $filePathLocs->xml->{$filePathType};
 			$this->setDom();
+			$this->filePath = $filePath;
+
+			if(file_exists($filePath)){
+				$this->loadDom();
+			} else {
+				$this->dom->loadXML("<" . $filePathType . "/>");
+			}
+			
 			return $this;
 		}
 		
@@ -61,28 +72,62 @@
 			
 			header('Content-type: text/xml');
 			
-
 			echo $newDom->saveXML();
 			
 			return $this;
 		}
+		
+		public function createXmlFromJson($jsonData){
+			$jsonArray = json_decode($jsonData, true);
+			$convertedXml = $this->array_to_xml($jsonArray);
+			$this->dom = dom_import_simplexml($convertedXml)->ownerDocument;
+			return $this;
+		}
+		
+		//Not my code, found on stackoverflow at: https://stackoverflow.com/questions/1397036/how-to-convert-array-to-simplexml (second answer)
+		public function array_to_xml($data, $xml = false){
+			if ($xml === false){
+				$xml = new SimpleXMLElement('<root/>');
+			}
 			
+			foreach( $data as $key => $value ) {
+				if( is_numeric($key) ){
+					$key = 'item'.$key; //dealing with <0/>..<n/> issues
+				}
+				if( is_array($value) ) {
+					$subnode = $xml->addChild($key);
+					$this->array_to_xml($value, $subnode);
+				} else {
+					$xml->addChild("$key",htmlspecialchars("$value"));
+				}
+			 }
+			return $xml;
+		}
+
 		private function findElements($xpathquery){
 			$xpath = new domxpath($this->dom);
 			return $xpath->query($xpathquery);
 		}
 		
-		protected function setDom()
+		private function setDom()
 		{
 			$this->dom = new domdocument('1.0');
-			$this->dom->preserveWhiteSpace = false;
-			$this->dom->formatOutput = true;
-			$this->dom->load($this->filePath);
+			$this->formatDom();
 
 			return $this;
 		}
 		
-		protected function saveDom()
+		private function formatDom(){
+			$this->dom->preserveWhiteSpace = false;
+			$this->dom->formatOutput = true;
+		}
+		
+		private function loadDom(){
+			$this->dom->load($this->filePath);
+			return $this;
+		}
+		
+		private function saveDom()
 		{
 			$this->dom->save($this->filePath);
 		}

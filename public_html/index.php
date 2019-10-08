@@ -1,13 +1,19 @@
 <?php
-    $key = "97341f9a29a6e2c9e44153ef98fb52bb";
-    $array = json_decode(file_get_contents("http://data.fixer.io/api/latest?access_key=" . $key . "&format=1"));
+require_once("../resources/libary/currencyFunctions.php");
+require_once("../resources/libary/XMLFunctions.php");
 
-    foreach ($array as $key => $jsons){
-        foreach ($jsons as $key => $value){
-            echo $key . " -> " . $value . "<br>";
-        }
-    }
-    print_r($json);
+	XMLOperation::invoke(function($f){
+		$apiKey = "97341f9a29a6e2c9e44153ef98fb52bb";
+		$currencyJson = file_get_contents("http://data.fixer.io/api/latest?access_key=" . $apiKey . "&format=1");
+		
+		return $f
+			->setFilePath("rates")
+			->createXmlFromJson(convertBaseRate($currencyJson));
+			
+	});
+
+
+	//echo getBaseRateMultiplier($rates["GBP"]);
 ?>
 
 <html>
