@@ -91,4 +91,20 @@
 		
 		return json_encode($incomingJsonData);
 	}
+
+	function getAllCodes(){
+		$codes = XMLOperation::invoke(function($f){
+			return $f
+				->setFilePath("rates")
+				->dom->getElementsByTagName("rates");
+		});		
+		return $codes;
+	}
+
+	function getCodesForDropdown(){
+		$dom = getAllCodes();
+		foreach ($dom->item(0)->childNodes as $code){
+			echo "<option value='{$code->nodeName}'>{$code->nodeName}</option>";
+		}
+	}
 ?>

@@ -9,7 +9,6 @@
 			$f = $fn(new static());
 			
 			if (isset($f->dom) && isset($f->filePath)){
-				$f->formatDom();
 				$f->saveDom();
 			}
 			return $f;
@@ -122,14 +121,14 @@
 		private function setDom()
 		{
 			$this->dom = new domdocument('1.0');
-			$this->formatDom();
+			$this->formatDom($this->dom);
 
 			return $this;
 		}
 		
-		private function formatDom(){
-			$this->dom->preserveWhiteSpace = false;
-			$this->dom->formatOutput = true;
+		private function formatDom($dom){
+			$dom->preserveWhiteSpace = false;
+			$dom->formatOutput = true;
 		}
 		
 		private function loadDom(){

@@ -1,4 +1,6 @@
-<?php ?>
+<?php 
+	require_once("../resources/libary/currencyFunctions.php");
+?>
 <html>
 
 <head>
@@ -39,8 +41,9 @@
 
 			<input type="text" name="xpath" placeholder="xpath query">
 
-			<input type="text" name="to" placeholder="to">
-			<input type="text" name="from" placeholder="from">
+			<p>From:</p><select name="from"><?php getCodesForDropdown(); ?></select>
+			<p>To:</p><select name="to"><?php getCodesForDropdown(); ?></select>
+
 			<input type="text" name="amnt" placeholder="amnt">
 			<input type="text" name="format" placeholder="format">
 
