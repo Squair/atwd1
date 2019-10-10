@@ -83,17 +83,16 @@
 
 	function getCurrencyText($currCode){
 		$xml = simplexml_load_file("C:\\xamppLatest\\htdocs\\CurrencyConversionAPI\\resources\\xml\\currencies.xml");
-		$json = json_encode($xml);
-		$jsonArray = json_decode($json, true);
+
 		
-		foreach($jsonArray['CcyTbl']['CcyNtry'] as $entry => $value){
-			print_r($value['CcyNm']);
-			foreach ($value as $k => $item){
-				if ($k == "Ccy" && $item == $currCode){
-					return $value['CcyNm'];		
+		foreach($xml->CcyTbl->CcyNtry as $entry){
+
+				if ($entry->Ccy == $currCode){
+					print_r($entry->Ccy);
+					return (string) $entry->CcyNm;		
 				}
 
-			}
+			
 
 		}
 		
