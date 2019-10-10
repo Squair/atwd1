@@ -1,6 +1,11 @@
 <?php 
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 	require_once("../resources/libary/currencyFunctions.php");
 	$rateCodes = getAllRateCodes();
+
+
 
 ?>
 <html>
@@ -8,7 +13,7 @@
 <head>
 	<link rel="stylesheet" href="css/stylesheet.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
 	<script>
 		$(document).ready(function() {

@@ -50,21 +50,25 @@
 	function getConversionResponse($fromCode, $toCode, $amount, $format){
 		$fromRate = getRateData($fromCode);
 		$toRate = getRateData($toCode);
-		
+                
+        $fromCountryData = getCurrencyInfo($fromCode);
+        $toCountryData = getCurrencyInfo($toCode);
+
+        
 		$response = array(
 			'conv' => array(
 				'at' => "test",
 				'rate' => $toRate,
 				'from' => array(
 					'code' => $fromCode,
-					'curr' => getCurrencyText($fromCode),
-					'loc' => "",
+					'curr' => $fromCountryData['curr'],
+					'loc' => $fromCountryData['loc'],
 					'amnt' => number_format($amount, 2, '.', '')
 				),
 				'to' => array(
 					'code' => $toCode,
-					'curr' => getCurrencyText($toCode),
-					'loc' => "",
+					'curr' => $toCountryData['curr'],
+					'loc' => $toCountryData['loc'],
 					'amnt' => getConversionAmount($fromRate, $toRate, $amount)
 				)
 			)
@@ -81,21 +85,21 @@
 		}
 	}
 
-	function getCurrencyText($currCode){
-		$xml = simplexml_load_file("C:\\xamppLatest\\htdocs\\CurrencyConversionAPI\\resources\\xml\\currencies.xml");
-
-		
-		foreach($xml->CcyTbl->CcyNtry as $entry){
-
-				if ($entry->Ccy == $currCode){
-					print_r($entry->Ccy);
-					return (string) $entry->CcyNm;		
-				}
-
-			
-
-		}
-		
+	function getCurrencyInfo($currCode){
+		$xml = simplexml_load_file("../xml/currencies.xml");
+        $matches = $xml->xpath("//CcyNtry[Ccy='{$currCode}']");
+        
+        $locArr = array();
+        
+        foreach($matches as $match){
+            array_push($locArr, (string) $match->CtryNm);
+        }
+                
+        $infoArray = array(
+            'curr' => (string) $matches[0]->CcyNm,
+            'loc' => implode(", ", $locArr)
+        );
+        return $infoArray;
 	}
 
 	function convertBaseRate($jsonData, $newBaseType = "GBP"){

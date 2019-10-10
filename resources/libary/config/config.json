@@ -1,8 +1,8 @@
 {
 	"filepaths": {
 		"xml": {
-			"rates": "C:\\xamppLatest\\htdocs\\CurrencyConversionAPI\\resources\\xml\\rates.xml",
-			"currencies": "C:\\xamppLatest\\htdocs\\CurrencyConversionAPI\\resources\\xml\\currencies.xml"
+			"rates": "//nas//students//g//g2-squair//unix//public_html//year 3//CurrencyConversionAPI//resources//xml//rates.xml",
+			"currencies": "//nas//students//g//g2-squair//unix//public_html//year 3//CurrencyConversionAPI//resources//xml//currencies.xml"
 		}
 	},
 	"api": {

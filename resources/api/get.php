@@ -2,9 +2,9 @@
 	require_once ("../libary/currencyFunctions.php");
 
 	if (currencyNeedsUpdate()){
-		echo "Rate file updated <br>";
 		$apiConfig = getItemFromConfig("api");
 		$currencyJson = file_get_contents($apiConfig->fixer->endpoint);
+        
 		XMLOperation::invoke(function($f) use ($currencyJson){
 			return $f
 				->setFilePath("rates")
