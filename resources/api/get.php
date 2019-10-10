@@ -4,7 +4,6 @@
 	if (currencyNeedsUpdate()){
 		$apiConfig = getItemFromConfig("api");
 		$currencyJson = file_get_contents($apiConfig->fixer->endpoint);
-        
 		XMLOperation::invoke(function($f) use ($currencyJson){
 			return $f
 				->setFilePath("rates")

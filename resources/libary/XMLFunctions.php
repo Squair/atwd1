@@ -9,7 +9,7 @@
 			$f = $fn(new static());
 			
 			if (isset($f->dom) && isset($f->filePath)){
-				//TODO: $f->formatDom(); Can this be removed?
+				$f->formatDom(); //Can this be removed?
 				$f->saveDom();
 			}
 			return $f;
@@ -18,7 +18,10 @@
 		public function setFilePath($filePathType){
 			$filePathLocs = getItemFromConfig("filepaths");
 			$filePath = $filePathLocs->xml->{$filePathType};
+            
 			$this->setDom();
+            $this->formatDom();
+            
 			$this->filePath = $filePath;
 
 			if(file_exists($filePath)){

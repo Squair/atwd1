@@ -24,7 +24,7 @@
 	}
 
 	function getConversionAmount($fromRate, $toRate, $amount){
-		return number_format(($toRate / $fromRate) * $amount, 2, '.', '');
+		return ($toRate / $fromRate) * $amount;
 	}
 
 	function getRateData($code){
@@ -54,11 +54,13 @@
         $fromCountryData = getCurrencyInfo($fromCode);
         $toCountryData = getCurrencyInfo($toCode);
 
+        $convAmount = getConversionAmount($fromRate, $toRate, $amount);
+        $rate = ($convAmount / $amount);
         
 		$response = array(
 			'conv' => array(
 				'at' => "test",
-				'rate' => $toRate,
+				'rate' => $rate,
 				'from' => array(
 					'code' => $fromCode,
 					'curr' => $fromCountryData['curr'],
@@ -69,7 +71,7 @@
 					'code' => $toCode,
 					'curr' => $toCountryData['curr'],
 					'loc' => $toCountryData['loc'],
-					'amnt' => getConversionAmount($fromRate, $toRate, $amount)
+					'amnt' => number_format($convAmount, 2, '.', '')
 				)
 			)
 		);
