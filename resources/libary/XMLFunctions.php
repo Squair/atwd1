@@ -1,4 +1,5 @@
 <?php
+	require_once("global.php");
 	require_once("config/configReader.php");
 
 	class XMLOperation {
@@ -17,7 +18,7 @@
 		
 		public function setFilePath($filePathType){
 			$filePathLocs = getItemFromConfig("filepaths");
-			$filePath = $filePathLocs->xml->{$filePathType};
+			$filePath = ROOT_PATH . $filePathLocs->xml->{$filePathType};
             
 			$this->setDom();
             $this->formatDom();

@@ -1,7 +1,9 @@
-<?php 
-	function getConfig(){
+<?php
+	require_once(__DIR__ . "/../global.php");
 
-		return file_get_contents("/nas/students/g/g2-squair/unix/public_html/year 3/CurrencyConversionAPI/resources/libary/config/config.json");
+	function getConfig(){
+		$filePath = ROOT_PATH . 'libary/config/config.json';
+		return file_get_contents($filePath);
 	}
 
 	function getItemFromConfig($item){

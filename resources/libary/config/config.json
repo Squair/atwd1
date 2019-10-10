@@ -1,8 +1,8 @@
 {
 	"filepaths": {
 		"xml": {
-			"rates": "//nas//students//g//g2-squair//unix//public_html//year 3//CurrencyConversionAPI//resources//xml//rates.xml",
-			"currencies": "//nas//students//g//g2-squair//unix//public_html//year 3//CurrencyConversionAPI//resources//xml//currencies.xml"
+			"rates": "xml//rates.xml",
+			"currencies": "xml//currencies.xml"
 		}
 	},
 	"api": {
