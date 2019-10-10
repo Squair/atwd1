@@ -1,29 +1,7 @@
 <?php
 	require_once("XMLFunctions.php");
 
-	function createNewCurrency($type, $country, $symbol, $rate){
-		
-		$tempDom = new domdocument();
-		
-		$newCurrency = $tempDom->createElement("Currency");
-		
-		//Adds attribute for the currency
-		$currencyType = $tempDom->createAttribute("type");
-		$currencyType->value = $type;
-		$newCurrency->appendChild($currencyType);
-		
-		$newCurrency->appendChild($tempDom->createElement("Country", $country));
-		$newCurrency->appendChild($tempDom->createElement("Symbol", $symbol));
-		$newCurrency->appendChild($tempDom->createElement("Rate", $rate));
-		
-		return $newCurrency;
-	}
-
-	function createNewRate($countryCode, $rate){
-		//TODO
-	}
-
-	function getConversionAmount($fromRate, $toRate, $amount){
+	function calcConversionAmount($fromRate, $toRate, $amount){
 		return ($toRate / $fromRate) * $amount;
 	}
 
@@ -37,40 +15,46 @@
 	}
 
 	function currencyNeedsUpdate(){
+		//7200 = 2hours
+		return time() - getTimeLastUpdated() >= 7200 ? true : false;
+	}
+
+	function getTimeLastUpdated(){
 		$timestamp = XMLOperation::invoke(function($f){
 			return $f
 				->setFilePath("rates")
 				->findElements("/root/timestamp");
-		});
-		//7200 = 2hours
-		return time() - $timestamp->item(0)->nodeValue >= 7200 ? true : false;
+		});		
+		return $timestamp->item(0)->nodeValue;
 	}
 
-
 	function getConversionResponse($fromCode, $toCode, $amount, $format){
+		$at = gmdate("Y-m-d\ H:i:s",  getTimeLastUpdated());
+		        
+        $fromCurrencyData = getCurrencyData($fromCode);
+        $toCurrencyData = getCurrencyData($toCode);
+
 		$fromRate = getRateData($fromCode);
 		$toRate = getRateData($toCode);
-                
-        $fromCountryData = getCurrencyInfo($fromCode);
-        $toCountryData = getCurrencyInfo($toCode);
-
-        $convAmount = getConversionAmount($fromRate, $toRate, $amount);
+		
+		$convAmount = calcConversionAmount(getRateData($fromCode), getRateData($toCode), $amount);
         $rate = ($convAmount / $amount);
+
         
 		$response = array(
 			'conv' => array(
-				'at' => "test",
+				'at' => $at,
 				'rate' => $rate,
 				'from' => array(
 					'code' => $fromCode,
-					'curr' => $fromCountryData['curr'],
-					'loc' => $fromCountryData['loc'],
+					'curr' => $fromCurrencyData['curr'],
+					'loc' => $fromCurrencyData['loc'],
 					'amnt' => number_format($amount, 2, '.', '')
 				),
 				'to' => array(
 					'code' => $toCode,
-					'curr' => $toCountryData['curr'],
-					'loc' => $toCountryData['loc'],
+					'curr' => $toCurrencyData['curr'],
+					'loc' => $toCurrencyData['loc'],
 					'amnt' => number_format($convAmount, 2, '.', '')
 				)
 			)
@@ -87,21 +71,26 @@
 		}
 	}
 
-	function getCurrencyInfo($currCode){
-		$xml = simplexml_load_file("../xml/currencies.xml");
-        $matches = $xml->xpath("//CcyNtry[Ccy='{$currCode}']");
-        
+	function getCurrencyData($currCode){
+		$matches = XMLOperation::invoke(function($f) use ($currCode){
+				return $f
+					->setFilePath("currencies")
+					->findElements("//CcyNtry[Ccy='{$currCode}']");
+		});
+
         $locArr = array();
         
         foreach($matches as $match){
-            array_push($locArr, (string) $match->CtryNm);
+			$ctryNm = $match->getElementsByTagName("CtryNm");
+            array_push($locArr, $ctryNm->item(0)->nodeValue);
         }
-                
-        $infoArray = array(
-            'curr' => (string) $matches[0]->CcyNm,
+    	
+		$ccyNm = $matches->item(0)->getElementsByTagName("CcyNm")->item(0);
+
+        return array(
+            'curr' => $ccyNm->nodeValue,
             'loc' => implode(", ", $locArr)
         );
-        return $infoArray;
 	}
 
 	function convertBaseRate($jsonData, $newBaseType = "GBP"){
@@ -120,12 +109,11 @@
 	}
 
 	function getAllRateCodes(){
-		$codes = XMLOperation::invoke(function($f){
+		return XMLOperation::invoke(function($f){
 			return $f
 				->setFilePath("rates")
-				->dom->getElementsByTagName("rates");
+				->findElements("rates");
 		});		
-		return $codes;
 	}
 
 	function getDataForDropdown($dataList){

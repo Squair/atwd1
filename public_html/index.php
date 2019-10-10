@@ -7,9 +7,6 @@
     error_reporting(E_ALL);
 
 	$rateCodes = getAllRateCodes();
-
-
-
 ?>
 <html>
 
@@ -17,26 +14,7 @@
 	<link rel="stylesheet" href="css/stylesheet.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-
-	<script>
-		$(document).ready(function() {
-			$('#paramsForm').submit(function(event) {
-				event.preventDefault();
-				$.ajax({
-					type: "GET",
-					data: $(this).serialize(),
-					contextType: "text/plain",
-					dataType: "text",
-					url: "../resources/api/" + $('#radioSelect:checked').val(),
-					success: function(result) {
-						//alert(result);
-						$("#response").html(result);
-					}
-				});
-			});
-		});
-
-	</script>
+	<script src="js/formProcess.js"></script>
 
 </head>
 
@@ -48,8 +26,6 @@
 			<input id="radioSelect" type="radio" name="requestType" value="delete.php"> DELETE <br>
 			<input id="radioSelect" type="radio" name="requestType" value="post.php"> POST <br>
 			<input id="radioSelect" type="radio" name="requestType" value="update.php"> UPDATE <br>
-
-			<input type="text" name="xpath" placeholder="xpath query">
 
 			<p>From:</p><select name="from"><?php getDataForDropdown($rateCodes); ?></select>
 			<p>To:</p><select name="to"><?php getDataForDropdown($rateCodes); ?></select>

@@ -53,36 +53,11 @@
 			return $this;
 		}
 		
-		public function deleteElements($xpathQuery){
-			$elements = iterator_to_array($this->findElements($xpathQuery));
-			
-			$removeFunc = function($element){
-				$element->parentNode->removeChild($element);
-			};
-			
-			array_map($removeFunc, $elements);
-			return $this;
-		}
-		
 		public function printElements($dom){
 			header('Content-type: text/xml');
 			$dom->preserveWhiteSpace = false;
 			$dom->formatOutput = true;
 			echo $dom->saveXML();
-		}
-		
-		public function getElements($xpathQuery = "//*")
-		{
-			$elements = $this->findElements($xpathQuery);
-			$newDom = new DomDocument('1.0');
-			$newDom->preserveWhiteSpace = false;
-			$newDom->formatOutput = true;
-			
-			foreach($elements as $element){
-				$newDom->appendChild($newDom->importNode($element, true));
-			}
-
-			return $newDom;
 		}
 		
 		public function createXmlFromJson($jsonData){
