@@ -9,7 +9,7 @@
 			$f = $fn(new static());
 			
 			if (isset($f->dom) && isset($f->filePath)){
-				$f->formatDom();
+				//TODO: $f->formatDom(); Can this be removed?
 				$f->saveDom();
 			}
 			return $f;
@@ -120,7 +120,7 @@
 		}
 		
 		private function setDom(){
-			return $this->dom = new domdocument('1.0');
+			$this->dom = new domdocument('1.0');
 		}
 		
 		private function formatDom(){
@@ -129,6 +129,7 @@
 		}
 		
 		private function loadDom(){
+			$this->formatDom();
 			$this->dom->load($this->filePath);
 			return $this;
 		}

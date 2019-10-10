@@ -1,5 +1,7 @@
 <?php 
 	require_once("../resources/libary/currencyFunctions.php");
+	$rateCodes = getAllRateCodes();
+
 ?>
 <html>
 
@@ -41,8 +43,8 @@
 
 			<input type="text" name="xpath" placeholder="xpath query">
 
-			<p>From:</p><select name="from"><?php getCodesForDropdown(); ?></select>
-			<p>To:</p><select name="to"><?php getCodesForDropdown(); ?></select>
+			<p>From:</p><select name="from"><?php getDataForDropdown($rateCodes); ?></select>
+			<p>To:</p><select name="to"><?php getDataForDropdown($rateCodes); ?></select>
 
 			<input type="text" name="amnt" placeholder="amnt">
 			<input type="text" name="format" placeholder="format">

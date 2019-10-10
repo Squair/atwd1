@@ -57,10 +57,14 @@
 				'rate' => $toRate,
 				'from' => array(
 					'code' => $fromCode,
-					'amnt' => $amount
+					'curr' => getCurrencyText($fromCode),
+					'loc' => "",
+					'amnt' => number_format($amount, 2, '.', '')
 				),
 				'to' => array(
 					'code' => $toCode,
+					'curr' => getCurrencyText($toCode),
+					'loc' => "",
 					'amnt' => getConversionAmount($fromRate, $toRate, $amount)
 				)
 			)
@@ -75,6 +79,24 @@
 					->printElements($f->dom);
 			});
 		}
+	}
+
+	function getCurrencyText($currCode){
+		$xml = simplexml_load_file("C:\\xamppLatest\\htdocs\\CurrencyConversionAPI\\resources\\xml\\currencies.xml");
+		$json = json_encode($xml);
+		$jsonArray = json_decode($json, true);
+		
+		foreach($jsonArray['CcyTbl']['CcyNtry'] as $entry => $value){
+			print_r($value['CcyNm']);
+			foreach ($value as $k => $item){
+				if ($k == "Ccy" && $item == $currCode){
+					return $value['CcyNm'];		
+				}
+
+			}
+
+		}
+		
 	}
 
 	function convertBaseRate($jsonData, $newBaseType = "GBP"){
@@ -92,7 +114,7 @@
 		return json_encode($incomingJsonData);
 	}
 
-	function getAllCodes(){
+	function getAllRateCodes(){
 		$codes = XMLOperation::invoke(function($f){
 			return $f
 				->setFilePath("rates")
@@ -101,10 +123,9 @@
 		return $codes;
 	}
 
-	function getCodesForDropdown(){
-		$dom = getAllCodes();
-		foreach ($dom->item(0)->childNodes as $code){
-			echo "<option value='{$code->nodeName}'>{$code->nodeName}</option>";
+	function getDataForDropdown($dataList){
+		foreach ($dataList->item(0)->childNodes as $item){
+			echo "<option value='{$item->nodeName}'>{$item->nodeName}</option>";
 		}
 	}
 ?>

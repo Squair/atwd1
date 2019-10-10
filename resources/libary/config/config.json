@@ -1,7 +1,8 @@
 {
 	"filepaths": {
 		"xml": {
-			"rates": "C:\\xamppLatest\\htdocs\\CurrencyConversionAPI\\resources\\xml\\rates.xml"
+			"rates": "C:\\xamppLatest\\htdocs\\CurrencyConversionAPI\\resources\\xml\\rates.xml",
+			"currencies": "C:\\xamppLatest\\htdocs\\CurrencyConversionAPI\\resources\\xml\\currencies.xml"
 		}
 	},
 	"api": {
