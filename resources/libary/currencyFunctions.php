@@ -30,7 +30,7 @@
 		return $timestamp->item(0)->nodeValue;
 	}
 
-	function getConversionResponse($fromCode, $toCode, $amount, $format = "xml"){
+	function getConversionResponse($fromCode, $toCode, $amount, $format){
 		$at = gmdate("d F Y H:i",  getTimeLastUpdated());
 		        
         $fromCurrencyData = getCurrencyData($fromCode);
