@@ -28,8 +28,8 @@
 		return $timestamp->item(0)->nodeValue;
 	}
 
-	function getConversionResponse($fromCode, $toCode, $amount, $format){
-		$at = gmdate("Y-m-d\ H:i:s",  getTimeLastUpdated());
+	function getConversionResponse($fromCode, $toCode, $amount, $format = "xml"){
+		$at = gmdate("d F Y H:i",  getTimeLastUpdated());
 		        
         $fromCurrencyData = getCurrencyData($fromCode);
         $toCurrencyData = getCurrencyData($toCode);
@@ -61,6 +61,7 @@
 		);
 		
 		if ($format == "json"){
+			header('Content-Type: application/json');
 			return json_encode($response, JSON_PRETTY_PRINT);
 		} else if ($format == "xml") {
 			return XMLOperation::invoke(function($f) use ($response){
