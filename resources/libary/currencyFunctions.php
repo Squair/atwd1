@@ -1,6 +1,8 @@
 <?php
 	require_once("XMLFunctions.php");
+	require_once("config/configReader.php");
 	require_once("response.php");
+	require_once("global.php");
 
 
 	function calcConversionAmount($fromRate, $toRate, $amount){
@@ -17,8 +19,8 @@
 	}
 
 	function currencyNeedsUpdate(){
-		//7200 = 2hours
-		return time() - getTimeLastUpdated() >= 7200 ? true : false;
+		$updateRate = getItemFromConfig("api")->fixer->updateRate;
+		return time() - getTimeLastUpdated() >= $updateRate ? true : false;
 	}
 
 	function getTimeLastUpdated(){

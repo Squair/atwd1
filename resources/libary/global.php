@@ -1,4 +1,5 @@
 <?php 
+	//Root path for pulling filepaths out of config file
 	define('ROOT_PATH', dirname(__DIR__). '/');
 
 	//Status codes
