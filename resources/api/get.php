@@ -31,6 +31,12 @@
 		}
 	}
 
+	//Check currency codes exist and are availible
+	if (!checkCurrencyCodesExists($_GET['to'], $_GET['from'])){
+			echo getErrorResponse(UNKOWN_CURRENCY, $_GET['format']);
+			return;		
+	}
+
 	//Check all parameters match $validParameters
 	if (count(array_diff($parameters, $validParameters)) > 0){				
 		echo getErrorResponse(UNKOWN_PARAM, $_GET['format']);
