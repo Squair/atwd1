@@ -1,5 +1,7 @@
 <?php
 	require_once("XMLFunctions.php");
+	require_once("response.php");
+
 
 	function calcConversionAmount($fromRate, $toRate, $amount){
 		return ($toRate / $fromRate) * $amount;
@@ -59,17 +61,7 @@
 				)
 			)
 		);
-		
-		if ($format == "json"){
-			header('Content-Type: application/json');
-			return json_encode($response, JSON_PRETTY_PRINT);
-		} else if ($format == "xml") {
-			return XMLOperation::invoke(function($f) use ($response){
-				return $f
-					->createXmlFromJson(json_encode($response))
-					->printElements($f->dom);
-			});
-		}
+		return sendResponse($response, $format);
 	}
 
 	function getCurrencyData($currCode){
