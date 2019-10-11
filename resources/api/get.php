@@ -38,6 +38,12 @@
 		//Return invalid parameter code 1100
 	}
 
+	//Check if amount submitted is decimal (short circuit for non numerical values)
+	if (!is_numeric($_GET['amnt']) || !is_float((float)$_GET['amnt'])){
+		echo getErrorResponse(CURRENCY_NOT_DECIMAL, $_GET['format']);
+		return;
+	}
+
 	//Check format is valid
 	if (!checkFormatValueValid($_GET['format'])){
 		echo getErrorResponse(INCORRECT_FORMAT, $_GET['format']);
