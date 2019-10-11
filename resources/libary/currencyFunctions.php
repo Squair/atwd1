@@ -109,6 +109,14 @@
 		});		
 	}
 
+	function checkCurrencyCodesExists(...$currCodes){
+		return XMLOperation::invoke(function($f) use ($currCodes){
+				return $f
+					->setFilePath("rates")
+					->checkElementsExist($currCodes);
+		});
+	}
+
 	function getDataForDropdown($dataList){
 		foreach ($dataList->item(0)->childNodes as $item){
 			echo "<option value='{$item->nodeName}'>{$item->nodeName}</option>";
