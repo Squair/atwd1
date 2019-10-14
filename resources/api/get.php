@@ -36,7 +36,7 @@
 	}
 
 	//Check currency codes exist and are availible
-	if (!checkCurrencyCodesExists($_GET['to'], $_GET['from'])){
+	if (!checkCurrencyCodesExists($_GET['to'], $_GET['from']) || checkCurrencyCodesUnavailable($_GET['to'], $_GET['from'])){
 			echo getErrorResponse(UNKOWN_CURRENCY, $_GET['format']);
 			return;		
 	}

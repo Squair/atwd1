@@ -122,6 +122,23 @@
 			return true;
 		}
 		
+		public function checkAttributeValue($elementName, $attrName, $value){
+			if ($this->dom->getElementsByTagName($elementName)->item(0)->getAttribute($attrName) != $value){
+				return false;
+			} else {
+				return true;
+			}
+		}		
+		
+		public function checkAttributeValues($elementNames, $attrName, $value){
+			foreach ($elementNames as $elementName){
+				if ($this->checkAttributeValue($elementName, $attrName, $value)){
+					return true;
+				} 
+			}
+			return false;
+		}
+		
 		private function setDom(){
 			$this->dom = new domdocument('1.0');
 		}

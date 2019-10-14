@@ -1,7 +1,7 @@
 <?php 
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+   //ini_set('display_errors', 1);
+   //ini_set('display_startup_errors', 1);
+   //error_reporting(E_ALL);
 
 	require_once("../resources/libary/global.php");
 	require_once("../resources/libary/currencyFunctions.php");
@@ -22,10 +22,10 @@
 	<h1>Currency Conversion API</h1>
 	<div id="form-container">
 		<form id="paramsForm" action="#">
-			<input id="radioSelect" type="radio" name="requestType" checked value="get.php"> GET <br>
-			<input id="radioSelect" type="radio" name="requestType" value="delete.php"> DELETE <br>
-			<input id="radioSelect" type="radio" name="requestType" value="post.php"> POST <br>
-			<input id="radioSelect" type="radio" name="requestType" value="update.php"> UPDATE <br>
+			<input id="radioSelect" type="radio" name="requestType" checked value="get"> GET <br>
+			<input id="radioSelect" type="radio" name="requestType" value="delete"> DELETE <br>
+			<input id="radioSelect" type="radio" name="requestType" value="post"> POST <br>
+			<input id="radioSelect" type="radio" name="requestType" value="update"> UPDATE <br>
             
 			<p>To:</p><select name="to"><?php getDataForDropdown($rateCodes); ?></select>
 

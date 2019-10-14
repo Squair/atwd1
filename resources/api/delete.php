@@ -1,15 +1,18 @@
 <?php
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+	require_once("../libary/XMLFunctions.php");
+	require_once("../libary/global.php");
+	require_once ("../libary/currencyFunctions.php");
+	require_once ("../libary/actionResponse.php");
 
-require_once("../libary/XMLFunctions.php");
-require_once("../libary/global.php");
-require_once ("../libary/currencyFunctions.php");
 
-XMLOperation::invoke(function($f){
-		return $f
-			->setFilePath("rates")
-			->addAttributeToElement($_GET['to'], "unavailible", "true");
-});
+	if ($_GET['to'] == "GBP"){
+		//Return error 2400
+	}
+
+	XMLOperation::invoke(function($f){
+			return $f
+				->setFilePath("rates")
+				->addAttributeToElement($_GET['to'], "unavailable", "true");
+	});
+	echo getActionResponse($_GET['requestType']);
 ?>
