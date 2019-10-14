@@ -8,7 +8,7 @@
 	function sendResponse($response, $format){
 		if ($format == "json"){
 			header('Content-Type: application/json');
-			return json_encode($response, JSON_PRETTY_PRINT);
+			return json_encode($response, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
 		} else if ($format == "xml") {
 			return XMLOperation::invoke(function($f) use ($response){
 				return $f
