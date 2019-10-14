@@ -1,10 +1,10 @@
 <?php 
-	require_once("../resources/libary/global.php");
-	require_once("../resources/libary/currencyFunctions.php");
-
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
+
+	require_once("../resources/libary/global.php");
+	require_once("../resources/libary/currencyFunctions.php");
 
 	$rateCodes = getAllRateCodes();
 ?>
@@ -26,8 +26,7 @@
 			<input id="radioSelect" type="radio" name="requestType" value="delete.php"> DELETE <br>
 			<input id="radioSelect" type="radio" name="requestType" value="post.php"> POST <br>
 			<input id="radioSelect" type="radio" name="requestType" value="update.php"> UPDATE <br>
-
-			<p>From:</p><select name="from"><?php getDataForDropdown($rateCodes); ?></select>
+            
 			<p>To:</p><select name="to"><?php getDataForDropdown($rateCodes); ?></select>
 
 			<input type="text" name="amnt" placeholder="amnt">

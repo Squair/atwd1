@@ -32,7 +32,7 @@
 		return $timestamp->item(0)->nodeValue;
 	}
 
-	function getConversionResponse($fromCode, $toCode, $amount, $format){
+	function getConversionResponse($fromCode = "GBP", $toCode, $amount, $format){
 		$at = gmdate("d F Y H:i",  getTimeLastUpdated());
 		        
         $fromCurrencyData = getCurrencyData($fromCode);

@@ -1,12 +1,15 @@
 <?php
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
 require_once("../libary/XMLFunctions.php");
+require_once("../libary/global.php");
 require_once ("../libary/currencyFunctions.php");
 
 XMLOperation::invoke(function($f){
-	$filePath = "../xml/test.xml";
-	$xpathQuery = $_POST['xpath'];
 		return $f
-			->setFilePath($filePath)
-			->deleteElements($xpathQuery);
+			->setFilePath("rates")
+			->addAttributeToElement($_GET['to'], "unavailible", "true");
 });
 ?>
