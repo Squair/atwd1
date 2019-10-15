@@ -3,23 +3,11 @@
 	require_once("../libary/global.php");
 	require_once("../libary/errorResponse.php");
 
-	if (currencyNeedsUpdate()){
-		$apiConfig = getItemFromConfig("api");
-		$currencyJson = file_get_contents($apiConfig->fixer->endpoint);
-		XMLOperation::invoke(function($f) use ($currencyJson){
-			return $f
-				->setFilePath("rates")
-				->createXmlFromJson(convertBaseRate($currencyJson));
-		});
-	}
-
     $_GET['from'] = !isset($_GET['from']) ? "GBP" : $_GET['from'];
 
 	$validParameters = array("from", "to", "amnt", "format", "requestType");
 	$parameters = array_keys($_GET);
 	
-
-
 	//Check all parameters are present
 	if (count(array_diff($validParameters, $parameters)) > 0){
 		echo getErrorResponse(MISSING_PARAM, $_GET['format']);
@@ -62,6 +50,17 @@
 
 	}
 
+	//Check if rates needs updating, if so update it
+	if (currencyNeedsUpdate()){
+		$apiConfig = getItemFromConfig("api");
+		$currencyJson = file_get_contents($apiConfig->fixer->endpoint);
+		XMLOperation::invoke(function($f) use ($currencyJson){
+			return $f
+				->setFilePath("rates")
+				->createXmlFromJson(convertBaseRate($currencyJson));
+		});
+	}
+	
 	echo getConversionResponse($_GET['from'], $_GET['to'], $_GET['amnt'], $_GET['format']);
 
 
