@@ -1,6 +1,7 @@
 <?php
 	require_once("global.php");
 	require_once("config/configReader.php");
+	require_once("errorResponse.php");
 
 	class XMLOperation {
 		public $dom;
@@ -28,7 +29,8 @@
 			if(file_exists($filePath)){
 				$this->loadDom();
 			} else {
-				$this->dom->loadXML("<" . $filePathType . "/>");
+				$format = isset($_GET['format']) ? $format : "xml";
+				return exit(getErrorResponse(ERROR_IN_SERVICE, $format));
 			}
 			
 			return $this;

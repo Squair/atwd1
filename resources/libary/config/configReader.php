@@ -3,7 +3,11 @@
 
 	function getConfig(){
 		$filePath = ROOT_PATH . 'libary/config/config.json';
-		return file_get_contents($filePath);
+		if (file_exists($filePath)){
+			return file_get_contents($filePath);
+		} else {
+			//SOMETHING
+		}
 	}
 
 	function getItemFromConfig($item){
