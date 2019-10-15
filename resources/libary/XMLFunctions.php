@@ -29,6 +29,7 @@
 			if(file_exists($filePath)){
 				$this->loadDom();
 			} else {
+				//Check if format set incase falling over when populating dropdown menu
 				$format = isset($_GET['format']) ? $_GET['format'] : "xml";
 				return exit(getErrorResponse(ERROR_IN_SERVICE, $format));
 			}

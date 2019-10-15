@@ -32,5 +32,11 @@
 		'code' => 1500,
 		'msg' => "Error in service"
 	));
+
+
+	define('IMMUTABLE_BASE_CURRENCY', array(
+		'code' => 2400,
+		'msg' => "Cannot update base currency"
+	));
 		   
 ?>

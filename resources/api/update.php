@@ -9,6 +9,8 @@
 		
 		if ($_GET['to'] == "GBP"){
 			//Return error 2400
+			echo getErrorResponse(IMMUTABLE_BASE_CURRENCY, $_GET['format']);
+			return;
 		}
 
 		//Delete action
