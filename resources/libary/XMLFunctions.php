@@ -29,7 +29,7 @@
 			if(file_exists($filePath)){
 				$this->loadDom();
 			} else {
-				$format = isset($_GET['format']) ? $format : "xml";
+				$format = isset($_GET['format']) ? $_GET['format'] : "xml";
 				return exit(getErrorResponse(ERROR_IN_SERVICE, $format));
 			}
 			

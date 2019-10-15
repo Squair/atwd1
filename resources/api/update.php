@@ -1,14 +1,25 @@
 <?php
-require_once("../libary/XMLFunctions.php");
-require_once ("../libary/currencyFunctions.php");
+	require_once("../libary/XMLFunctions.php");
+	require_once("../libary/global.php");
+	require_once ("../libary/currencyFunctions.php");
+	require_once ("../libary/actionResponse.php");
+	
+	if (isset($_GET['action'])){
+		$action = $_GET['action'];
+		
+		if ($_GET['to'] == "GBP"){
+			//Return error 2400
+		}
 
-XMLOperation::invoke(function($f){
-	$filePath = "../xml/test.xml";
-	$xpathQuery = $_POST['xpath'];
-	$newCurrency = createNewCurrency($_POST['type'], $_POST['country'], $_POST['symbol'], $_POST['rate']);
-		return $f
-			->setFilePath($filePath)
-			->updateXmlElement($xpathQuery, $newCurrency);
-			
-});
+		//Delete action
+		if ($action == "delete"){
+			XMLOperation::invoke(function($f){
+					return $f
+						->setFilePath("rates")
+						->addAttributeToElement($_GET['to'], "unavailable", "true");
+			});
+		}
+
+		echo getActionResponse($action);
+	}
 ?>

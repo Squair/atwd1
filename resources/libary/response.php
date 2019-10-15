@@ -2,7 +2,7 @@
 	require_once("XMLFunctions.php");
 	
 	function checkFormatValueValid($format){
-		return !empty($format) && ($format == "xml" || $format == "json");
+		return isset($format) && ($format == "xml" || $format == "json");
 	}
 
 	function sendResponse($response, $format){
