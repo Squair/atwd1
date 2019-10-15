@@ -22,10 +22,10 @@
 	<h1>Currency Conversion API</h1>
 	<div id="form-container">
 		<form id="paramsForm" action="#">
-			<input id="radioSelect" type="radio" name="requestType" checked value="get"> GET <br>
-			<input id="radioSelect" type="radio" name="requestType" value="delete"> DELETE <br>
-			<input id="radioSelect" type="radio" name="requestType" value="post"> POST <br>
-			<input id="radioSelect" type="radio" name="requestType" value="update"> UPDATE <br>
+			<input id="radioSelect" type="radio" checked value="get"> GET <br>
+			<input id="radioSelect" type="radio" value="delete"> DELETE <br>
+			<input id="radioSelect" type="radio" value="post"> POST <br>
+			<input id="radioSelect" type="radio" value="update"> UPDATE <br>
             
 			<p>To:</p><select name="to"><?php getDataForDropdown($rateCodes); ?></select>
 
