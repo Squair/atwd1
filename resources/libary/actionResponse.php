@@ -2,25 +2,33 @@
 	require_once("response.php");
 	require_once("currencyFunctions.php");
 	require_once("XMLFunctions.php");
-	
+	require_once("config/configReader.php");
 
-	function getActionResponse($type){
+	function getActionResponse($type, $toCode, $currencyJson){
 		$xmlResponse = new SimpleXMLElement("<action></action>");
 		$xmlResponse->addAttribute('type', $type);
 		$xmlResponse->addChild('at', time());
-		//rate for post and put
-		//old rate for post
 		
-		
-		if ($type="delete"){
-			$xmlResponse->addChild('code', $_GET['to']);
-		} else {
-			$xmlResponse->addChild(createCurrencyInfo($_GET['to']));
+		if ($type == "post" || $type == "put"){
+			$xmlResponse->addChild('rate', $currencyJson->rates->{$toCode});
 		}
 		
-		$dom = dom_import_simplexml($xmlResponse)->ownerDocument;
+		//THIS NEEDS TO HAPPEN BEFORE UPDATE IS MADE
+		if ($type == "post"){
+			
+			$xmlResponse->addChild('old_rate', getRateData($toCode));
+		}
+
+		if ($type == "delete"){
+			$xmlResponse->addChild('code', $toCode);
+		} else {
+			$dom = dom_import_simplexml($xmlResponse);
+			$dom->appendChild($dom->ownerDocument->importNode(createCurrencyInfo($toCode), true));
+		}
+		
+		if (!isset($dom)){ $dom = dom_import_simplexml($xmlResponse)->ownerDocument; }
 		return XMLOperation::invoke(function($f) use ($dom){
-			return $f->printElements($dom);
+			return $f->printElements($dom->ownerDocument);
 		});		 
 	}
 
@@ -32,7 +40,7 @@
 		$xmlCurrencyInfo->addChild('name', $currencyInfo['curr']);
 		$xmlCurrencyInfo->addChild('loc', $currencyInfo['loc']);
 		
-		return $xmlCurrencyInfo;
+		return dom_import_simplexml($xmlCurrencyInfo);
 	}
 
 ?>

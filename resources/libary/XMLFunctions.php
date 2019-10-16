@@ -62,6 +62,10 @@
 			return $this;
 		}
 		
+		public function createNewElement($tagName, $value){
+			return $this->dom->createElement($tagName, $value);
+		}
+		
 		public function printElements($dom){
 			header('Content-type: text/xml');
 			$dom->preserveWhiteSpace = false;
