@@ -33,10 +33,34 @@
 		'msg' => "Error in service"
 	));
 
+	define('UNKOWN_ACTION', array(
+		'code' => 2000,
+		'msg' => "Action not recognized"
+	));
+
+	define('MISSING_CURRENCY', array(
+		'code' => 2100,
+		'msg' => "Currency code in wrong format or is missing"
+	));
+
+	define('CURRENCY_NOT_FOUND', array(
+		'code' => 2200,
+		'msg' => "Currency code not found for update"
+	));
+
+	define('UNKNOWN_RATE', array(
+		'code' => 2300,
+		'msg' => "No rate listed for this currency"
+	));
 
 	define('IMMUTABLE_BASE_CURRENCY', array(
 		'code' => 2400,
 		'msg' => "Cannot update base currency"
 	));
-		   
+
+	define('ACTION_ERROR', array(
+		'code' => 2500,
+		'msg' => "Error in service"
+	));
+
 ?>
