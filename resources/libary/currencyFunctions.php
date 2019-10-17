@@ -67,19 +67,18 @@
 	}
 
 	function getCurrencyData($currCode){
+        //TODO: BTC doresnt have a location, handle this!!
 		$matches = XMLOperation::invoke(function($f) use ($currCode){
 				return $f
 					->setFilePath("currencies")
 					->findElements("//CcyNtry[Ccy='{$currCode}']");
 		});
-
         $locArr = array();
         
         foreach($matches as $match){
 			$ctryNm = $match->getElementsByTagName("CtryNm");
             array_push($locArr, $ctryNm->item(0)->nodeValue);
         }
-    	
 		$ccyNm = $matches->item(0)->getElementsByTagName("CcyNm")->item(0);
 
         return array(
