@@ -1,5 +1,10 @@
 
 	$(document).ready(function () {
+        $(".radioSelect").click(function(){
+             $('#but').val($('.radioSelect:checked').val()); 
+        });         
+        
+        
 		$('#paramsForm').submit(function (event) {
 			
 			event.preventDefault();
