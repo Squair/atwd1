@@ -1,4 +1,8 @@
 <?php
+   ini_set('display_errors', 1);
+   ini_set('display_startup_errors', 1);
+   error_reporting(E_ALL);
+
 	require_once("../libary/XMLFunctions.php");
 	require_once("../libary/global.php");
 	require_once ("../libary/currencyFunctions.php");
@@ -6,10 +10,17 @@
 	require_once("../libary/config/configReader.php");
 	
 	if (isset($_GET['action'])){
-		$action = $_GET['action'];
+        $action = $_GET['action'];
 		$toCode = $_GET['to'];
 		$currencyJson;
-		
+        
+        $validActions = array("put", "post", "delete");
+        
+        if (!in_array($action, $validActions)){
+            echo getErrorResponse(UNKOWN_ACTION, $_GET['format']);
+            return;
+        }
+        		
 		if ($toCode == "GBP"){
 			//Return error 2400
 			echo getErrorResponse(IMMUTABLE_BASE_CURRENCY, $_GET['format']);
@@ -37,7 +48,8 @@
 
 		//Delete action
 		if ($action == "delete"){
-			XMLOperation::invoke(function($f){
+            $currencyJson = "";
+			XMLOperation::invoke(function($f) use ($toCode){
 					return $f
 						->setFilePath("rates")
 						->addAttributeToElement($toCode, "unavailable", "true");

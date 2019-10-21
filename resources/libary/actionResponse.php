@@ -5,9 +5,10 @@
 	require_once("config/configReader.php");
 
 	function getActionResponse($type, $toCode, $currencyJson){
+
 		$xmlResponse = new SimpleXMLElement("<action></action>");
 		$xmlResponse->addAttribute('type', $type);
-		$xmlResponse->addChild('at', time());
+		$xmlResponse->addChild('at', gmdate("d F Y H:i", time()));
 		
 		if ($type == "post" || $type == "put"){
 			$xmlResponse->addChild('rate', $currencyJson->rates->{$toCode});
@@ -26,9 +27,11 @@
 			$dom->appendChild($dom->ownerDocument->importNode(createCurrencyInfo($toCode), true));
 		}
 		
-		if (!isset($dom)){ $dom = dom_import_simplexml($xmlResponse)->ownerDocument; }
-		return XMLOperation::invoke(function($f) use ($dom){
-			return $f->printElements($dom->ownerDocument);
+		if (!isset($dom)){ 
+            $dom = dom_import_simplexml($xmlResponse); 
+        }
+        return XMLOperation::invoke(function($f) use ($dom){
+            return $f->printElements($dom->ownerDocument);
 		});		 
 	}
 
