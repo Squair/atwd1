@@ -1,7 +1,7 @@
 <?php
 	require_once("response.php");
 
-	function getErrorResponse($error, $format){
+	function getErrorResponse($error){
 		$response = array(
 			'conv' => array(
 				'error' => $error['code'],
@@ -9,7 +9,7 @@
 			)
 		);
 		
-		$format = checkFormatValueValid($format) ? $format : "xml";
+		$format = checkFormatValueValid($_GET['format']) ? $_GET['format'] : "xml";
 		return sendResponse($response, $format);
 	}
 

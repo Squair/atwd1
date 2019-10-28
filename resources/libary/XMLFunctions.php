@@ -26,16 +26,38 @@
             
 			$this->filePath = $filePath;
 
-			if(file_exists($filePath)){
-				$this->loadDom();
-			} else {
-				//Check if format set incase falling over when populating dropdown menu
-				$format = isset($_GET['format']) ? $_GET['format'] : "xml";
-				return exit(getErrorResponse(ERROR_IN_SERVICE, $format));
-			}
-			
+            if (file_exists($filePath)){
+                $this->loadDom();
+                
+            } else if ($this->tryCreateFile($filePathType, $filePath)) {
+                $this->loadDom();
+                
+            } else {
+                return exit(getErrorResponse(ERROR_IN_SERVICE));
+            }
+            //Ensures the cache doesn't still think the file exists
+            clearstatcache();
+
 			return $this;
 		}
+        
+        private function tryCreateFile($fileType, $filePath){
+            if ($fileType == "currencies"){
+                $url = getItemFromConfig("url");
+                $isoCurrencies = file_get_contents($url->ISOCurrencies->href);
+                
+                if (isset($isoCurrencies)){
+                    file_put_contents($filePath, $isoCurrencies);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            if ($fileType == "rates"){
+                
+            }
+            
+        }
 		
         public function addAttributeToElement($elementName, $attributeName, $attributeValue){
             $node = $this->dom->getElementsByTagName($elementName)->item(0);
