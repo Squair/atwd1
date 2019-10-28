@@ -26,16 +26,17 @@
             
 			$this->filePath = $filePath;
 
-            if (file_exists($filePath)){
+       
+
+            if (file_exists(realpath($filePath))){
+                //echo "heere";
                 $this->loadDom();
-                
             } else if ($this->tryCreateFile($filePathType, $filePath)) {
                 $this->loadDom();
-                
             } else {
                 return exit(getErrorResponse(ERROR_IN_SERVICE));
             }
-            //Ensures the cache doesn't still think the file exists
+            
             clearstatcache();
 
 			return $this;
