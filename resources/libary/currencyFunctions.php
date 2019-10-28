@@ -18,6 +18,14 @@
 		return $curr->item(0)->nodeValue;
 	}
 
+    function getAllCurrencyCodes(){
+        return XMLOperation::invoke(function($f){
+            return $f
+                ->setFilePath("currencies")
+                ->findElements("/ISO_4217/CcyTbl/CcyNtry/Ccy");
+        });
+    }
+
 	function currencyNeedsUpdate(){
 		$updateRate = getItemFromConfig("api")->fixer->updateRate;
 		return time() - getTimeLastUpdated() >= $updateRate ? true : false;
@@ -127,8 +135,8 @@
 	}
 
 	function getDataForDropdown($dataList){
-		foreach ($dataList->item(0)->childNodes as $item){
-			echo "<option value='{$item->nodeName}'>{$item->nodeName}</option>";
+		foreach ($dataList as $item){
+			echo "<option value='{$item->nodeValue}'>{$item->nodeValue}</option>";
 		}
 	}
 ?>
