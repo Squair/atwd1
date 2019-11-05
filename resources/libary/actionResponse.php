@@ -14,7 +14,7 @@
 			$xmlResponse->addChild('rate', $currencyJson->rates->{$toCode});
 		}
 		
-		//THIS will be resolved when rates files are timestamped
+		//THe order of sending request will be resolved when rates files are timestamped
 		if ($type == "post"){
 			$xmlResponse->addChild('old_rate', getRateData($toCode));
 		}

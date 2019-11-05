@@ -161,7 +161,7 @@
 		}		
 		
 		public function checkAttributeValues($elementNames, $attrName, $value){
-			foreach ($elementNames as $elementName){
+			foreach ((array) $elementNames as $elementName){
 				if ($this->checkAttributeValue($elementName, $attrName, $value)){
 					return true;
 				} 
