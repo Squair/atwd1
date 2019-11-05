@@ -56,15 +56,8 @@
 
 	}
 
-	//Check if rates needs updating, if so update it
 	if (currencyNeedsUpdate()){
-		$apiConfig = getItemFromConfig("api");
-		$currencyJson = file_get_contents($apiConfig->fixer->endpoint); //TODO return 1500 if not availible
-		XMLOperation::invoke(function($f) use ($currencyJson){
-			return $f
-				->setFilePath("rates")
-				->createXmlFromJson(convertBaseRate($currencyJson));
-		});
+		updateRatesFile();
 	}
 	
 	echo getConversionResponse($_GET['from'], $_GET['to'], $_GET['amnt'], $_GET['format']);

@@ -28,21 +28,13 @@
 		}
 		
 		//put action
+		if ($action == "put"){
+			$currencyJson = updateSingleCurrency($toCode, $action);
+		}
 		
 		//post action
 		if ($action == "post"){
-			$apiConfig = getItemFromConfig("api");
-			$unconverted = file_get_contents($apiConfig->fixer->endpoint . "&symbols=GBP," . $toCode);
-			$currencyJson = json_decode(convertBaseRate($unconverted));
-			
-			//Send response before performing update if valid request
-			echo getActionResponse($action, $toCode, $currencyJson);
-			
-			XMLOperation::invoke(function($f) use ($currencyJson, $toCode){
-					return $f
-						->setFilePath("rates")
-						->updateXmlElement("(/root/rates/" . $toCode . ")[1]", $f->createNewElement($toCode, $currencyJson->rates->{$toCode}));
-			});
+			updateSingleCurrency($toCode, $action);
 			return;
 		}
 
@@ -57,5 +49,28 @@
 		}
 
 		echo getActionResponse($action, $toCode, $currencyJson);
+	}
+
+	function updateSingleCurrency($toCode, $action){
+			if (checkCurrencyCodesUnavailable($toCode) && $action != "put"){
+				echo getErrorResponse(CURRENCY_NOT_FOUND);
+				return; 
+			}
+		
+			$apiConfig = getItemFromConfig("api");
+			$unconverted = file_get_contents($apiConfig->fixer->endpoint . "&symbols=GBP," . $toCode);
+			$currencyJson = json_decode(convertBaseRate($unconverted));
+			
+			//Send response before performing update to get old data on post
+			if ($action == "post"){
+				echo getActionResponse($action, $toCode, $currencyJson);				
+			}
+			
+			XMLOperation::invoke(function($f) use ($currencyJson, $toCode){
+					return $f
+						->setFilePath("rates")
+						->updateXmlElement("(/root/rates/" . $toCode . ")[1]", $f->createNewElement($toCode, $currencyJson->rates->{$toCode}));
+			});		
+		return $currencyJson;
 	}
 ?>

@@ -14,9 +14,8 @@
 			$xmlResponse->addChild('rate', $currencyJson->rates->{$toCode});
 		}
 		
-		//THIS NEEDS TO HAPPEN BEFORE UPDATE IS MADE
+		//THIS will be resolved when rates files are timestamped
 		if ($type == "post"){
-			
 			$xmlResponse->addChild('old_rate', getRateData($toCode));
 		}
 

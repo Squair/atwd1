@@ -31,6 +31,18 @@
 		return time() - getTimeLastUpdated() >= $updateRate ? true : false;
 	}
 
+	function updateRatesFile(){
+		//Check if rates needs updating, if so update it
+			$apiConfig = getItemFromConfig("api");
+			$currencyJson = file_get_contents($apiConfig->fixer->endpoint); //TODO return 1500 if not availible
+			XMLOperation::invoke(function($f) use ($currencyJson){
+				return $f
+					->setFilePath("rates")
+					->createXmlFromJson(convertBaseRate($currencyJson));
+			});
+				
+	}
+
 	function getTimeLastUpdated(){
 		$timestamp = XMLOperation::invoke(function($f){
 			return $f
