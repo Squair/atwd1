@@ -10,36 +10,29 @@
 	require_once("../libary/config/configReader.php");
 	
 	if (isset($_GET['action'])){
-        $action = $_GET['action'];
+        $requestType = $_GET['action'];
 		$toCode = $_GET['to'];
 		$currencyJson;
         
-        $validActions = array("put", "post", "delete");
+        $validParameters = array("action", "to", "format");
         
-        if (!in_array($action, $validActions)){
-            echo getErrorResponse(UNKOWN_ACTION, $_GET['format']);
-            return;
-        }
-        		
-		if ($toCode == "GBP"){
-			//Return error 2400
-			echo getErrorResponse(IMMUTABLE_BASE_CURRENCY, $_GET['format']);
+		if (!checkParametersValid($validParameters, $requestType)){
 			return;
 		}
-		
+        		
 		//put action
-		if ($action == "put"){
-			$currencyJson = updateSingleCurrency($toCode, $action);
+		if ($requestType == "put"){
+			$currencyJson = updateSingleCurrency($toCode, $requestType);
 		}
 		
 		//post action
-		if ($action == "post"){
-			updateSingleCurrency($toCode, $action);
+		if ($requestType == "post"){
+			updateSingleCurrency($toCode, $requestType);
 			return;
 		}
 
 		//Delete action
-		if ($action == "delete"){
+		if ($requestType == "delete"){
             $currencyJson = "";
 			XMLOperation::invoke(function($f) use ($toCode){
 					return $f
@@ -48,11 +41,11 @@
 			});
 		}
 
-		echo getActionResponse($action, $toCode, $currencyJson);
+		echo getActionResponse($requestType, $toCode, $currencyJson);
 	}
 
-	function updateSingleCurrency($toCode, $action){
-			if (checkCurrencyCodesUnavailable($toCode) && $action != "put"){
+	function updateSingleCurrency($toCode, $requestType){
+			if (checkCurrencyCodesUnavailable($toCode) && $requestType != "put"){
 				echo getErrorResponse(CURRENCY_NOT_FOUND);
 				return; 
 			}
@@ -62,8 +55,8 @@
 			$currencyJson = json_decode(convertBaseRate($unconverted));
 			
 			//Send response before performing update to get old data on post
-			if ($action == "post"){
-				echo getActionResponse($action, $toCode, $currencyJson);				
+			if ($requestType == "post"){
+				echo getActionResponse($requestType, $toCode, $currencyJson);				
 			}
 			
 			XMLOperation::invoke(function($f) use ($currencyJson, $toCode){

@@ -130,7 +130,7 @@
 		});		
 	}
 
-	function checkCurrencyCodesExists(...$currCodes){
+	function checkCurrencyCodesExists($currCodes){
 		return XMLOperation::invoke(function($f) use ($currCodes){
 				return $f
 					->setFilePath("rates")
@@ -138,7 +138,7 @@
 		});
 	}
 
-	function checkCurrencyCodesUnavailable(...$currCodes){
+	function checkCurrencyCodesUnavailable($currCodes){
 		return XMLOperation::invoke(function($f) use ($currCodes){
 				return $f
 					->setFilePath("rates")
