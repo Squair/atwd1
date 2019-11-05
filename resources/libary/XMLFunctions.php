@@ -34,7 +34,7 @@
             } else if ($this->tryCreateFile($filePathType, $filePath)) {
                 $this->loadDom();
             } else {
-                return exit(getErrorResponse(ERROR_IN_SERVICE));
+                return $_GET['action'] == "get" ? exit(getErrorResponse(ERROR_IN_SERVICE)) : exit(getErrorResponse(ACTION_ERROR));
             }
             
             clearstatcache();

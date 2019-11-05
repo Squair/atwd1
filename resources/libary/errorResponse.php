@@ -1,6 +1,7 @@
 <?php
 	require_once("response.php");
-
+	
+	//Creates skeleton for error response message ready to be passed back to the user
 	function getErrorResponse($error){
 		$response = array(
 			'conv' => array(
@@ -13,6 +14,7 @@
 		return sendResponse($response, $format);
 	}
 
+	//Deconstructs the url parameters to check the same parameters hasnt been entered twice, which would overwrite the first instance
 	function urlHasDuplicateParameters($queryString){
 		$parts = explode('&', $queryString);
 		$parameters = array();
@@ -28,32 +30,43 @@
 		return false;
 	}
 
-		//Check all parameters are present
+	//Runs multiple types of checks on parameters dependant on the type of request to evaluate if an error needs to be sent back to the user
 	function checkParametersValid($validParameters, $requestType) {
 		$parameters = array_keys($_GET);
+		
+		//Loads currencyCodes into an array to use later
 		$codes = array();
 		$requestType == "get" ? array_push($codes, $_GET['to'], $_GET['from']) : array_push($codes, $_GET['to']); 
-		if (count(array_diff($validParameters, $parameters)) != 0){
-			echo $requestType == "get" ? getErrorResponse(MISSING_PARAM) : getErrorResponse(UNKOWN_ACTION);
-			return false;
-			//RETURN missing parameters 1000 & 2000
-		} 
 		
+
+		
+		//Checks each $_GET parameter has an associating value, and returns the corresponding error code depending on which doesn't have a value.
 		foreach($_GET as $parameter => $value){
 			if (empty($value)){
-				echo $requestType == "get" ? getErrorResponse(MISSING_PARAM) : getErrorResponse(UNKOWN_ACTION);
+				if ($requestType == "get"){
+					echo getErrorResponse(MISSING_PARAM);
+				} else {
+					echo $parameter == "action" ? getErrorResponse(UNKOWN_ACTION) : getErrorResponse(MISSING_CURRENCY);
+				}
 				return false;			
 			}
 		}
 		
-		//Check all parameters match $validParameters and dosent have duplicate parameters
+		//Checks if the supplied $_GET parameters match the number of validParameters passed in
+		if (count(array_diff($validParameters, $parameters)) != 0){
+			//RETURN error codes 1000 or 2000
+			echo $requestType == "get" ? getErrorResponse(MISSING_PARAM) : getErrorResponse(UNKOWN_ACTION);
+			return false;
+		} 
+		
+		//Checks the reverse of the above to catch garbage parameters and also checks there are no duplicate parameters
 		if (count(array_diff($parameters, $validParameters)) != 0 || urlHasDuplicateParameters($_SERVER['QUERY_STRING'])){				
 			echo $requestType == "get" ? getErrorResponse(UNKOWN_PARAM) : getErrorResponse(UNKOWN_ACTION);
 			return false;
 			//Return invalid parameter code 1100 or 2000
 		}
 		
-		//Check currency codes exist and are availible when request type not put
+		//Check currency codes exist and are availible when request type is not set to put
 		if ($requestType != "put" && (!checkCurrencyCodesExists($codes) || checkCurrencyCodesUnavailable($codes))){
 			echo $requestType == "get" ? getErrorResponse(UNKOWN_CURRENCY) : getErrorResponse(CURRENCY_NOT_FOUND);
 			return false;	
@@ -67,7 +80,7 @@
 				return false;
 			}
 			
-			//Check format is valid
+			//Check format is valid, if not return error as xml
 			if (!checkFormatValueValid($_GET['format'])){
 				echo getErrorResponse(INCORRECT_FORMAT);
 				return false;

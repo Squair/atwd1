@@ -97,7 +97,9 @@
         
         foreach($matches as $match){
 			$ctryNm = $match->getElementsByTagName("CtryNm");
-            array_push($locArr, $ctryNm->item(0)->nodeValue);
+			$location = $ctryNm->item(0)->nodeValue;
+            array_push($locArr, sanitiseLocationName($location));
+			
         }
 		$ccyNm = $matches->item(0)->getElementsByTagName("CcyNm")->item(0);
 
@@ -150,5 +152,12 @@
 		foreach ($dataList as $item){
 			echo "<option value='{$item->nodeValue}'>{$item->nodeValue}</option>";
 		}
+	}
+
+	//Will reformat the country names where (THE) proceeds the country name or other typically prefixed statements
+	function sanitiseLocationName($locName){
+		$pattern = "~([\w\s’']*)\(((THE)?([\w\s’']*))(OF)?\)~";
+		$replacement = "$2 $1";
+		return preg_replace($pattern, $replacement, $locName);
 	}
 ?>
