@@ -30,7 +30,7 @@
 		$updateRate = getItemFromConfig("api")->fixer->updateRate;
 		$lastUpdated = getTimeLastUpdated();
 		
-		if ($lastUpdated == -1){
+		if ($lastUpdated == false){
 			return true;
 		}
 		

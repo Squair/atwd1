@@ -35,7 +35,7 @@
 
 	define('UNKOWN_ACTION', array(
 		'code' => 2000,
-		'msg' => "Action not recognized"
+		'msg' => "Action not recognized or is missing"
 	));
 
 	define('MISSING_CURRENCY', array(

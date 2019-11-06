@@ -38,22 +38,23 @@
 	//Runs multiple types of checks on parameters dependant on the type of request to evaluate if an error needs to be sent back to the user
 	function checkParametersValid($validParameters, $requestType) {
 		$parameters = array_keys($_GET);
-		
-		//Loads currencyCodes into an array to use later
-		$codes = array();
-		$requestType == "get" ? array_push($codes, $_GET['to'], $_GET['from']) : array_push($codes, $_GET['to']); 
-		
-
-		
-		//Checks each $_GET parameter has an associating value, and returns the corresponding error code depending on which doesn't have a value.
+				
+		//Checks each $_GET parameter has an associating value, and returns the corresponding error code depending on which doesn't have a value. Or if parameter is action, ensures its a valid one.
+		$validActionParameters = array("put", "post", "delete");
+			
 		foreach($_GET as $parameter => $value){
 			if (empty($value)){
 				if ($requestType == "get"){
 					echo getErrorResponse(MISSING_PARAM);
-				} else {
+				} else { //If not get request, return error depending on which parameter is missing
 					echo $parameter == "action" ? getErrorResponse(UNKOWN_ACTION) : getErrorResponse(MISSING_CURRENCY);
 				}
 				return false;			
+			}
+			//If update action and not put, post or delete, return error 2000
+			if ($requestType != "get" && $parameter == "action" && !in_array($value, $validActionParameters)){
+				echo getErrorResponse(UNKOWN_ACTION);
+				return false;
 			}
 		}
 		
@@ -70,6 +71,10 @@
 			return false;
 			//Return invalid parameter code 1100 or 2000
 		}
+		
+		//At this point we can be sure all parameters exist and have a value, so we can set $codes
+		$codes = array();
+		$requestType == "get" ? array_push($codes, $_GET['to'], $_GET['from']) : array_push($codes, $_GET['to']); 
 		
 		//Check currency codes exist and are availible when request type is not set to put
 		if ($requestType != "put" && (!checkCurrencyCodesExists($codes) || checkCurrencyCodesUnavailable($codes))){
@@ -94,7 +99,7 @@
 		} else if ($requestType != "get"){ //Action specific errors
 			if ($_GET['to'] == "GBP"){
 				//Return error 2400
-				echo getErrorResponse(IMMUTABLE_BASE_CURRENCY, $_GET['format']);
+				echo getErrorResponse(IMMUTABLE_BASE_CURRENCY);
 				return;
 			}
 		}
