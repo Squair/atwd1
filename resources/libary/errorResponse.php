@@ -10,7 +10,12 @@
 			)
 		);
 		
-		$format = checkFormatValueValid($_GET['format']) ? $_GET['format'] : "xml";
+		//If format is set, validate it otherwise default to xml or if not set set to xml
+		if (isset($_GET['format'])){
+			$format = checkFormatValueValid($_GET['format']) ? $_GET['format'] : "xml";
+		} else {
+			$format = "xml";
+		}
 		return sendResponse($response, $format);
 	}
 
