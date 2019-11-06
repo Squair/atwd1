@@ -43,16 +43,10 @@
 			<p>To:</p><select name="to"><?php getDataForDropdown($rateCodes); ?></select>
 			<input type="number" step="0.01" name="amnt" placeholder="amnt">
 
-			<label class="container">XML
-				<input type="radio" name="format" checked value="xml">
-				<span class="checkmark"></span>
-			</label>
-
-			<label class="container">JSON
-				<input type="radio" name="format" value="json">
-				<span class="checkmark"></span>
-			</label>
-
+			<p>Format:</p><select name="format">
+				<option value="xml">XML</option>
+				<option value="json">JSON</option>
+			</select>
 
 			<input id="but" type="submit" name="submitRequest" value="Submit">
 

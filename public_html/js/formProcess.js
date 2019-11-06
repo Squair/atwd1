@@ -3,9 +3,16 @@ $(document).ready(function () {
 		$('#but').val($('.radioSelect:checked').val());
 
 		if ($('.radioSelect:checked').val() != "get") {
+			//disables unneeded fields for non get requests
 			$('input[name="amnt"]').attr("disabled", "disabled");
+			$('select[name="format"]').val("xml");
+			$('select[name="format"]').attr("disabled", "disabled");
 		} else {
+			//reenables if going back to get option
 			$('input[name="amnt"]').removeAttr("disabled");
+			$('select[name="format"]').removeAttr("disabled");
+			$('select[name="format"]').val("xml");
+
 		}
 	});
 
