@@ -6,7 +6,10 @@
 		if (file_exists($filePath)){
 			return file_get_contents($filePath);
 		} else {
-			//SOMETHING
+			if (isset($_GET['action'])){
+				return $_GET['action'] == "get" ? exit(getErrorResponse(ERROR_IN_SERVICE)) : exit(getErrorResponse(ACTION_ERROR));
+			}
+			return exit(getErrorResponse(ERROR_IN_SERVICE));
 		}
 	}
 
