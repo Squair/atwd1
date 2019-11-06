@@ -65,7 +65,7 @@
 		});		
 		//If timestamp cant be retrived, return -1 to indicate it probablly should attempt to be updated
 		//Checking length as findElements() uses Xpath Query, which will return an empty domnodelist if unsuccesful
-		return $timestamp->length > 0 ? $timestamp->item(0)->nodeValue : -1;
+		return $timestamp->length > 0 ? $timestamp->item(0)->nodeValue : false;
 	}
 
 	function getConversionResponse($fromCode = "GBP", $toCode, $amount, $format){
