@@ -28,16 +28,23 @@
 
 	function currencyNeedsUpdate(){
 		$updateRate = getItemFromConfig("api")->fixer->updateRate;
+		$lastUpdated = getTimeLastUpdated();
+		
+		if ($lastUpdated == -1){
+			return true;
+		}
+		
 		return time() - getTimeLastUpdated() >= $updateRate ? true : false;
 	}
 
 	function updateRatesFile(){
 		//Check if rates needs updating, if so update it
 			$apiConfig = getItemFromConfig("api");
-			$currencyJson = file_get_contents($apiConfig->fixer->endpoint);
+			//@ symbol to supress warnings generated from file_get_contents in case server is having issues talking to other host names, this would breach API key
+			$currencyJson = @file_get_contents($apiConfig->fixer->endpoint);
 		
 			//If API call fails, return
-			if (!isset($currencyJson)){
+			if ($currencyJson === FALSE){
 				echo $_GET['action'] == "get" ? getErrorResponse(ERROR_IN_SERVICE) : getErrorResponse(ACTION_ERROR);
 				return false;
 			}
@@ -56,7 +63,9 @@
 				->setFilePath("rates")
 				->findElements("/root/timestamp");
 		});		
-		return $timestamp->item(0)->nodeValue;
+		//If timestamp cant be retrived, return -1 to indicate it probablly should attempt to be updated
+		//Checking length as findElements() uses Xpath Query, which will return an empty domnodelist if unsuccesful
+		return $timestamp->length > 0 ? $timestamp->item(0)->nodeValue : -1;
 	}
 
 	function getConversionResponse($fromCode = "GBP", $toCode, $amount, $format){

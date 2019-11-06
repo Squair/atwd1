@@ -27,8 +27,6 @@
             
 			$this->filePath = $filePath;
 
-       
-
             if (file_exists(realpath($filePath))){
                 //echo "heere";
                 $this->loadDom();
