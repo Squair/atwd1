@@ -2,6 +2,7 @@
 	require_once("global.php");
 	require_once("config/configReader.php");
 	require_once("errorResponse.php");
+	require_once("currencyFunctions.php");
 
 	class XMLOperation {
 		public $dom;
@@ -42,10 +43,11 @@
 			return $this;
 		}
         
-        private function tryCreateFile($fileType, $filePath){
+        private function tryCreateFile($fileType, $filePath){			               
+			$api = getItemFromConfig("api");
+
             if ($fileType == "currencies"){
-                $url = getItemFromConfig("url");
-                $isoCurrencies = file_get_contents($url->ISOCurrencies->href);
+                $isoCurrencies = file_get_contents($api->ISOCurrencies->endpoint);
                 
                 if (isset($isoCurrencies)){
                     file_put_contents($filePath, $isoCurrencies);
@@ -55,7 +57,8 @@
                 }
             }
             if ($fileType == "rates"){
-                
+                file_put_contents($filePath, "<root></root>"); //If cant find rates at config location, create empty rates files, and go to api
+				return updateRatesFile();
             }
             
         }

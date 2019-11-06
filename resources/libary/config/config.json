@@ -9,13 +9,10 @@
 		"fixer": {
 			"endpoint": "http://data.fixer.io//api//latest?access_key=97341f9a29a6e2c9e44153ef98fb52bb&format=1",
 			"updateRate": 7200
-        
-		}
-	},
-    "url": {
-        "ISOCurrencies": {
-            "href": "https://www.currency-iso.org/dam/downloads/lists/list_one.xml"
-        }
-    }
 
+		},
+		"ISOCurrencies": {
+			"endpoint": "https://www.currency-iso.org/dam/downloads/lists/list_one.xml"
+		}
+	}
 }

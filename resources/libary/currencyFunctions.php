@@ -34,13 +34,20 @@
 	function updateRatesFile(){
 		//Check if rates needs updating, if so update it
 			$apiConfig = getItemFromConfig("api");
-			$currencyJson = file_get_contents($apiConfig->fixer->endpoint); //TODO return 1500 if not availible
+			$currencyJson = file_get_contents($apiConfig->fixer->endpoint);
+		
+			//If API call fails, return
+			if (!isset($currencyJson)){
+				echo $_GET['action'] == "get" ? getErrorResponse(ERROR_IN_SERVICE) : getErrorResponse(ACTION_ERROR);
+				return false;
+			}
+		
 			XMLOperation::invoke(function($f) use ($currencyJson){
 				return $f
 					->setFilePath("rates")
 					->createXmlFromJson(convertBaseRate($currencyJson));
 			});
-				
+			return true;
 	}
 
 	function getTimeLastUpdated(){
