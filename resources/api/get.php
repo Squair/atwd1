@@ -14,8 +14,10 @@
 	$parameters = array_keys($_GET);
 	
 	//Update should be called first if application never run before
-	if (currencyNeedsUpdate()){
-		if (!updateRatesFile()){
+	$timeLastUpdated = getTimeLastUpdated();
+	
+	if (currencyNeedsUpdate($timeLastUpdated)){
+		if (!updateRatesFile($timeLastUpdated)){
 			return;
 		}
 	}
@@ -25,8 +27,6 @@
 	if (!checkParametersValid($validParameters, $requestType)){
 		return;
 	}
-
-
 	
 	echo getConversionResponse($_GET['from'], $_GET['to'], $_GET['amnt'], $_GET['format']);
 

@@ -25,12 +25,16 @@
 			$this->setDom();
             $this->formatDom();
             
-			$this->filePath = $filePath;
-
-            if (file_exists(realpath($filePath))){
-                //echo "heere";
+			if ($filePathType == "rates"){
+				$lastUpdated = getTimeLastUpdated();				
+				if ($lastUpdated != false) $this->filePath = replaceTimestamp($filePath, $lastUpdated);
+			} else {
+				$this->filePath = $filePath;
+			}		
+			
+            if (file_exists(realpath($this->filePath))){
                 $this->loadDom();
-            } else if ($this->tryCreateFile($filePathType, $filePath)) {
+            } else if ($this->tryCreateFile($filePathType, $this->filePath)) {
                 $this->loadDom();
             } else {
                 return $_GET['action'] == "get" ? exit(getErrorResponse(ERROR_IN_SERVICE)) : exit(getErrorResponse(ACTION_ERROR));
@@ -55,8 +59,7 @@
                 }
             }
             if ($fileType == "rates"){
-                file_put_contents($filePath, "<root></root>"); //If cant find rates at config location, create empty rates files, and go to api
-				return updateRatesFile();
+				return updateRatesFile(getTimeLastUpdated());
             }
             
         }

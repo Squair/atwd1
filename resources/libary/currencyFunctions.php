@@ -26,18 +26,17 @@
         });
     }
 
-	function currencyNeedsUpdate(){
-		$updateRate = getItemFromConfig("api")->fixer->updateRate;
-		$lastUpdated = getTimeLastUpdated();
-		
+	function currencyNeedsUpdate($lastUpdated){
+		//If it was never updated, we need to update.
 		if ($lastUpdated == false){
 			return true;
 		}
 		
+		$updateRate = getItemFromConfig("api")->fixer->updateRate;
 		return time() - getTimeLastUpdated() >= $updateRate ? true : false;
 	}
 
-	function updateRatesFile(){
+	function updateRatesFile($timeLastUpdated){
 		//Check if rates needs updating, if so update it
 			$apiConfig = getItemFromConfig("api");
 			//@ symbol to supress warnings generated from file_get_contents in case server is having issues talking to other host names, this would breach API key
@@ -49,6 +48,25 @@
 				return false;
 			}
 		
+			$currencyDecode = json_decode($currencyJson);
+		
+			//Get latest file path, and copy to new path with timestamp if it exists
+			$filePathLocs = getItemFromConfig("filepaths");
+			$filePath = ROOT_PATH . $filePathLocs->xml->rates;
+		
+			//Replace placeholder with timestamps ready to be copied
+			$ratePath = replaceTimestamp($filePath, $timeLastUpdated);
+			$newRatePath = replaceTimestamp($filePath, $currencyDecode->timestamp);
+		
+			//Copy old rates file with new timestamp in name
+			if (file_exists(realpath($ratePath))){
+				copy($ratePath, $newRatePath);
+	            clearstatcache();
+			} else { //If cant find rates at config location, create empty rates files, and overwrite
+				file_put_contents($newRatePath, "<root></root>"); 
+			}
+
+			//Update the latest timestamped rates file with the API response
 			XMLOperation::invoke(function($f) use ($currencyJson){
 				return $f
 					->setFilePath("rates")
@@ -57,15 +75,36 @@
 			return true;
 	}
 
+	//Picks the timestamps from all the historic rates files and returns the most recent time
 	function getTimeLastUpdated(){
-		$timestamp = XMLOperation::invoke(function($f){
-			return $f
-				->setFilePath("rates")
-				->findElements("/root/timestamp");
-		});		
-		//If timestamp cant be retrived, return -1 to indicate it probablly should attempt to be updated
-		//Checking length as findElements() uses Xpath Query, which will return an empty domnodelist if unsuccesful
-		return $timestamp->length > 0 ? $timestamp->item(0)->nodeValue : false;
+		$filePathLocs = getItemFromConfig("filepaths");
+		
+		//Find all rates files with timestamps proceeding them
+		$ratePath = ROOT_PATH . $filePathLocs->xml->ratesGlob . "*";
+
+		$timestamps = array();
+		
+		//Loop thorugh file name, get timestamp between 'rates' and extension
+		foreach(glob($ratePath) as $foundFile){
+			$timestamp = get_string_between($foundFile, "rates", ".xml");
+			if ($timestamp != '') array_push($timestamps, (int)$timestamp);
+		}
+		//Get most recent timestamp or return false if nothing found
+		return !empty($timestamps) ? max($timestamps) : false;
+	}
+
+	//Source: https://stackoverflow.com/questions/5696412/how-to-get-a-substring-between-two-strings-in-php
+	function get_string_between($string, $start, $end){
+		$string = ' ' . $string;
+		$ini = strpos($string, $start);
+		if ($ini == 0) return '';
+		$ini += strlen($start);
+		$len = strpos($string, $end, $ini) - $ini;
+		return substr($string, $ini, $len);
+	}
+
+	function replaceTimestamp($filePath, $timestamp){
+		return str_replace("{timestamp}", $timestamp, $filePath);
 	}
 
 	function getConversionResponse($fromCode = "GBP", $toCode, $amount, $format){
@@ -170,10 +209,10 @@
 		}
 	}
 
-	//Will reformat the country names where (THE) proceeds the country name or other typically prefixed statements
+	//Will reformat the country names where (THE) proceeds the country name or other typically prefixed statements and strip whitespace from end of string
 	function sanitiseLocationName($locName){
 		$pattern = "~([\w\s’']*)\(((THE)?([\w\s’']*))(OF)?\)~";
 		$replacement = "$2 $1";
-		return preg_replace($pattern, $replacement, $locName);
+		return rtrim(preg_replace($pattern, $replacement, $locName));
 	}
 ?>

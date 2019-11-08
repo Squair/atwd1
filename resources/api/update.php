@@ -10,15 +10,16 @@
 	require_once("../libary/config/configReader.php");
 	
 	if (isset($_GET['action'])){
-        $requestType = $_GET['action'];
-		$toCode = $_GET['to'];
-		$currencyJson;
-        
-        $validParameters = array("action", "to", "format");
-        
+		$requestType = $_GET['action'];
+        $validParameters = array("action", "to");
+		
 		if (!checkParametersValid($validParameters, $requestType)){
 			return;
 		}
+		$toCode = $_GET['to'];
+		$currencyJson;
+        
+
         		
 		//put action
 		if ($requestType == "put"){
