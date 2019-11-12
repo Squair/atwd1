@@ -27,26 +27,28 @@
         
         
         foreach($rates[0] as $rate => $value){
-            $matches = $currenciesXml->xpath("//CcyNtry[Ccy='{$rate}']/parent::*");
+            $matches = $currenciesXml->xpath("//CcyNtry[Ccy='{$rate}']");
             
             foreach($matches as $match){
                 $ctryNm = $match->CtryNm;
                 array_push($locArr, sanitiseLocationName($ctryNm));
+				$ccyNm = $match->CcyNm;
+
             }
-
-            $ccyNm = $matches->CcyNm;
-
             $currInfo = array(
                 'rate' => $value,
                 'code' => $rate,
                 'curr' => $ccyNm,
                 'loc' => implode(", ", $locArr)
             );
+			sxml_append($combinedDoc, formatCurrency($currInfo));
+
             
-            sxml_append($combinedDoc, formatCurrency($currInfo));
         }
-    
-        $combinedDoc->asXML("test.xml");
+
+		$dom = dom_import_simplexml($combinedDoc)->ownerDocument;
+		$dom->formatOutput = true;
+		$dom->save("test.xml");
         
     }
 
