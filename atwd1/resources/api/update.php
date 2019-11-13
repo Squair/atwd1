@@ -22,6 +22,9 @@
 		//put action
 		if ($requestType == "put"){
 			$currencyJson = updateSingleCurrency($toCode, $requestType);
+			if (!isset($currencyJson)){
+				return;
+			}
 		}
 		
 		//post action
@@ -49,11 +52,14 @@
 				return; 
 			}
 		
-			
-		
 			$apiConfig = getItemFromConfig("api");
 			$unconverted = file_get_contents($apiConfig->fixer->endpoint . "&symbols=GBP," . $toCode);
 			$currencyJson = json_decode(convertBaseRate($unconverted));
+		
+			if (!isset($currencyJson->rates->{$toCode})){
+				echo getErrorResponse(UNKNOWN_RATE);
+				return;
+			}
 			
 			//Send response before performing update to get old data on post
 			if ($requestType == "post"){

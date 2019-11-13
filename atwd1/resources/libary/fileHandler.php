@@ -12,8 +12,7 @@
 		$rateCurrenciesPath = ROOT_PATH . $filePathLocs->xml->rateCurrencies;
         
         $ratesTimestamp = getTimeLastUpdated();
-
-        
+		
         $ratesXml = simplexml_load_file(replaceTimestamp($ratesPath, $ratesTimestamp));
         $currenciesXml = simplexml_load_file($currenciesPath);
         

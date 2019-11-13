@@ -20,15 +20,6 @@
 		return simplexml_import_dom($curr);
 	}
 
-	function getRateData($code){
-		$curr = XMLOperation::invoke(function($f) use ($code){
-			return $f
-				->setFilePath("rateCurrencies")
-				->findElements($f->getParentNodeOfValue("code", $code));
-		});
-		return $curr->getAttribute("rate");
-	}
-
     function getAllCurrencyCodes(){
         $currCodes = XMLOperation::invoke(function($f){
             return $f
@@ -148,29 +139,6 @@
 			)
 		);
 		return sendResponse($response, $format);
-	}
-
-	function getCurrencyData($currCode){
-        //TODO: BTC doresnt have a location, handle this!!
-		$matches = XMLOperation::invoke(function($f) use ($currCode){
-				return $f
-					->setFilePath("currencies")
-					->findElements("//CcyNtry[Ccy='{$currCode}']");
-		});
-        $locArr = array();
-        
-        foreach($matches as $match){
-			$ctryNm = $match->getElementsByTagName("CtryNm");
-			$location = $ctryNm->item(0)->nodeValue;
-            array_push($locArr, sanitiseLocationName($location));
-			
-        }
-		$ccyNm = $matches->item(0)->getElementsByTagName("CcyNm")->item(0);
-
-        return array(
-            'curr' => $ccyNm->nodeValue,
-            'loc' => implode(", ", $locArr)
-        );
 	}
 
 	function convertBaseRate($jsonData, $newBaseType = "GBP"){
