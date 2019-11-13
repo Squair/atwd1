@@ -3,6 +3,7 @@
 	require_once("config/configReader.php");
 	require_once("response.php");
 	require_once("global.php");
+	require_once("fileHandler.php");
 
 
 	function calcConversionAmount($fromRate, $toRate, $amount){
@@ -19,11 +20,12 @@
 	}
 
     function getAllCurrencyCodes(){
-        return XMLOperation::invoke(function($f){
+        $currCodes = XMLOperation::invoke(function($f){
             return $f
                 ->setFilePath("currencies")
-                ->findElements("/ISO_4217/CcyTbl/CcyNtry/Ccy");
+                ->findElementsArray("//Ccy");
         });
+		return array_unique($currCodes);
     }
 
 	function currencyNeedsUpdate($lastUpdated){
@@ -64,14 +66,16 @@
 	            clearstatcache();
 			} else { //If cant find rates at config location, create empty rates files, and overwrite
 				file_put_contents($newRatePath, "<root></root>"); 
-			}
-
+			}	
+		
 			//Update the latest timestamped rates file with the API response
 			XMLOperation::invoke(function($f) use ($currencyJson){
 				return $f
 					->setFilePath("rates")
 					->createXmlFromJson(convertBaseRate($currencyJson));
 			});
+			//Will stitch rates and currencies together which means less processing later down the line.
+			combineFiles();
 			return true;
 	}
 
@@ -190,22 +194,25 @@
 	function checkCurrencyCodesExists($currCodes){
 		return XMLOperation::invoke(function($f) use ($currCodes){
 				return $f
-					->setFilePath("rates")
-					->checkElementsExist($currCodes);
+					->setFilePath("rateCurrencies")
+					->checkElementValue("code", $currCodes);
 		});
 	}
 
-	function checkCurrencyCodesUnavailable($currCodes){
+	function checkCurrencyCodesLive($currCodes){
 		return XMLOperation::invoke(function($f) use ($currCodes){
 				return $f
-					->setFilePath("rates")
-					->checkAttributeValues($currCodes, "unavailable", "true");
+					->setFilePath("rateCurrencies")
+					->checkAttributeValues($f->getParentNodesOfValues("code", $currCodes), "live", "1");
 		});
 	}
 
 	function getDataForDropdown($dataList){
-		foreach ($dataList as $item){
-			echo "<option value='{$item->nodeValue}'>{$item->nodeValue}</option>";
+		//Sort the list and print out option tags
+		$sortedList = array_map('strval', $dataList);
+		sort($sortedList);
+		foreach ($sortedList as $listItem){
+			 echo "<option value='{$listItem}'>{$listItem}</option>";
 		}
 	}
 

@@ -77,7 +77,7 @@
 		$requestType == "get" ? array_push($codes, $_GET['to'], $_GET['from']) : array_push($codes, $_GET['to']); 
 		
 		//Check currency codes exist and are availible when request type is not set to put
-		if ($requestType != "put" && (!checkCurrencyCodesExists($codes) || checkCurrencyCodesUnavailable($codes))){
+		if ($requestType != "put" && (!checkCurrencyCodesExists($codes) || !checkCurrencyCodesLive($codes))){
 			echo $requestType == "get" ? getErrorResponse(UNKOWN_CURRENCY) : getErrorResponse(CURRENCY_NOT_FOUND);
 			return false;	
 		}

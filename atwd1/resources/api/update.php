@@ -37,8 +37,8 @@
             $currencyJson = "";
 			XMLOperation::invoke(function($f) use ($toCode){
 					return $f
-						->setFilePath("rates")
-						->addAttributeToElement($toCode, "unavailable", "true");
+						->setFilePath("rateCurrencies")
+						->addAttributeToElement($f->getParentNodeOfValue("code", $toCode), "live", "0");
 			});
 		}
 
@@ -46,7 +46,7 @@
 	}
 
 	function updateSingleCurrency($toCode, $requestType){
-			if (checkCurrencyCodesUnavailable($toCode) && $requestType != "put"){
+			if (!checkCurrencyCodesLive($toCode) && $requestType != "put"){
 				echo getErrorResponse(CURRENCY_NOT_FOUND);
 				return; 
 			}
@@ -62,8 +62,10 @@
 			
 			XMLOperation::invoke(function($f) use ($currencyJson, $toCode){
 					return $f
-						->setFilePath("rates")
-						->updateXmlElement("(/root/rates/" . $toCode . ")[1]", $f->createNewElement($toCode, $currencyJson->rates->{$toCode}));
+						->setFilePath("rateCurrencies")
+						->addAttributeToElement($f->getParentNodeOfValue("code", $toCode), "rate", $currencyJson->rates->{$toCode})
+						->addAttributeToElement($f->getParentNodeOfValue("code", $toCode), "live", "1");
+
 			});		
 		return $currencyJson;
 	}

@@ -3,7 +3,8 @@
 		"xml": {
 			"rates": "xml//rates{timestamp}.xml",
 			"ratesGlob": "xml//rates",
-			"currencies": "xml//currencies.xml"
+			"currencies": "xml//currencies.xml",
+			"rateCurrencies": "xml//rateCurrencies.xml"
 		}
 	},
 	"api": {

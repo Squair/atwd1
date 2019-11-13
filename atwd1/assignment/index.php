@@ -5,10 +5,8 @@
 
 	require_once("../resources/libary/global.php");
 	require_once("../resources/libary/currencyFunctions.php");
-	require_once("../resources/libary/fileHandler.php");
 
 	$rateCodes = getAllCurrencyCodes();
-    combineFiles();
 ?>
 <html>
 

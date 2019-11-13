@@ -64,9 +64,8 @@
             
         }
 		
-        public function addAttributeToElement($elementName, $attributeName, $attributeValue){
-            $node = $this->dom->getElementsByTagName($elementName)->item(0);
-            $node->setAttribute($attributeName, $attributeValue);
+        public function addAttributeToElement($element, $attributeName, $attributeValue){
+            $element->setAttribute($attributeName, $attributeValue);
             return $this;
         }
         
@@ -133,9 +132,16 @@
 			return $xml;
 		}
 		
+		//Uses domXpath and returns domnodelist
 		public function findElements($xpathquery){
 			$xpath = new domxpath($this->dom);
 			return $xpath->query($xpathquery);
+		}
+		
+		//Convert to simplexml and returns results as array 
+		public function findElementsArray($xpathquery){
+			$dom = simplexml_import_dom($this->dom);
+			return $dom->xpath($xpathquery);
 		}
 		
 		public function checkElementExists($elementName){
@@ -144,35 +150,41 @@
 			} else {
 				return true;
 			}
-		}
+		}		
 		
-		//Will return false if any one element in array doesnt exist
-		public function checkElementsExist($elementNames){
-			foreach ($elementNames as $elementName){
-				if (!$this->checkElementExists($elementName)){
-					return false;
+		public function checkElementValue($elementName, $values){
+			$elements = $this->dom->getElementsByTagName($elementName);
+			foreach($elements as $element){
+				if (in_array($element->nodeValue, (array)$values)){
+					return true;
 				}
+			}
+			return false;
+		}			
+		
+		public function checkAttributeValues($elements, $attrName, $value){
+			foreach ($elements as $element){
+				if ($element->getAttribute($attrName) != $value){
+					return false;
+				} 
 			}
 			return true;
 		}
 		
-		public function checkAttributeValue($elementName, $attrName, $value){
-			if ($this->dom->getElementsByTagName($elementName)->item(0)->getAttribute($attrName) != $value){
-				return false;
-			} else {
-				return true;
+		public function getParentNodesOfValues($elementName, $values){
+			$parentNodes = array();
+
+			foreach ((array)$values as $value){
+				$parentNode = $this->getParentNodeOfValue($elementName, $value);
+				array_push($parentNodes, $parentNode);
 			}
-		}		
-		
-		public function checkAttributeValues($elementNames, $attrName, $value){
-			foreach ((array) $elementNames as $elementName){
-				if ($this->checkAttributeValue($elementName, $attrName, $value)){
-					return true;
-				} 
-			}
-			return false;
+			return $parentNodes;
 		}
 		
+		public function getParentNodeOfValue($elementName, $value){
+			return $this->findElements("//{$elementName}[.='{$value}']/parent::*")[0];
+		}		
+
 		private function setDom(){
 			$this->dom = new domdocument('1.0');
 		}
