@@ -10,13 +10,23 @@
 		return ($toRate / $fromRate) * $amount;
 	}
 
+	function getRateCurrency($code){
+		$curr = XMLOperation::invoke(function($f) use ($code){
+			return $f
+				->setFilePath("rateCurrencies")
+				->getParentNodeOfValue("code", $code);
+		});
+		
+		return simplexml_import_dom($curr);
+	}
+
 	function getRateData($code){
 		$curr = XMLOperation::invoke(function($f) use ($code){
 			return $f
-				->setFilePath("rates")
-				->findElements("(/root/rates/" . $code . ")[1]");
+				->setFilePath("rateCurrencies")
+				->findElements($f->getParentNodeOfValue("code", $code));
 		});
-		return $curr->item(0)->nodeValue;
+		return $curr->getAttribute("rate");
 	}
 
     function getAllCurrencyCodes(){
@@ -114,30 +124,25 @@
 	function getConversionResponse($fromCode = "GBP", $toCode, $amount, $format){
 		$at = gmdate("d F Y H:i",  getTimeLastUpdated());
 		        
-        $fromCurrencyData = getCurrencyData($fromCode);
-        $toCurrencyData = getCurrencyData($toCode);
-
-		$fromRate = getRateData($fromCode);
-		$toRate = getRateData($toCode);
-		
-		$convAmount = calcConversionAmount(getRateData($fromCode), getRateData($toCode), $amount);
+        $fromCurrencyData = getRateCurrency($fromCode);
+        $toCurrencyData = getRateCurrency($toCode);
+		$convAmount = calcConversionAmount($fromCurrencyData['rate'], $toCurrencyData['rate'], $amount);
         $rate = ($convAmount / $amount);
 
-        
 		$response = array(
 			'conv' => array(
 				'at' => $at,
 				'rate' => $rate,
 				'from' => array(
 					'code' => $fromCode,
-					'curr' => $fromCurrencyData['curr'],
-					'loc' => $fromCurrencyData['loc'],
+					'curr' => (string) $fromCurrencyData->curr,
+					'loc' => (string) $fromCurrencyData->loc,
 					'amnt' => number_format($amount, 2, '.', '')
 				),
 				'to' => array(
 					'code' => $toCode,
-					'curr' => $toCurrencyData['curr'],
-					'loc' => $toCurrencyData['loc'],
+					'curr' => (string) $toCurrencyData->curr,
+					'loc' => (string) $toCurrencyData->loc,
 					'amnt' => number_format($convAmount, 2, '.', '')
 				)
 			)

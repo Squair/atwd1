@@ -19,8 +19,6 @@
 		$toCode = $_GET['to'];
 		$currencyJson;
         
-
-        		
 		//put action
 		if ($requestType == "put"){
 			$currencyJson = updateSingleCurrency($toCode, $requestType);
@@ -50,6 +48,8 @@
 				echo getErrorResponse(CURRENCY_NOT_FOUND);
 				return; 
 			}
+		
+			
 		
 			$apiConfig = getItemFromConfig("api");
 			$unconverted = file_get_contents($apiConfig->fixer->endpoint . "&symbols=GBP," . $toCode);
