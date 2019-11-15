@@ -75,7 +75,6 @@
 				return combineFiles();
 			}
 			return false;
-            
         }
 		
         public function addAttributeToElement($element, $attributeName, $attributeValue){
@@ -94,16 +93,6 @@
 				$oldnode->parentNode->replaceChild($newnode, $oldnode);
 			}
 			return $this;
-		}
-		
-		public function writeNewElement($newNode){
-			$this->dom->documentElement->appendChild($this->dom->importNode($newNode, true));
-			
-			return $this;
-		}
-		
-		public function createNewElement($tagName, $value){
-			return $this->dom->createElement($tagName, $value);
 		}
 		
 		public function printElements($dom){

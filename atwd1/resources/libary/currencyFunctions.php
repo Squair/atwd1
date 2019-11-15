@@ -171,14 +171,6 @@
 		return json_encode($incomingJsonData);
 	}
 
-	function getAllRateCodes(){
-		return XMLOperation::invoke(function($f){
-			return $f
-				->setFilePath("rates")
-				->findElements("rates");
-		});		
-	}
-
 	function checkCurrencyCodesExists($currCodes){
 		return XMLOperation::invoke(function($f) use ($currCodes){
 				return $f

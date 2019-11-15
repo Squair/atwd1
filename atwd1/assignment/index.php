@@ -6,6 +6,7 @@
 	require_once("../resources/libary/global.php");
 	require_once("../resources/libary/currencyFunctions.php");
 
+	//Get all currency codes from currencies.xml to populate the dropdown
 	$rateCodes = getAllCurrencyCodes();
 ?>
 <html>
@@ -15,7 +16,6 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 	<script src="js/formProcess.js"></script>
-
 </head>
 
 <body>
@@ -40,9 +40,9 @@
 			</label>
 
 			<p>To:</p><select name="to"><?php getDataForDropdown($rateCodes); ?></select>
-			<input type="number" step="0.01" name="amnt" placeholder="amnt">
+			<input id="amnt" type="number" step="0.01" name="amnt" placeholder="amnt">
 
-			<p>Format:</p><select name="format">
+			<p>Format:</p><select id="format" name="format">
 				<option value="xml">XML</option>
 				<option value="json">JSON</option>
 			</select>
@@ -53,6 +53,5 @@
 		</form>
 	</div>
 </body>
-
 
 </html>
