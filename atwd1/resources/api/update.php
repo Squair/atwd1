@@ -30,6 +30,8 @@
 		//put an post action
 		if ($requestType == "put" || $requestType == "post"){
 			$currencyJson = updateSingleCurrency($toCode, $requestType);
+			//If reponse wasn't successful, return
+			if (!isset($currencyJson)) return;
 		}
 
 		//Delete action

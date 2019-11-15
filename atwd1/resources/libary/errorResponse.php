@@ -1,8 +1,10 @@
 <?php
 	require_once("response.php");
-	
+	require_once("fileHandler.php");
+
 	//Creates skeleton for error response message ready to be passed back to the user
 	function getErrorResponse($error){
+		//Create skeleton for all responses as json.
 		$response = array(
 			'conv' => array(
 				'error' => $error['code'],
@@ -10,7 +12,7 @@
 			)
 		);
 		
-		//If format is set, validate it otherwise default to xml or if not set set to xml
+		//If format is set, validate it otherwise default to xml or if not set, set to xml
 		if (isset($_GET['format'])){
 			$format = checkFormatValueValid($_GET['format']) ? $_GET['format'] : "xml";
 		} else {

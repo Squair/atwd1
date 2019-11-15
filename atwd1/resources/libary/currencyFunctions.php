@@ -103,12 +103,13 @@
 			$timestamp = get_string_between($foundFile, "rates", ".xml");
 			if ($timestamp != '') array_push($timestamps, (int)$timestamp);
 		}
+		//If no timestamps found for rates for or if trying to access historic rates file that doesn't exist, return false
 		if (empty($timestamps) || $offset >= count($timestamps)) return false;
 		
 		//Sort decending
 		rsort($timestamps);
 		
-		//Get most recent timestamp or return previous if offset is set
+		//Get most recent timestamp at base index, or return next descending timestamp at offset 
 		return $timestamps[$offset];
 	}
 
