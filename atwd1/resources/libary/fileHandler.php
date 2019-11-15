@@ -20,7 +20,7 @@
         $combinedDoc = new SimpleXMLElement("<currencies ts='{$ratesTimestamp}' base='{$baseRate[0]}'></currencies>");
 
 		//Get list of currency codes from ISO
-        $currencies = $currenciesXml->xpath("/ISO_4217/CcyTbl/CcyNtry/Ccy");
+        $currencies = getAllCurrencyCodes();
 		
 		//Array unique to not loop over repeated currency codes
         $distinctCurrencies = array_unique($currencies);
@@ -55,6 +55,7 @@
 		$dom = dom_import_simplexml($combinedDoc)->ownerDocument;
 		$dom->formatOutput = true;
 		$dom->save($rateCurrenciesPath);
+		return true;
     }
 
     function formatCurrency($currInfo){

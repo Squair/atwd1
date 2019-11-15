@@ -18,7 +18,7 @@
 		
 		//THe order of sending request will be resolved when rates files are timestamped
 		if ($type == "post"){
-			$xmlResponse->addChild('old_rate', (string) $currencyData['rate']);
+			$xmlResponse->addChild('old_rate', getOldRate($toCode));
 		}
 
 		if ($type == "delete"){

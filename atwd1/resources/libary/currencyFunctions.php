@@ -20,6 +20,15 @@
 		return simplexml_import_dom($curr);
 	}
 
+	function getOldRate($code){
+		$curr = XMLOperation::invoke(function($f) use ($code){
+			return $f
+				->setFilePath("ratesOld")
+				->findElements("//{$code}");
+		});
+		return $curr->item(0)->nodeValue;
+	}
+
     function getAllCurrencyCodes(){
         $currCodes = XMLOperation::invoke(function($f){
             return $f
@@ -81,7 +90,7 @@
 	}
 
 	//Picks the timestamps from all the historic rates files and returns the most recent time
-	function getTimeLastUpdated(){
+	function getTimeLastUpdated($offset = 0){
 		$filePathLocs = getItemFromConfig("filepaths");
 		
 		//Find all rates files with timestamps proceeding them
@@ -94,8 +103,13 @@
 			$timestamp = get_string_between($foundFile, "rates", ".xml");
 			if ($timestamp != '') array_push($timestamps, (int)$timestamp);
 		}
-		//Get most recent timestamp or return false if nothing found
-		return !empty($timestamps) ? max($timestamps) : false;
+		if (empty($timestamps) || $offset >= count($timestamps)) return false;
+		
+		//Sort decending
+		rsort($timestamps);
+		
+		//Get most recent timestamp or return previous if offset is set
+		return $timestamps[$offset];
 	}
 
 	//Source: https://stackoverflow.com/questions/5696412/how-to-get-a-substring-between-two-strings-in-php

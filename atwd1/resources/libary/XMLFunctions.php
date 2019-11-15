@@ -3,6 +3,7 @@
 	require_once("config/configReader.php");
 	require_once("errorResponse.php");
 	require_once("currencyFunctions.php");
+	require_once("fileHandler.php");
 
 	class XMLOperation {
 		public $dom;
@@ -26,8 +27,12 @@
             $this->formatDom();
             
 			if ($filePathType == "rates"){
+				//Checking rates file has a timestamp in filename
 				$lastUpdated = getTimeLastUpdated();				
 				if ($lastUpdated != false) $this->filePath = replaceTimestamp($filePath, $lastUpdated);
+			} else if ($filePathType == "ratesOld") {
+				$previouslyUpdated = getTimeLastUpdated(1);				
+				if ($previouslyUpdated != false) $this->filePath = replaceTimestamp($filePath, $previouslyUpdated);
 			} else {
 				$this->filePath = $filePath;
 			}		
@@ -61,6 +66,9 @@
             if ($fileType == "rates"){
 				return updateRatesFile(getTimeLastUpdated());
             }
+			if ($fileType == "rateCurrencies"){
+				return combineFiles();
+			}
             
         }
 		

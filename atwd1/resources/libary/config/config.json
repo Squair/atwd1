@@ -2,6 +2,7 @@
 	"filepaths": {
 		"xml": {
 			"rates": "xml//rates{timestamp}.xml",
+			"ratesOld": "xml//rates{timestamp}.xml",
 			"ratesGlob": "xml//rates",
 			"currencies": "xml//currencies.xml",
 			"rateCurrencies": "xml//rateCurrencies.xml"

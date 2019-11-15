@@ -13,24 +13,23 @@
 		$requestType = $_GET['action'];
         $validParameters = array("action", "to");
 		
-		if (!checkParametersValid($validParameters, $requestType)){
-			return;
-		}
-		$toCode = $_GET['to'];
-		$currencyJson;
-        
-		//put action
-		if ($requestType == "put"){
-			$currencyJson = updateSingleCurrency($toCode, $requestType);
-			if (!isset($currencyJson)){
+		//Update should be called first if application never run before
+		$timeLastUpdated = getTimeLastUpdated();
+
+		if (currencyNeedsUpdate($timeLastUpdated)){
+			if (!updateRatesFile($timeLastUpdated)){
 				return;
 			}
 		}
 		
-		//post action
-		if ($requestType == "post"){
-			updateSingleCurrency($toCode, $requestType);
-			return;
+		if (!checkParametersValid($validParameters, $requestType)) return;
+
+		$toCode = $_GET['to'];
+		$currencyJson;
+        
+		//put an post action
+		if ($requestType == "put" || $requestType == "post"){
+			$currencyJson = updateSingleCurrency($toCode, $requestType);
 		}
 
 		//Delete action
@@ -47,6 +46,7 @@
 	}
 
 	function updateSingleCurrency($toCode, $requestType){
+			//If trying to post when code isnt live, return error for not availble
 			if (!checkCurrencyCodesLive($toCode) && $requestType != "put"){
 				echo getErrorResponse(CURRENCY_NOT_FOUND);
 				return; 
@@ -56,14 +56,10 @@
 			$unconverted = file_get_contents($apiConfig->fixer->endpoint . "&symbols=GBP," . $toCode);
 			$currencyJson = json_decode(convertBaseRate($unconverted));
 		
+			//If no rate exists for currency throw rate missing error
 			if (!isset($currencyJson->rates->{$toCode})){
 				echo getErrorResponse(UNKNOWN_RATE);
 				return;
-			}
-			
-			//Send response before performing update to get old data on post
-			if ($requestType == "post"){
-				echo getActionResponse($requestType, $toCode, $currencyJson);				
 			}
 			
 			XMLOperation::invoke(function($f) use ($currencyJson, $toCode){
