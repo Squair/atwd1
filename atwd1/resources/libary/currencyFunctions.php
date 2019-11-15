@@ -26,7 +26,8 @@
 				->setFilePath("ratesOld")
 				->findElements("//{$code}");
 		});
-		return $curr->item(0)->nodeValue;
+		//If false, no older rates file exists.
+		return $curr->length > 0 ? $curr->item(0)->nodeValue : NULL ;
 	}
 
     function getAllCurrencyCodes(){
@@ -105,7 +106,6 @@
 		}
 		//If no timestamps found for rates for or if trying to access historic rates file that doesn't exist, return false
 		if (empty($timestamps) || $offset >= count($timestamps)) return false;
-		
 		//Sort decending
 		rsort($timestamps);
 		

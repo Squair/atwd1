@@ -26,25 +26,30 @@
 			$this->setDom();
             $this->formatDom();
             
-			if ($filePathType == "rates"){
-				//Checking rates file has a timestamp in filename
-				$lastUpdated = getTimeLastUpdated();				
-				if ($lastUpdated != false) $this->filePath = replaceTimestamp($filePath, $lastUpdated);
-			} else if ($filePathType == "ratesOld") {
-				$previouslyUpdated = getTimeLastUpdated(1);				
-				if ($previouslyUpdated != false) $this->filePath = replaceTimestamp($filePath, $previouslyUpdated);
-			} else {
-				$this->filePath = $filePath;
-			}		
-			
-            if (file_exists(realpath($this->filePath))){
+			switch ($filePathType){
+				case "rates":
+					$lastUpdated = getTimeLastUpdated();				
+					if ($lastUpdated != false) $this->filePath = replaceTimestamp($filePath, $lastUpdated);
+					break;
+				case "ratesOld":
+					$previouslyUpdated = getTimeLastUpdated(1);	
+					if ($previouslyUpdated == false) { return $this; } //If no previous rates file exists, return here and it will fall out pipeline later
+					//Otherwise set it to the previous
+					$this->filePath = replaceTimestamp($filePath, $previouslyUpdated);	
+					break;
+				default:
+					$this->filePath = $filePath;
+					
+			}
+						
+			//Short circuit logic, if no file found then try to create it
+            if (file_exists(realpath($this->filePath)) || $this->tryCreateFile($filePathType, $this->filePath)){
                 $this->loadDom();
-            } else if ($this->tryCreateFile($filePathType, $this->filePath)) {
-                $this->loadDom();
-            } else {
+            } else { //Couldnt find required file and couldnt create the file - so throw error in service
                 return $_GET['action'] == "get" ? exit(getErrorResponse(ERROR_IN_SERVICE)) : exit(getErrorResponse(ACTION_ERROR));
             }
             
+			//Prevents file_exists from caching results
             clearstatcache();
 
 			return $this;
@@ -69,6 +74,7 @@
 			if ($fileType == "rateCurrencies"){
 				return combineFiles();
 			}
+			return false;
             
         }
 		
@@ -142,12 +148,14 @@
 		
 		//Uses domXpath and returns domnodelist
 		public function findElements($xpathquery){
+			if (!isset($this->dom)) return false;
 			$xpath = new domxpath($this->dom);
 			return $xpath->query($xpathquery);
 		}
 		
-		//Convert to simplexml and returns results as array 
+		//Convert to simplexml and returns results as array to make use of array functions
 		public function findElementsArray($xpathquery){
+			if (!isset($this->dom)) return false;
 			$dom = simplexml_import_dom($this->dom);
 			return $dom->xpath($xpathquery);
 		}

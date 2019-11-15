@@ -3,6 +3,7 @@
 	require_once("config/configReader.php");
 	require_once("errorResponse.php");
 	require_once("currencyFunctions.php");
+	require_once("XMLFunctions.php");
 
     function combineFiles(){
         $filePathLocs = getItemFromConfig("filepaths");
@@ -13,22 +14,31 @@
         
         $ratesTimestamp = getTimeLastUpdated();
 		
+		//Get list of currency codes from ISO and check rates doesn't need update.
+		//If by some very unkown reason program flow managed to get to here without ever invoking XMLOperation on rates.xml and currencies.xml, these functions will ensure this 
+        $currencies = getAllCurrencyCodes();
+		$timeLastUpdated = getTimeLastUpdated();
+		if (currencyNeedsUpdate($timeLastUpdated)){
+			if (!updateRatesFile($timeLastUpdated)){
+				return;
+			}
+		}
+		
+		
         $ratesXml = simplexml_load_file(replaceTimestamp($ratesPath, $ratesTimestamp));
         $currenciesXml = simplexml_load_file($currenciesPath);
         
         $baseRate = $ratesXml->xpath("(//base)");
         $combinedDoc = new SimpleXMLElement("<currencies ts='{$ratesTimestamp}' base='{$baseRate[0]}'></currencies>");
 
-		//Get list of currency codes from ISO
-        $currencies = getAllCurrencyCodes();
+
 		
 		//Array unique to not loop over repeated currency codes
         $distinctCurrencies = array_unique($currencies);
 		
-        foreach($distinctCurrencies as $currency){
-			//$rates[0] as $rate => $value
-			
+        foreach($distinctCurrencies as $currency){			
 			//Get all entries associated to currency code
+			
             $matches = $currenciesXml->xpath("//CcyNtry[Ccy='{$currency}']");
             
 			//Get location information where currency is used and ensure name is sanitised
