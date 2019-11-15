@@ -17,7 +17,8 @@
 			});
 			
 			//if request type is put post or delete, append the top level action tag
-			if ($_GET['action'] != "get"){
+			$action = isset($_GET['action']) ? $_GET['action'] : "get";
+			if ($action != "get"){
 				//Import convertedJson skeleton into action tag
 				$actionElement = $convertedResponse->createElement("action");
 				$actionElement->setAttribute("type", $_GET['action']);

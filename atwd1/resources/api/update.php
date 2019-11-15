@@ -55,7 +55,13 @@
 			}
 		
 			$apiConfig = getItemFromConfig("api");
-			$unconverted = file_get_contents($apiConfig->fixer->endpoint . "&symbols=GBP," . $toCode);
+			$unconverted = @file_get_contents($apiConfig->fixer->endpoint . "&symbols=GBP," . $toCode);
+		
+			if ($unconverted === FALSE){
+				echo getErrorResponse(ACTION_ERROR);
+				return;
+			}
+		
 			$currencyJson = json_decode(convertBaseRate($unconverted));
 		
 			//If no rate exists for currency throw rate missing error

@@ -46,7 +46,8 @@
             if (file_exists(realpath($this->filePath)) || $this->tryCreateFile($filePathType, $this->filePath)){
                 $this->loadDom();
             } else { //Couldnt find required file and couldnt create the file - so throw error in service
-                return $_GET['action'] == "get" ? exit(getErrorResponse(ERROR_IN_SERVICE)) : exit(getErrorResponse(ACTION_ERROR));
+				$action = isset($_GET['action']) ? $_GET['action'] : "get"; //Default to get if error thrown on page entry
+                return $action == "get" ? exit(getErrorResponse(ERROR_IN_SERVICE)) : exit(getErrorResponse(ACTION_ERROR));
             }
             
 			//Prevents file_exists from caching results
@@ -59,9 +60,8 @@
 			$api = getItemFromConfig("api");
 
             if ($fileType == "currencies"){
-                $isoCurrencies = file_get_contents($api->ISOCurrencies->endpoint);
-                
-                if (isset($isoCurrencies)){
+                $isoCurrencies = @file_get_contents($api->ISOCurrencies->endpoint);
+                if ($isoCurrencies !== FALSE){
                     file_put_contents($filePath, $isoCurrencies);
                     return true;
                 } else {
