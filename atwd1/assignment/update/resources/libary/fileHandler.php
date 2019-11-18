@@ -13,7 +13,6 @@
 		$rateCurrenciesPath = ROOT_PATH . $filePathLocs->xml->rateCurrencies;
         
         $ratesTimestamp = getTimeLastUpdated();
-		
 		//Get list of currency codes from ISO and check rates doesn't need update.
 		//If by some very unkown reason program flow managed to get to here without ever invoking XMLOperation on rates.xml and currencies.xml, these functions will ensure this 
         $currencies = getAllCurrencyCodes();

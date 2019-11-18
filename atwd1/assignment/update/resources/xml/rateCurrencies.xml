@@ -1,0 +1,898 @@
+<?xml version="1.0"?>
+<currencies ts="1574079246" base="GBP">
+  <currency rate="101.70938679936" live="1">
+    <code>AFN</code>
+    <curr>Afghani</curr>
+    <loc>Afghanistan</loc>
+  </currency>
+  <currency rate="1.1707888189668" live="1">
+    <code>EUR</code>
+    <curr>Euro</curr>
+    <loc>&#xC5;land Islands, Andorra, Austria, Belgium, Cyprus, Estonia, European Union, Finland, France, French Guiana, The French Southern Territories, Germany, Greece, Guadeloupe, The Holy See, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Martinique, Mayotte, Monaco, Montenegro, The Netherlands, Portugal, R&#xC9;union, Saint Barth&#xC9;lemy, French Part Saint Martin, Saint Pierre And Miquelon, San Marino, Slovakia, Slovenia, Spain</loc>
+  </currency>
+  <currency rate="143.57189755598" live="1">
+    <code>ALL</code>
+    <curr>Lek</curr>
+    <loc>Albania</loc>
+  </currency>
+  <currency rate="155.32667700863" live="1">
+    <code>DZD</code>
+    <curr>Algerian Dinar</curr>
+    <loc>Algeria</loc>
+  </currency>
+  <currency rate="1.294816332504" live="1">
+    <code>USD</code>
+    <curr>US Dollar</curr>
+    <loc>American Samoa, Bonaire, Sint Eustatius And Saba, The British Indian Ocean Territory, Ecuador, El Salvador, Guam, Haiti, The Marshall Islands, Federated States Of Micronesia, The Northern Mariana Islands, Palau, Panama, Puerto Rico, Timor-leste, The Turks And Caicos Islands, The United States Minor Outlying Islands, The United States Of America, British Virgin Islands, Virgin Islands (u.s.)</loc>
+  </currency>
+  <currency rate="598.37219610713" live="1">
+    <code>AOA</code>
+    <curr>Kwanza</curr>
+    <loc>Angola</loc>
+  </currency>
+  <currency rate="3.4993063076248" live="1">
+    <code>XCD</code>
+    <curr>East Caribbean Dollar</curr>
+    <loc>Anguilla, Antigua And Barbuda, Dominica, Grenada, Montserrat, Saint Kitts And Nevis, Saint Lucia, Saint Vincent And The Grenadines</loc>
+  </currency>
+  <currency rate="77.168592419142" live="1">
+    <code>ARS</code>
+    <curr>Argentine Peso</curr>
+    <loc>Argentina</loc>
+  </currency>
+  <currency rate="618.6211830821" live="1">
+    <code>AMD</code>
+    <curr>Armenian Dram</curr>
+    <loc>Armenia</loc>
+  </currency>
+  <currency rate="2.3306693985072" live="1">
+    <code>AWG</code>
+    <curr>Aruban Florin</curr>
+    <loc>Aruba</loc>
+  </currency>
+  <currency rate="1.901219376555" live="1">
+    <code>AUD</code>
+    <curr>Australian Dollar</curr>
+    <loc>Australia, Christmas Island, Keeling Cocos The  Islands, Heard Island And Mcdonald Islands, Kiribati, Nauru, Norfolk Island, Tuvalu</loc>
+  </currency>
+  <currency rate="2.1700875164642" live="1">
+    <code>AZN</code>
+    <curr>Azerbaijan Manat</curr>
+    <loc>Azerbaijan</loc>
+  </currency>
+  <currency rate="1.2948865798332" live="1">
+    <code>BSD</code>
+    <curr>Bahamian Dollar</curr>
+    <loc>The Bahamas</loc>
+  </currency>
+  <currency rate="0.48819903409922" live="1">
+    <code>BHD</code>
+    <curr>Bahraini Dinar</curr>
+    <loc>Bahrain</loc>
+  </currency>
+  <currency rate="109.79991102005" live="1">
+    <code>BDT</code>
+    <curr>Taka</curr>
+    <loc>Bangladesh</loc>
+  </currency>
+  <currency rate="2.6144744621689" live="1">
+    <code>BBD</code>
+    <curr>Barbados Dollar</curr>
+    <loc>Barbados</loc>
+  </currency>
+  <currency rate="2.6476042733792" live="1">
+    <code>BYN</code>
+    <curr>Belarusian Ruble</curr>
+    <loc>Belarus</loc>
+  </currency>
+  <currency rate="2.6100254646568" live="1">
+    <code>BZD</code>
+    <curr>Belize Dollar</curr>
+    <loc>Belize</loc>
+  </currency>
+  <currency rate="767.92112746963" live="1">
+    <code>XOF</code>
+    <curr>CFA Franc BCEAO</curr>
+    <loc>Benin, Burkina Faso, C&#xD4;te D'ivoire, Guinea-bissau, Mali, The Niger, Senegal, Togo</loc>
+  </currency>
+  <currency rate="1.294816332504" live="1">
+    <code>BMD</code>
+    <curr>Bermudian Dollar</curr>
+    <loc>Bermuda</loc>
+  </currency>
+  <currency rate="92.980108297966" live="1">
+    <code>INR</code>
+    <curr>Indian Rupee</curr>
+    <loc>Bhutan, India</loc>
+  </currency>
+  <currency rate="92.959199180448" live="1">
+    <code>BTN</code>
+    <curr>Ngultrum</curr>
+    <loc>Bhutan</loc>
+  </currency>
+  <currency rate="8.9540441972779" live="1">
+    <code>BOB</code>
+    <curr>Boliviano</curr>
+    <loc>Plurinational State Of Bolivia</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>BOV</code>
+    <curr>Mvdol</curr>
+    <loc>Plurinational State Of Bolivia</loc>
+  </currency>
+  <currency rate="2.2896461290795" live="1">
+    <code>BAM</code>
+    <curr>Convertible Mark</curr>
+    <loc>Bosnia And Herzegovina</loc>
+  </currency>
+  <currency rate="14.090276013464" live="1">
+    <code>BWP</code>
+    <curr>Pula</curr>
+    <loc>Botswana</loc>
+  </currency>
+  <currency rate="11.791628859944" live="1">
+    <code>NOK</code>
+    <curr>Norwegian Krone</curr>
+    <loc>Bouvet Island, Norway, Svalbard And Jan Mayen</loc>
+  </currency>
+  <currency rate="5.4114222157178" live="1">
+    <code>BRL</code>
+    <curr>Brazilian Real</curr>
+    <loc>Brazil</loc>
+  </currency>
+  <currency rate="1.7614178252598" live="1">
+    <code>BND</code>
+    <curr>Brunei Dollar</curr>
+    <loc>Brunei Darussalam</loc>
+  </currency>
+  <currency rate="2.289739792185" live="1">
+    <code>BGN</code>
+    <curr>Bulgarian Lev</curr>
+    <loc>Bulgaria</loc>
+  </currency>
+  <currency rate="2430.863767013" live="1">
+    <code>BIF</code>
+    <curr>Burundi Franc</curr>
+    <loc>Burundi</loc>
+  </currency>
+  <currency rate="129.0847639397" live="1">
+    <code>CVE</code>
+    <curr>Cabo Verde Escudo</curr>
+    <loc>Cabo Verde</loc>
+  </currency>
+  <currency rate="5244.3320310259" live="1">
+    <code>KHR</code>
+    <curr>Riel</curr>
+    <loc>Cambodia</loc>
+  </currency>
+  <currency rate="767.92112746963" live="1">
+    <code>XAF</code>
+    <curr>CFA Franc BEAC</curr>
+    <loc>Cameroon, The Central African Republic, Chad, The Congo, Equatorial Guinea, Gabon</loc>
+  </currency>
+  <currency rate="1.7118829211181" live="1">
+    <code>CAD</code>
+    <curr>Canadian Dollar</curr>
+    <loc>Canada</loc>
+  </currency>
+  <currency rate="1.0791301039075" live="1">
+    <code>KYD</code>
+    <curr>Cayman Islands Dollar</curr>
+    <loc>The Cayman Islands</loc>
+  </currency>
+  <currency rate="996.87882569881" live="1">
+    <code>CLP</code>
+    <curr>Chilean Peso</curr>
+    <loc>Chile</loc>
+  </currency>
+  <currency rate="0.036104785599298" live="1">
+    <code>CLF</code>
+    <curr>Unidad de Fomento</curr>
+    <loc>Chile</loc>
+  </currency>
+  <currency rate="9.0848236499341" live="1">
+    <code>CNY</code>
+    <curr>Yuan Renminbi</curr>
+    <loc>China</loc>
+  </currency>
+  <currency rate="4437.4535261232" live="1">
+    <code>COP</code>
+    <curr>Colombian Peso</curr>
+    <loc>Colombia</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>COU</code>
+    <curr>Unidad de Valor Real</curr>
+    <loc>Colombia</loc>
+  </currency>
+  <currency rate="577.002533587" live="1">
+    <code>KMF</code>
+    <curr>Comorian Franc </curr>
+    <loc>The Comoros</loc>
+  </currency>
+  <currency rate="2155.8689313625" live="1">
+    <code>CDF</code>
+    <curr>Congolese Franc</curr>
+    <loc>The Democratic Republic Of The Congo</loc>
+  </currency>
+  <currency rate="2.0223351382994" live="1">
+    <code>NZD</code>
+    <curr>New Zealand Dollar</curr>
+    <loc>The Cook Islands, New Zealand, Niue, Pitcairn, Tokelau</loc>
+  </currency>
+  <currency rate="751.0950680521" live="1">
+    <code>CRC</code>
+    <curr>Costa Rican Colon</curr>
+    <loc>Costa Rica</loc>
+  </currency>
+  <currency rate="8.7095776379336" live="1">
+    <code>HRK</code>
+    <curr>Kuna</curr>
+    <loc>Croatia</loc>
+  </currency>
+  <currency rate="34.312632225962" live="1">
+    <code>CUP</code>
+    <curr>Cuban Peso</curr>
+    <loc>Cuba</loc>
+  </currency>
+  <currency rate="1.294816332504" live="1">
+    <code>CUC</code>
+    <curr>Peso Convertible</curr>
+    <loc>Cuba</loc>
+  </currency>
+  <currency rate="2.2336531538124" live="1">
+    <code>ANG</code>
+    <curr>Netherlands Antillean Guilder</curr>
+    <loc>Cura&#xC7;ao, Dutch Part Sint Maarten</loc>
+  </currency>
+  <currency rate="29.963216156886" live="1">
+    <code>CZK</code>
+    <curr>Czech Koruna</curr>
+    <loc>Czechia</loc>
+  </currency>
+  <currency rate="8.7489442411825" live="1">
+    <code>DKK</code>
+    <curr>Danish Krone</curr>
+    <loc>Denmark, The Faroe Islands, Greenland</loc>
+  </currency>
+  <currency rate="230.11451719596" live="1">
+    <code>DJF</code>
+    <curr>Djibouti Franc</curr>
+    <loc>Djibouti</loc>
+  </currency>
+  <currency rate="68.240586565198" live="1">
+    <code>DOP</code>
+    <curr>Dominican Peso</curr>
+    <loc>The Dominican Republic</loc>
+  </currency>
+  <currency rate="20.862603248939" live="1">
+    <code>EGP</code>
+    <curr>Egyptian Pound</curr>
+    <loc>Egypt</loc>
+  </currency>
+  <currency rate="11.329817064247" live="1">
+    <code>SVC</code>
+    <curr>El Salvador Colon</curr>
+    <loc>El Salvador</loc>
+  </currency>
+  <currency rate="19.422449875604" live="1">
+    <code>ERN</code>
+    <curr>Nakfa</curr>
+    <loc>Eritrea</loc>
+  </currency>
+  <currency rate="38.956289770233" live="1">
+    <code>ETB</code>
+    <curr>Ethiopian Birr</curr>
+    <loc>Ethiopia</loc>
+  </currency>
+  <currency rate="1.0525297819406" live="1">
+    <code>FKP</code>
+    <curr>Falkland Islands Pound</curr>
+    <loc>The Falkland Islands  [malvinas]</loc>
+  </currency>
+  <currency rate="2.8321498609688" live="1">
+    <code>FJD</code>
+    <curr>Fiji Dollar</curr>
+    <loc>Fiji</loc>
+  </currency>
+  <currency rate="139.61627279379" live="1">
+    <code>XPF</code>
+    <curr>CFP Franc</curr>
+    <loc>French Polynesia, New Caledonia, Wallis And Futuna</loc>
+  </currency>
+  <currency rate="66.422499048734" live="1">
+    <code>GMD</code>
+    <curr>Dalasi</curr>
+    <loc>The Gambia</loc>
+  </currency>
+  <currency rate="3.8392073759696" live="1">
+    <code>GEL</code>
+    <curr>Lari</curr>
+    <loc>Georgia</loc>
+  </currency>
+  <currency rate="7.1866213961657" live="1">
+    <code>GHS</code>
+    <curr>Ghana Cedi</curr>
+    <loc>Ghana</loc>
+  </currency>
+  <currency rate="1.0525309527294" live="1">
+    <code>GIP</code>
+    <curr>Gibraltar Pound</curr>
+    <loc>Gibraltar</loc>
+  </currency>
+  <currency rate="9.977073613347" live="1">
+    <code>GTQ</code>
+    <curr>Quetzal</curr>
+    <loc>Guatemala</loc>
+  </currency>
+  <currency rate="1" live="1">
+    <code>GBP</code>
+    <curr>Pound Sterling</curr>
+    <loc>Guernsey, Isle Of Man, Jersey, The United Kingdom Of Great Britain And Northern Ireland</loc>
+  </currency>
+  <currency rate="12322.084293283" live="1">
+    <code>GNF</code>
+    <curr>Guinean Franc</curr>
+    <loc>Guinea</loc>
+  </currency>
+  <currency rate="270.20410244402" live="1">
+    <code>GYD</code>
+    <curr>Guyana Dollar</curr>
+    <loc>Guyana</loc>
+  </currency>
+  <currency rate="126.0842932826" live="1">
+    <code>HTG</code>
+    <curr>Gourde</curr>
+    <loc>Haiti</loc>
+  </currency>
+  <currency rate="31.877839894629" live="1">
+    <code>HNL</code>
+    <curr>Lempira</curr>
+    <loc>Honduras</loc>
+  </currency>
+  <currency rate="10.137051368359" live="1">
+    <code>HKD</code>
+    <curr>Hong Kong Dollar</curr>
+    <loc>Hong Kong</loc>
+  </currency>
+  <currency rate="392.51021220547" live="1">
+    <code>HUF</code>
+    <curr>Forint</curr>
+    <loc>Hungary</loc>
+  </currency>
+  <currency rate="159.33965754427" live="1">
+    <code>ISK</code>
+    <curr>Iceland Krona</curr>
+    <loc>Iceland</loc>
+  </currency>
+  <currency rate="18223.244516903" live="1">
+    <code>IDR</code>
+    <curr>Rupiah</curr>
+    <loc>Indonesia</loc>
+  </currency>
+  <currency rate="0.94126620810771" live="1">
+    <code>XDR</code>
+    <curr>SDR (Special Drawing Right)</curr>
+    <loc>Imf International Monetary Fund &#xA0;</loc>
+  </currency>
+  <currency rate="54518.240040978" live="1">
+    <code>IRR</code>
+    <curr>Iranian Rial</curr>
+    <loc>Islamic Republic Of Iran</loc>
+  </currency>
+  <currency rate="1545.8468608225" live="1">
+    <code>IQD</code>
+    <curr>Iraqi Dinar</curr>
+    <loc>Iraq</loc>
+  </currency>
+  <currency rate="4.4776022244988" live="1">
+    <code>ILS</code>
+    <curr>New Israeli Sheqel</curr>
+    <loc>Israel</loc>
+  </currency>
+  <currency rate="181.99854939265" live="1">
+    <code>JMD</code>
+    <curr>Jamaican Dollar</curr>
+    <loc>Jamaica</loc>
+  </currency>
+  <currency rate="141.18813288453" live="1">
+    <code>JPY</code>
+    <curr>Yen</curr>
+    <loc>Japan</loc>
+  </currency>
+  <currency rate="0.91815015366603" live="1">
+    <code>JOD</code>
+    <curr>Jordanian Dinar</curr>
+    <loc>Jordan</loc>
+  </currency>
+  <currency rate="501.7992565491" live="1">
+    <code>KZT</code>
+    <curr>Tenge</curr>
+    <loc>Kazakhstan</loc>
+  </currency>
+  <currency rate="131.89033104054" live="1">
+    <code>KES</code>
+    <curr>Kenyan Shilling</curr>
+    <loc>Kenya</loc>
+  </currency>
+  <currency rate="1165.410245573" live="1">
+    <code>KPW</code>
+    <curr>North Korean Won</curr>
+    <loc>The Democratic People&#x2019;s Republic Of Korea</loc>
+  </currency>
+  <currency rate="1508.7652720621" live="1">
+    <code>KRW</code>
+    <curr>Won</curr>
+    <loc>The Republic Of Korea</loc>
+  </currency>
+  <currency rate="0.39315791014196" live="1">
+    <code>KWD</code>
+    <curr>Kuwaiti Dinar</curr>
+    <loc>Kuwait</loc>
+  </currency>
+  <currency rate="90.442403629445" live="1">
+    <code>KGS</code>
+    <curr>Som</curr>
+    <loc>Kyrgyzstan</loc>
+  </currency>
+  <currency rate="11464.665755012" live="1">
+    <code>LAK</code>
+    <curr>Lao Kip</curr>
+    <loc>The Lao People&#x2019;s Democratic Republic</loc>
+  </currency>
+  <currency rate="1957.8589597541" live="1">
+    <code>LBP</code>
+    <curr>Lebanese Pound</curr>
+    <loc>Lebanon</loc>
+  </currency>
+  <currency rate="19.059922142544" live="1">
+    <code>LSL</code>
+    <curr>Loti</curr>
+    <loc>Lesotho</loc>
+  </currency>
+  <currency rate="19.128453095273" live="1">
+    <code>ZAR</code>
+    <curr>Rand</curr>
+    <loc>Lesotho, Namibia, South Africa</loc>
+  </currency>
+  <currency rate="253.78445192448" live="1">
+    <code>LRD</code>
+    <curr>Liberian Dollar</curr>
+    <loc>Liberia</loc>
+  </currency>
+  <currency rate="1.8231125420752" live="1">
+    <code>LYD</code>
+    <curr>Libyan Dinar</curr>
+    <loc>Libya</loc>
+  </currency>
+  <currency rate="1.282780623445" live="1">
+    <code>CHF</code>
+    <curr>Swiss Franc</curr>
+    <loc>Liechtenstein, Switzerland</loc>
+  </currency>
+  <currency rate="10.441835796868" live="1">
+    <code>MOP</code>
+    <curr>Pataca</curr>
+    <loc>Macao</loc>
+  </currency>
+  <currency rate="71.996673788965" live="1">
+    <code>MKD</code>
+    <curr>Denar</curr>
+    <loc>The Former Yugoslav Republic Of Macedonia</loc>
+  </currency>
+  <currency rate="4822.7587484268" live="1">
+    <code>MGA</code>
+    <curr>Malagasy Ariary</curr>
+    <loc>Madagascar</loc>
+  </currency>
+  <currency rate="952.70446831553" live="1">
+    <code>MWK</code>
+    <curr>Malawi Kwacha</curr>
+    <loc>Malawi</loc>
+  </currency>
+  <currency rate="5.3806105663691" live="1">
+    <code>MYR</code>
+    <curr>Malaysian Ringgit</curr>
+    <loc>Malaysia</loc>
+  </currency>
+  <currency rate="19.875149421923" live="1">
+    <code>MVR</code>
+    <curr>Rufiyaa</curr>
+    <loc>Maldives</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>MRU</code>
+    <curr>Ouguiya</curr>
+    <loc>Mauritania</loc>
+  </currency>
+  <currency rate="47.066939850724" live="1">
+    <code>MUR</code>
+    <curr>Mauritius Rupee</curr>
+    <loc>Mauritius</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>XUA</code>
+    <curr>ADB Unit of Account</curr>
+    <loc>Member Countries Of The African Development Bank Group</loc>
+  </currency>
+  <currency rate="24.903721352261" live="1">
+    <code>MXN</code>
+    <curr>Mexican Peso</curr>
+    <loc>Mexico</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>MXV</code>
+    <curr>Mexican Unidad de Inversion (UDI)</curr>
+    <loc>Mexico</loc>
+  </currency>
+  <currency rate="22.663500073174" live="1">
+    <code>MDL</code>
+    <curr>Moldovan Leu</curr>
+    <loc>The Republic Of Moldova</loc>
+  </currency>
+  <currency rate="3502.0949591687" live="1">
+    <code>MNT</code>
+    <curr>Tugrik</curr>
+    <loc>Mongolia</loc>
+  </currency>
+  <currency rate="12.497570027806" live="1">
+    <code>MAD</code>
+    <curr>Moroccan Dirham</curr>
+    <loc>Morocco, Western Sahara</loc>
+  </currency>
+  <currency rate="82.169400263427" live="1">
+    <code>MZN</code>
+    <curr>Mozambique Metical</curr>
+    <loc>Mozambique</loc>
+  </currency>
+  <currency rate="1963.6953420167" live="1">
+    <code>MMK</code>
+    <curr>Kyat</curr>
+    <loc>Myanmar</loc>
+  </currency>
+  <currency rate="19.059843699693" live="1">
+    <code>NAD</code>
+    <curr>Namibia Dollar</curr>
+    <loc>Namibia</loc>
+  </currency>
+  <currency rate="148.73477067174" live="1">
+    <code>NPR</code>
+    <curr>Nepalese Rupee</curr>
+    <loc>Nepal</loc>
+  </currency>
+  <currency rate="43.682665886141" live="1">
+    <code>NIO</code>
+    <curr>Cordoba Oro</curr>
+    <loc>Nicaragua</loc>
+  </currency>
+  <currency rate="468.04279935607" live="1">
+    <code>NGN</code>
+    <curr>Naira</curr>
+    <loc>Nigeria</loc>
+  </currency>
+  <currency rate="0.49846685204156" live="1">
+    <code>OMR</code>
+    <curr>Rial Omani</curr>
+    <loc>Oman</loc>
+  </currency>
+  <currency rate="202.22888921411" live="1">
+    <code>PKR</code>
+    <curr>Pakistan Rupee</curr>
+    <loc>Pakistan</loc>
+  </currency>
+  <currency rate="1.2948982877214" live="1">
+    <code>PAB</code>
+    <curr>Balboa</curr>
+    <loc>Panama</loc>
+  </currency>
+  <currency rate="4.4081088833602" live="1">
+    <code>PGK</code>
+    <curr>Kina</curr>
+    <loc>Papua New Guinea</loc>
+  </currency>
+  <currency rate="8336.4707753549" live="1">
+    <code>PYG</code>
+    <curr>Guarani</curr>
+    <loc>Paraguay</loc>
+  </currency>
+  <currency rate="4.355272354749" live="1">
+    <code>PEN</code>
+    <curr>Sol</curr>
+    <loc>Peru</loc>
+  </currency>
+  <currency rate="65.643323869457" live="1">
+    <code>PHP</code>
+    <curr>Philippine Peso</curr>
+    <loc>The Philippines</loc>
+  </currency>
+  <currency rate="5.0214921703498" live="1">
+    <code>PLN</code>
+    <curr>Zloty</curr>
+    <loc>Poland</loc>
+  </currency>
+  <currency rate="4.714373188936" live="1">
+    <code>QAR</code>
+    <curr>Qatari Rial</curr>
+    <loc>Qatar</loc>
+  </currency>
+  <currency rate="5.5873906044197" live="1">
+    <code>RON</code>
+    <curr>Romanian Leu</curr>
+    <loc>Romania</loc>
+  </currency>
+  <currency rate="82.712659154105" live="1">
+    <code>RUB</code>
+    <curr>Russian Ruble</curr>
+    <loc>The Russian Federation</loc>
+  </currency>
+  <currency rate="1207.4369114591" live="1">
+    <code>RWF</code>
+    <curr>Rwanda Franc</curr>
+    <loc>Rwanda</loc>
+  </currency>
+  <currency rate="1.7103210888336" live="1">
+    <code>SHP</code>
+    <curr>Saint Helena Pound</curr>
+    <loc>Saint Helena, Ascension And Tristan Da Cunha</loc>
+  </currency>
+  <currency rate="3.4704498756037" live="1">
+    <code>WST</code>
+    <curr>Tala</curr>
+    <loc>Samoa</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>STN</code>
+    <curr>Dobra</curr>
+    <loc>Sao Tome And Principe</loc>
+  </currency>
+  <currency rate="4.8557295477828" live="1">
+    <code>SAR</code>
+    <curr>Saudi Riyal</curr>
+    <loc>Saudi Arabia</loc>
+  </currency>
+  <currency rate="137.52883945558" live="1">
+    <code>RSD</code>
+    <curr>Serbian Dinar</curr>
+    <loc>Serbia</loc>
+  </currency>
+  <currency rate="17.739068637495" live="1">
+    <code>SCR</code>
+    <curr>Seychelles Rupee</curr>
+    <loc>Seychelles</loc>
+  </currency>
+  <currency rate="12527.347994731" live="1">
+    <code>SLL</code>
+    <curr>Leone</curr>
+    <loc>Sierra Leone</loc>
+  </currency>
+  <currency rate="1.7613639689741" live="1">
+    <code>SGD</code>
+    <curr>Singapore Dollar</curr>
+    <loc>Singapore</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>XSU</code>
+    <curr>Sucre</curr>
+    <loc>Sistema Unitario De Compensacion Regional De Pagos "sucre"</loc>
+  </currency>
+  <currency rate="10.752028098932" live="1">
+    <code>SBD</code>
+    <curr>Solomon Islands Dollar</curr>
+    <loc>Solomon Islands</loc>
+  </currency>
+  <currency rate="752.28784428509" live="1">
+    <code>SOS</code>
+    <curr>Somali Shilling</curr>
+    <loc>Somalia</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>SSP</code>
+    <curr>South Sudanese Pound</curr>
+    <loc>South Sudan</loc>
+  </currency>
+  <currency rate="232.49692843553" live="1">
+    <code>LKR</code>
+    <curr>Sri Lanka Rupee</curr>
+    <loc>Sri Lanka</loc>
+  </currency>
+  <currency rate="58.415057515001" live="1">
+    <code>SDG</code>
+    <curr>Sudanese Pound</curr>
+    <loc>The Sudan</loc>
+  </currency>
+  <currency rate="9.6568265769062" live="1">
+    <code>SRD</code>
+    <curr>Surinam Dollar</curr>
+    <loc>Suriname</loc>
+  </currency>
+  <currency rate="19.129396751061" live="1">
+    <code>SZL</code>
+    <curr>Lilangeni</curr>
+    <loc>Eswatini</loc>
+  </currency>
+  <currency rate="12.485393824089" live="1">
+    <code>SEK</code>
+    <curr>Swedish Krona</curr>
+    <loc>Sweden</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>CHE</code>
+    <curr>WIR Euro</curr>
+    <loc>Switzerland</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>CHW</code>
+    <curr>WIR Franc</curr>
+    <loc>Switzerland</loc>
+  </currency>
+  <currency rate="666.82997453534" live="1">
+    <code>SYP</code>
+    <curr>Syrian Pound</curr>
+    <loc>Syrian Arab Republic</loc>
+  </currency>
+  <currency rate="39.480888628714" live="1">
+    <code>TWD</code>
+    <curr>New Taiwan Dollar</curr>
+    <loc>Province Of China Taiwan</loc>
+  </currency>
+  <currency rate="12.553293721645" live="1">
+    <code>TJS</code>
+    <curr>Somoni</curr>
+    <loc>Tajikistan</loc>
+  </currency>
+  <currency rate="2985.9738832138" live="1">
+    <code>TZS</code>
+    <curr>Tanzanian Shilling</curr>
+    <loc>Tanzania, United Republic Of</loc>
+  </currency>
+  <currency rate="39.129925947607" live="1">
+    <code>THB</code>
+    <curr>Baht</curr>
+    <loc>Thailand</loc>
+  </currency>
+  <currency rate="3.0021659593151" live="1">
+    <code>TOP</code>
+    <curr>Pa&#x2019;anga</curr>
+    <loc>Tonga</loc>
+  </currency>
+  <currency rate="8.7642768915557" live="1">
+    <code>TTD</code>
+    <curr>Trinidad and Tobago Dollar</curr>
+    <loc>Trinidad And Tobago</loc>
+  </currency>
+  <currency rate="3.6953747987707" live="1">
+    <code>TND</code>
+    <curr>Tunisian Dinar</curr>
+    <loc>Tunisia</loc>
+  </currency>
+  <currency rate="7.4184691936192" live="1">
+    <code>TRY</code>
+    <curr>Turkish Lira</curr>
+    <loc>Turkey</loc>
+  </currency>
+  <currency rate="4.5448055027074" live="1">
+    <code>TMT</code>
+    <curr>Turkmenistan New Manat</curr>
+    <loc>Turkmenistan</loc>
+  </currency>
+  <currency rate="4778.1639771696" live="1">
+    <code>UGX</code>
+    <curr>Uganda Shilling</curr>
+    <loc>Uganda</loc>
+  </currency>
+  <currency rate="31.291627103761" live="1">
+    <code>UAH</code>
+    <curr>Hryvnia</curr>
+    <loc>Ukraine</loc>
+  </currency>
+  <currency rate="4.755731303966" live="1">
+    <code>AED</code>
+    <curr>UAE Dirham</curr>
+    <loc>The United Arab Emirates</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>USN</code>
+    <curr>US Dollar (Next day)</curr>
+    <loc>The United States Of America</loc>
+  </currency>
+  <currency rate="48.784919069223" live="1">
+    <code>UYU</code>
+    <curr>Peso Uruguayo</curr>
+    <loc>Uruguay</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>UYI</code>
+    <curr>Uruguay Peso en Unidades Indexadas (UI)</curr>
+    <loc>Uruguay</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>UYW</code>
+    <curr>Unidad Previsional</curr>
+    <loc>Uruguay</loc>
+  </currency>
+  <currency rate="12301.316783843" live="1">
+    <code>UZS</code>
+    <curr>Uzbekistan Sum</curr>
+    <loc>Uzbekistan</loc>
+  </currency>
+  <currency rate="151.98353636763" live="1">
+    <code>VUV</code>
+    <curr>Vatu</curr>
+    <loc>Vanuatu</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>VES</code>
+    <curr>Bol&#xED;var Soberano</curr>
+    <loc>Bolivarian Republic Of Venezuela</loc>
+  </currency>
+  <currency rate="30049.225132153" live="1">
+    <code>VND</code>
+    <curr>Dong</curr>
+    <loc>Viet Nam</loc>
+  </currency>
+  <currency rate="324.15694775355" live="1">
+    <code>YER</code>
+    <curr>Yemeni Rial</curr>
+    <loc>Yemen</loc>
+  </currency>
+  <currency rate="18.056998682863" live="1">
+    <code>ZMW</code>
+    <curr>Zambian Kwacha</curr>
+    <loc>Zambia</loc>
+  </currency>
+  <currency rate="416.93084735841" live="1">
+    <code>ZWL</code>
+    <curr>Zimbabwe Dollar</curr>
+    <loc>Zimbabwe</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>XBA</code>
+    <curr>Bond Markets Unit European Composite Unit (EURCO)</curr>
+    <loc>Zz01_bond Markets Unit European_eurco</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>XBB</code>
+    <curr>Bond Markets Unit European Monetary Unit (E.M.U.-6)</curr>
+    <loc>Zz02_bond Markets Unit European_emu-6</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>XBC</code>
+    <curr>Bond Markets Unit European Unit of Account 9 (E.U.A.-9)</curr>
+    <loc>Zz03_bond Markets Unit European_eua-9</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>XBD</code>
+    <curr>Bond Markets Unit European Unit of Account 17 (E.U.A.-17)</curr>
+    <loc>Zz04_bond Markets Unit European_eua-17</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>XTS</code>
+    <curr>Codes specifically reserved for testing purposes</curr>
+    <loc>Zz06_testing_code</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>XXX</code>
+    <curr>The codes assigned for transactions where no currency is involved</curr>
+    <loc>Zz07_no_currency</loc>
+  </currency>
+  <currency rate="0.00088745792477682" live="1">
+    <code>XAU</code>
+    <curr>Gold</curr>
+    <loc>Zz08_gold</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>XPD</code>
+    <curr>Palladium</curr>
+    <loc>Zz09_palladium</loc>
+  </currency>
+  <currency rate="" live="1">
+    <code>XPT</code>
+    <curr>Platinum</curr>
+    <loc>Zz10_platinum</loc>
+  </currency>
+  <currency rate="0.077023854822186" live="1">
+    <code>XAG</code>
+    <curr>Silver</curr>
+    <loc>Zz11_silver</loc>
+  </currency>
+</currencies>

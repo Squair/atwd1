@@ -3,7 +3,7 @@
    ini_set('display_startup_errors', 1);
    error_reporting(E_ALL);
 
-	require_once ("../libary/currencyFunctions.php");
+    require_once ("../libary/currencyFunctions.php");
 	require_once("../libary/global.php");
 	require_once("../libary/errorResponse.php");
 
@@ -29,7 +29,4 @@
 	}
 	
 	echo getConversionResponse($_GET['from'], $_GET['to'], $_GET['amnt'], $_GET['format']);
-
-
-
 ?>

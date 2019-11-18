@@ -200,6 +200,6 @@
 	function sanitiseLocationName($locName){
 		$pattern = "~([\w\s’']*)\(((THE)?([\w\s’']*))(OF)?\)~";
 		$replacement = "$2 $1";
-		return rtrim(preg_replace($pattern, $replacement, $locName));
+		return ucwords(strtolower(rtrim(preg_replace($pattern, $replacement, $locName))));
 	}
 ?>

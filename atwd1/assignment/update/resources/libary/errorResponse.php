@@ -40,7 +40,6 @@
 	//Runs multiple types of checks on parameters dependant on the type of request to evaluate if an error needs to be sent back to the user
 	function checkParametersValid($validParameters, $requestType) {
 		$parameters = array_keys($_GET);
-				
 		//Checks each $_GET parameter has an associating value, and returns the corresponding error code depending on which doesn't have a value. Or if parameter is action, ensures its a valid one.
 		$validActionParameters = array("put", "post", "delete");
 			
@@ -68,7 +67,7 @@
 		} 
 		
 		//Checks the reverse of the above to catch garbage parameters and also checks there are no duplicate parameters
-		if (count(array_diff($parameters, $validParameters)) != 0 || urlHasDuplicateParameters($_SERVER['QUERY_STRING'])){				
+		if (count(array_diff($parameters, $validParameters)) != 0 || urlHasDuplicateParameters($_SERVER['QUERY_STRING'])){
 			echo $requestType == "get" ? getErrorResponse(UNKOWN_PARAM) : getErrorResponse(UNKOWN_ACTION);
 			return false;
 			//Return invalid parameter code 1100 or 2000
