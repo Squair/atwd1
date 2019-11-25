@@ -13,8 +13,7 @@
 
 <head>
 	<link rel="stylesheet" href="css/stylesheet.css">
-	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+	<script src="js/JQuery.js"></script>
 	<script src="js/formProcess.js"></script>
 </head>
 

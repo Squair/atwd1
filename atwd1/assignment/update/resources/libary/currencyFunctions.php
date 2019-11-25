@@ -16,7 +16,6 @@
 				->setFilePath("rateCurrencies")
 				->getParentNodeOfValue("code", $code);
 		});
-		
 		return simplexml_import_dom($curr);
 	}
 
@@ -132,13 +131,17 @@
 		        
         $fromCurrencyData = getRateCurrency($fromCode);
         $toCurrencyData = getRateCurrency($toCode);
-		$convAmount = calcConversionAmount($fromCurrencyData['rate'], $toCurrencyData['rate'], $amount);
-        $rate = ($convAmount / $amount);
+        $fromRate = $fromCurrencyData->attributes()['rate'];
+        $toRate = $toCurrencyData->attributes()['rate'];
 
+        
+		$convAmount = calcConversionAmount((float) $fromRate, (float) $toRate, $amount);
+        
+    
 		$response = array(
 			'conv' => array(
 				'at' => $at,
-				'rate' => $rate,
+				'rate' => (string) $fromRate,
 				'from' => array(
 					'code' => $fromCode,
 					'curr' => (string) $fromCurrencyData->curr,

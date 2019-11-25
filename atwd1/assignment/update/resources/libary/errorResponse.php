@@ -1,6 +1,7 @@
 <?php
 	require_once("response.php");
 	require_once("fileHandler.php");
+    require_once("currencyFunctions.php");
 
 	//Creates skeleton for error response message ready to be passed back to the user
 	function getErrorResponse($error){
@@ -41,7 +42,7 @@
 	function checkParametersValid($validParameters, $requestType) {
 		$parameters = array_keys($_GET);
 		//Checks each $_GET parameter has an associating value, and returns the corresponding error code depending on which doesn't have a value. Or if parameter is action, ensures its a valid one.
-		$validActionParameters = array("put", "post", "delete");
+		$validActionParameters = array("put", "post", "del");
 			
 		foreach($_GET as $parameter => $value){
 			if (empty($value)){
@@ -75,10 +76,15 @@
 		
 		//At this point we can be sure all parameters exist and have a value, so we can set $codes
 		$codes = array();
-		$requestType == "get" ? array_push($codes, $_GET['to'], $_GET['from']) : array_push($codes, $_GET['to']); 
+		$requestType == "get" ? array_push($codes, $_GET['to'], $_GET['from']) : array_push($codes, $_GET['cur']); 
 		
+        if (!checkCurrencyCodesExists($codes)){
+            echo $requestType == "get" ? getErrorResponse(UNKOWN_CURRENCY) : getErrorResponse(CURRENCY_NOT_FOUND);
+            return false;
+        }
+        
 		//Check currency codes exist and are availible when request type is not set to put
-		if ($requestType != "put" && (!checkCurrencyCodesExists($codes) || !checkCurrencyCodesLive($codes))){
+		if ($requestType != "put" && !checkCurrencyCodesLive($codes)){
 			echo $requestType == "get" ? getErrorResponse(UNKOWN_CURRENCY) : getErrorResponse(CURRENCY_NOT_FOUND);
 			return false;	
 		}
@@ -86,10 +92,16 @@
 		//Get request specific errors
 		if ($requestType == "get"){
 			//Check if amount submitted is decimal (short circuit for non numerical values)
-			if (!is_numeric($_GET['amnt']) || !is_float((float)$_GET['amnt'])){
-				echo getErrorResponse(CURRENCY_NOT_DECIMAL);
-				return false;
+            $amount = $_GET['amnt'];
+			if (!is_numeric($amount)){
+                    echo getErrorResponse(CURRENCY_NOT_DECIMAL);
+				    return false;
 			}
+            $convAmount = (float) $amount;
+            if (!is_float($convAmount)){        
+                    echo getErrorResponse(CURRENCY_NOT_DECIMAL);
+				    return false;
+            }
 			
 			//Check format is valid, if not return error as xml
 			if (!checkFormatValueValid($_GET['format'])){
@@ -98,7 +110,7 @@
 				//Return format must be xml/json 1400
 			}
 		} else if ($requestType != "get"){ //Action specific errors
-			if ($_GET['to'] == "GBP"){
+			if ($_GET['cur'] == "GBP"){
 				//Return error 2400
 				echo getErrorResponse(IMMUTABLE_BASE_CURRENCY);
 				return;

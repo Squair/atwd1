@@ -10,7 +10,7 @@
 	},
 	"api": {
 		"fixer": {
-			"endpoint": "http://data.fixer.io//api//latest?access_key=97341f9a29a6e2c9e44153ef98fb52bb&format=1",
+			"endpoint": "http://data.fixer.io//api//latest?access_key=c7b9ee1360da17ab5521317d88786345&format=1",
 			"updateRate": 7200
 
 		},
