@@ -40,10 +40,14 @@
 
 	//Runs multiple types of checks on parameters dependant on the type of request to evaluate if an error needs to be sent back to the user
 	function checkParametersValid($validParameters, $requestType) {
+		//If no format supplied on get request, default to xml
+		if ($requestType == "get" && !isset($_GET['format'])){
+			$_GET['format'] = "xml";
+		}
 		$parameters = array_keys($_GET);
 		//Checks each $_GET parameter has an associating value, and returns the corresponding error code depending on which doesn't have a value. Or if parameter is action, ensures its a valid one.
 		$validActionParameters = array("put", "post", "del");
-			
+		
 		foreach($_GET as $parameter => $value){
 			if (empty($value)){
 				if ($requestType == "get"){

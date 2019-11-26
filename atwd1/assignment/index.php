@@ -3,7 +3,7 @@
    ini_set('display_startup_errors', 1);
    error_reporting(E_ALL);
 
-   require_once ("update/resources/libary/currencyFunctions.php");
+    require_once ("update/resources/libary/currencyFunctions.php");
     require_once("update/resources/libary/global.php");
 	require_once("update/resources/libary/errorResponse.php");
 

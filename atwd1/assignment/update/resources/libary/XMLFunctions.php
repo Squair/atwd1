@@ -159,12 +159,15 @@
 		
 		public function checkElementValue($elementName, $values){
 			$elements = $this->dom->getElementsByTagName($elementName);
+			$elementArr = array();
 			foreach($elements as $element){
-				if (in_array($element->nodeValue, (array)$values)){
-					return true;
-				}
+				array_push($elementArr, $element->nodeValue);
 			}
-			return false;
+			if (count(array_diff($values, $elementArr)) > 0){
+				return false;
+			} else {
+				return true;
+			}
 		}			
 		
 		public function checkAttributeValues($elements, $attrName, $value){

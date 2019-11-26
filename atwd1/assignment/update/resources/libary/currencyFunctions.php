@@ -107,7 +107,6 @@
 		if (empty($timestamps) || $offset >= count($timestamps)) return false;
 		//Sort decending
 		rsort($timestamps);
-		
 		//Get most recent timestamp at base index, or return next descending timestamp at offset 
 		return $timestamps[$offset];
 	}
