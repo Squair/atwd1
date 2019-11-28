@@ -11,6 +11,9 @@
         $ratesPath = ROOT_PATH . $filePathLocs->xml->rates;
         $currenciesPath = ROOT_PATH . $filePathLocs->xml->currencies;
 		$rateCurrenciesPath = ROOT_PATH . $filePathLocs->xml->rateCurrencies;
+		
+		//If a rateCurrencies file already exists, get wheter the codes were live or not so it persists across files
+		
         
         $ratesTimestamp = getTimeLastUpdated();
 		//Get list of currency codes from ISO and check rates doesn't need update.
@@ -29,14 +32,8 @@
         $baseRate = $ratesXml->xpath("(//base)");
         $combinedDoc = new SimpleXMLElement("<currencies ts='{$ratesTimestamp}' base='{$baseRate[0]}'></currencies>");
 
-
-		
-		//Array unique to not loop over repeated currency codes
-        $distinctCurrencies = array_unique($currencies);
-		
-        foreach($distinctCurrencies as $currency){			
+        foreach($currencies as $currency){			
 			//Get all entries associated to currency code
-			
             $matches = $currenciesXml->xpath("//CcyNtry[Ccy='{$currency}']");
             
 			//Get location information where currency is used and ensure name is sanitised
@@ -47,7 +44,6 @@
 				$ccyNm = $match->CcyNm;
             }
 			
-			//$rateInfo = $ratesXml->xpath("/rates/{$currency}");
             $currInfo = array(
                 'rate' => $ratesXml->rates->{$currency},
                 'code' => $currency,

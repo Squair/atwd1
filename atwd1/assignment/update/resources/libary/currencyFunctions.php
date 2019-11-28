@@ -5,11 +5,12 @@
 	require_once("global.php");
 	require_once("fileHandler.php");
 
-
+	//Returns the converted rate between two currencies, multiplied by the amount requested
 	function calcConversionAmount($fromRate, $toRate, $amount){
 		return ($toRate / $fromRate) * $amount;
 	}
 
+	//Will retrive all information amount a given currency from the amalgamated rateCurrencies file
 	function getRateCurrency($code){
 		$curr = XMLOperation::invoke(function($f) use ($code){
 			return $f
@@ -18,7 +19,8 @@
 		});
 		return simplexml_import_dom($curr);
 	}
-
+	
+	//Find old rate, used in post requests by looking at an older rates file if it exists
 	function getOldRate($code){
 		$curr = XMLOperation::invoke(function($f) use ($code){
 			return $f
@@ -29,6 +31,7 @@
 		return $curr->length > 0 ? $curr->item(0)->nodeValue : NULL ;
 	}
 
+	//Returns an array of all currency codes from the ISO currencies file
     function getAllCurrencyCodes(){
         $currCodes = XMLOperation::invoke(function($f){
             return $f
@@ -38,6 +41,7 @@
 		return array_unique($currCodes);
     }
 
+	//Checks the timestamp on the most recent rates file to see if its higher than the update rate pulled from config file
 	function currencyNeedsUpdate($lastUpdated){
 		//If it was never updated, we need to update.
 		if ($lastUpdated == false){
@@ -48,8 +52,8 @@
 		return time() - getTimeLastUpdated() >= $updateRate ? true : false;
 	}
 
+	//Will call the fixer api to retrive an up to date rates file and calls combineFiles() to combine the rates and currencies files together
 	function updateRatesFile($timeLastUpdated){
-		//Check if rates needs updating, if so update it
 			$apiConfig = getItemFromConfig("api");
 			//@ symbol to supress warnings generated from file_get_contents in case server is having issues talking to other host names, this would breach API key
 			$currencyJson = @file_get_contents($apiConfig->fixer->endpoint);
@@ -70,7 +74,7 @@
 			$ratePath = replaceTimestamp($filePath, $timeLastUpdated);
 			$newRatePath = replaceTimestamp($filePath, $currencyDecode->timestamp);
 		
-			//Copy old rates file with new timestamp in name
+			//Copy old rates file with new timestamp in name so it take precedent in xmlOperation's setFilePath()
 			if (file_exists(realpath($ratePath))){
 				copy($ratePath, $newRatePath);
 	            clearstatcache();
@@ -130,13 +134,12 @@
 		        
         $fromCurrencyData = getRateCurrency($fromCode);
         $toCurrencyData = getRateCurrency($toCode);
+		
         $fromRate = $fromCurrencyData->attributes()['rate'];
         $toRate = $toCurrencyData->attributes()['rate'];
 
-        
 		$convAmount = calcConversionAmount((float) $fromRate, (float) $toRate, $amount);
         
-    
 		$response = array(
 			'conv' => array(
 				'at' => $at,
@@ -202,6 +205,7 @@
 	function sanitiseLocationName($locName){
 		$pattern = "~([\w\s’']*)\(((THE)?([\w\s’']*))(OF)?\)~";
 		$replacement = "$2 $1";
+		//Capitalise the first letter of each word, remove additonal spacing from end of string and reorder location from match of regular expression
 		return ucwords(strtolower(rtrim(preg_replace($pattern, $replacement, $locName))));
 	}
 ?>
