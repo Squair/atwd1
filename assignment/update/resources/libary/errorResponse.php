@@ -22,11 +22,13 @@
 		return sendResponse($response, $format);
 	}
 
-	//Deconstructs the url parameters to check the same parameters hasnt been entered twice, which would overwrite the first instance
+	//Deconstructs the url parameters to check the same parameters hasnt been entered twice, has to use the SERVER['QUERY_STRING'] as GET will overwrite duplicate parameters
 	function urlHasDuplicateParameters($queryString){
+        //Segment the query string by breaking up each parameter into key value pairs delimited by '&'
 		$parts = explode('&', $queryString);
 		$parameters = array();
 		
+        //Loop through each parameter and push into an array, checking if its already been added
 		foreach($parts as $part){
 			$key = substr($part, 0, strpos($part, '='));
 			if (in_array($key, $parameters)){
@@ -44,20 +46,26 @@
 		if ($requestType == "get" && !isset($_GET['format'])){
 			$_GET['format'] = "xml";
 		}
+        
 		$parameters = array_keys($_GET);
-		//Checks each $_GET parameter has an associating value, and returns the corresponding error code depending on which doesn't have a value. Or if parameter is action, ensures its a valid one.
+        
+        //Valid values for the action parameter used when making put, post or delete requests
 		$validActionParameters = array("put", "post", "del");
 		
+		//Checks each $_GET parameter has an associating value, and returns the corresponding error code depending on which doesn't have a value. Or if parameter is action, ensures its a valid one.
 		foreach($_GET as $parameter => $value){
 			if (empty($value)){
 				if ($requestType == "get"){
+                    //Print error code 1000
 					echo getErrorResponse(MISSING_PARAM);
-				} else { //If not get request, return error depending on which parameter is missing
+				} else { //If its not a get request, return error if action is empty, otherwise it'll be the missing currency error
 					echo $parameter == "action" ? getErrorResponse(UNKOWN_ACTION) : getErrorResponse(MISSING_CURRENCY);
 				}
+                //Return false if any parameter is empty
 				return false;			
 			}
-			//If update action and not put, post or delete, return error 2000
+            
+			//If not a get request and action parameter value is not put, post or delete, return error 2000
 			if ($requestType != "get" && $parameter == "action" && !in_array($value, $validActionParameters)){
 				echo getErrorResponse(UNKOWN_ACTION);
 				return false;
@@ -71,23 +79,25 @@
 			return false;
 		} 
 		
-		//Checks the reverse of the above to catch garbage parameters and also checks there are no duplicate parameters
+		//Checks the reverse of the above to catch extra garbage parameters and also checks there are no duplicate valid parameters
 		if (count(array_diff($parameters, $validParameters)) != 0 || urlHasDuplicateParameters($_SERVER['QUERY_STRING'])){
 			echo $requestType == "get" ? getErrorResponse(UNKOWN_PARAM) : getErrorResponse(UNKOWN_ACTION);
 			return false;
 			//Return invalid parameter code 1100 or 2000
 		}
 		
-		//At this point we can be sure all parameters exist and have a value, so we can set $codes
+		//At this point we can be sure all parameters exist and have a value, so we can set $codes array
 		$codes = array();
+        //Push codes in depending on the requestType
 		$requestType == "get" ? array_push($codes, $_GET['to'], $_GET['from']) : array_push($codes, $_GET['cur']); 
 		
+        //Check all codes exist within the rateCurrencies file
         if (!checkCurrencyCodesExists($codes)){
             echo $requestType == "get" ? getErrorResponse(UNKOWN_CURRENCY) : getErrorResponse(CURRENCY_NOT_FOUND);
             return false;
         }
         
-		//Check currency codes exist and are availible when request type is not set to put
+		//Check currency codes are live if not making a put request
 		if ($requestType != "put" && !checkCurrencyCodesLive($codes)){
 			echo $requestType == "get" ? getErrorResponse(UNKOWN_CURRENCY) : getErrorResponse(CURRENCY_NOT_FOUND);
 			return false;	
@@ -95,27 +105,29 @@
 		
 		//Get request specific errors
 		if ($requestType == "get"){
-			//Check if amount submitted is decimal (short circuit for non numerical values)
+			//Check if amount parameter submitted is decimal
             $amount = $_GET['amnt'];
 			if (!is_numeric($amount)){
                     echo getErrorResponse(CURRENCY_NOT_DECIMAL);
 				    return false;
 			}
+            //Cast parameter to float, after checking is_numeric and check its a float
             $convAmount = (float) $amount;
             if (!is_float($convAmount)){        
                     echo getErrorResponse(CURRENCY_NOT_DECIMAL);
 				    return false;
             }
 			
-			//Check format is valid, if not return error as xml
+			//Check format parameter is valid, if not return error as xml
 			if (!checkFormatValueValid($_GET['format'])){
 				echo getErrorResponse(INCORRECT_FORMAT);
 				return false;
 				//Return format must be xml/json 1400
 			}
+        
+        //If making a put, post or delete request and targetting the base currency, return error 2400
 		} else if ($requestType != "get"){ //Action specific errors
-			if ($_GET['cur'] == "GBP"){
-				//Return error 2400
+			if ($_GET['cur'] == getBaseRate()){
 				echo getErrorResponse(IMMUTABLE_BASE_CURRENCY);
 				return;
 			}

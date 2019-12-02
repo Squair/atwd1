@@ -19,6 +19,7 @@ $(document).ready(function () {
 
 	$('#paramsForm').submit(function (event) {
 		event.preventDefault();
+        $('input[action]')
 		let action = $('#radioSelect:checked').val();
 		//Get the checked radio buttton and send request to update.php if not a get request, or get.php if it is.
 		let url = action != "get" ? "../index.php?action=" + action : "../../index.php";

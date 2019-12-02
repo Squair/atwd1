@@ -1,9 +1,7 @@
 <?php
 	require_once("XMLFunctions.php");
 	require_once("config/configReader.php");
-	require_once("response.php");
 	require_once("global.php");
-	require_once("fileHandler.php");
 
 	//Returns the converted rate between two currencies, multiplied by the amount requested
 	function calcConversionAmount($fromRate, $toRate, $amount){
@@ -41,6 +39,16 @@
 		return array_unique($currCodes);
     }
 
+    //Return the base rate from the rateCurrencies file
+    function getBaseRate(){
+        $baseRate = XMLOperation::invoke(function($f){
+            return $f
+                ->setFilePath("rateCurrencies")
+                ->findElements("//currencies/@base");
+        });
+		return $baseRate->item(0)->nodeValue;
+    }
+
 	//Checks the timestamp on the most recent rates file to see if its higher than the update rate pulled from config file
 	function currencyNeedsUpdate($lastUpdated){
 		//If it was never updated, we need to update.
@@ -50,47 +58,6 @@
 		
 		$updateRate = getItemFromConfig("api")->fixer->updateRate;
 		return time() - getTimeLastUpdated() >= $updateRate ? true : false;
-	}
-
-	//Will call the fixer api to retrive an up to date rates file and calls combineFiles() to combine the rates and currencies files together
-	function updateRatesFile($timeLastUpdated){
-			$apiConfig = getItemFromConfig("api");
-			//@ symbol to supress warnings generated from file_get_contents in case server is having issues talking to other host names, this would breach API key
-			$currencyJson = @file_get_contents($apiConfig->fixer->endpoint);
-		
-			//If API call fails, return
-			if ($currencyJson === FALSE){
-				echo $_GET['action'] == "get" ? getErrorResponse(ERROR_IN_SERVICE) : getErrorResponse(ACTION_ERROR);
-				return false;
-			}
-		
-			$currencyDecode = json_decode($currencyJson);
-		
-			//Get latest file path, and copy to new path with timestamp if it exists
-			$filePathLocs = getItemFromConfig("filepaths");
-			$filePath = ROOT_PATH . $filePathLocs->xml->rates;
-		
-			//Replace placeholder with timestamps ready to be copied
-			$ratePath = replaceTimestamp($filePath, $timeLastUpdated);
-			$newRatePath = replaceTimestamp($filePath, $currencyDecode->timestamp);
-		
-			//Copy old rates file with new timestamp in name so it take precedent in xmlOperation's setFilePath()
-			if (file_exists(realpath($ratePath))){
-				copy($ratePath, $newRatePath);
-	            clearstatcache();
-			} else { //If cant find rates at config location, create empty rates files, and overwrite
-				file_put_contents($newRatePath, "<root></root>"); 
-			}	
-		
-			//Update the latest timestamped rates file with the API response
-			XMLOperation::invoke(function($f) use ($currencyJson){
-				return $f
-					->setFilePath("rates")
-					->createXmlFromJson(convertBaseRate($currencyJson));
-			});
-			//Will stitch rates and currencies together which means less processing later down the line.
-			combineFiles();
-			return true;
 	}
 
 	//Picks the timestamps from all the historic rates files and returns the most recent time
@@ -115,52 +82,7 @@
 		return $timestamps[$offset];
 	}
 
-	//Source: https://stackoverflow.com/questions/5696412/how-to-get-a-substring-between-two-strings-in-php
-	function get_string_between($string, $start, $end){
-		$string = ' ' . $string;
-		$ini = strpos($string, $start);
-		if ($ini == 0) return '';
-		$ini += strlen($start);
-		$len = strpos($string, $end, $ini) - $ini;
-		return substr($string, $ini, $len);
-	}
-
-	function replaceTimestamp($filePath, $timestamp){
-		return str_replace("{timestamp}", $timestamp, $filePath);
-	}
-
-	function getConversionResponse($fromCode = "GBP", $toCode, $amount, $format){
-		$at = gmdate("d F Y H:i",  getTimeLastUpdated());
-		        
-        $fromCurrencyData = getRateCurrency($fromCode);
-        $toCurrencyData = getRateCurrency($toCode);
-		
-        $fromRate = $fromCurrencyData->attributes()['rate'];
-        $toRate = $toCurrencyData->attributes()['rate'];
-
-		$convAmount = calcConversionAmount((float) $fromRate, (float) $toRate, $amount);
-        
-		$response = array(
-			'conv' => array(
-				'at' => $at,
-				'rate' => (string) $fromRate,
-				'from' => array(
-					'code' => $fromCode,
-					'curr' => (string) $fromCurrencyData->curr,
-					'loc' => (string) $fromCurrencyData->loc,
-					'amnt' => number_format($amount, 2, '.', '')
-				),
-				'to' => array(
-					'code' => $toCode,
-					'curr' => (string) $toCurrencyData->curr,
-					'loc' => (string) $toCurrencyData->loc,
-					'amnt' => number_format($convAmount, 2, '.', '')
-				)
-			)
-		);
-		return sendResponse($response, $format);
-	}
-
+    //Taking the response from Fixer, convert all currencies to a chosen base rate, defaults to GBP if nothing explicitley passed
 	function convertBaseRate($jsonData, $newBaseType = "GBP"){
 		$incomingJsonData = json_decode($jsonData);
 		
@@ -176,6 +98,7 @@
 		return json_encode($incomingJsonData);
 	}
 
+    //Takes a single or multiple codes and checks that they exist within the rateCurrencies file, if they all exist this will return true, if one returns false then the function will return false
 	function checkCurrencyCodesExists($currCodes){
 		return XMLOperation::invoke(function($f) use ($currCodes){
 				return $f
@@ -184,6 +107,7 @@
 		});
 	}
 
+    //Takes a single or multiple codes and checks that the attribute 'live' is set to 1 within the rateCurrencies file, if they're all set to 1 this function will return true, if one returns false then the function will return false
 	function checkCurrencyCodesLive($currCodes){
 		return XMLOperation::invoke(function($f) use ($currCodes){
 				return $f
@@ -192,6 +116,7 @@
 		});
 	}
 
+    //Will take in an array of items, sort them in acending order and print them out within <option> tags, to populate a <select> dropdown
 	function getDataForDropdown($dataList){
 		//Sort the list and print out option tags
 		$sortedList = array_map('strval', $dataList);
@@ -199,13 +124,5 @@
 		foreach ($sortedList as $listItem){
 			 echo "<option value='{$listItem}'>{$listItem}</option>";
 		}
-	}
-
-	//Will reformat the country names where (THE) proceeds the country name or other typically prefixed statements and strip whitespace from end of string
-	function sanitiseLocationName($locName){
-		$pattern = "~([\w\s’']*)\(((THE)?([\w\s’']*))(OF)?\)~";
-		$replacement = "$2 $1";
-		//Capitalise the first letter of each word, remove additonal spacing from end of string and reorder location from match of regular expression
-		return ucwords(strtolower(rtrim(preg_replace($pattern, $replacement, $locName))));
 	}
 ?>
