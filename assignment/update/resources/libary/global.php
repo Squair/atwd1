@@ -2,7 +2,7 @@
 	//Root path for pulling filepaths out of config file
 	define('ROOT_PATH', dirname(__DIR__). '/');
 
-	//Status codes
+	//Status codes for error handling
 	define('MISSING_PARAM', array(
 		'code' => 1000,
 		'msg' => "Required parameter is missing"

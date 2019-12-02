@@ -1,4 +1,5 @@
 <?php	
+	//Handles the response made when a GET request is made. builds it up in JSON which can be simply converted to XML if format is required
     function getConversionResponse($fromCode = "GBP", $toCode, $amount, $format){
 		$at = gmdate("d F Y H:i",  getTimeLastUpdated());
 		        

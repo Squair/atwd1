@@ -30,10 +30,14 @@
             $rateCurrenciesXml = simplexml_load_file($rateCurrenciesPath);
         }
 		
+		//Load other relevant files into memory
         $ratesXml = simplexml_load_file(replaceTimestamp($ratesPath, $ratesTimestamp));
         $currenciesXml = simplexml_load_file($currenciesPath);
         
+		//Get base rate explicitey from rates file rather than ratesCurrencies in case base currency has been altered
         $baseRate = $ratesXml->xpath("(//base)");
+		
+		//Begin skeleton for combining documents together
         $combinedDoc = new SimpleXMLElement("<currencies ts='{$ratesTimestamp}' base='{$baseRate[0]}'></currencies>");
 
         foreach($currencies as $currency){			
@@ -50,7 +54,8 @@
 			
 			//Get previous live attribute value to carry over to new file
 			$live = !isset($rateCurrenciesXml) ? 1 : $rateCurrenciesXml->xpath("//*[code='{$currency}']/@live")[0];
-													  
+								
+			//Build currency structure using data from other files
             $currInfo = array(
                 'rate' => $ratesXml->rates->{$currency},
                 'code' => $currency,
@@ -62,13 +67,15 @@
 			//Build up combined file using both information from rates and currencies file.
 			sxml_append($combinedDoc, formatCurrency($currInfo));
         }
-
+		
+		//Convert into DOM for better formatting in file
 		$dom = dom_import_simplexml($combinedDoc)->ownerDocument;
 		$dom->formatOutput = true;
 		$dom->save($rateCurrenciesPath);
 		return true;
     }
 
+	//Maps passed in array to simpleXMlObject
     function formatCurrency($currInfo){
         $currency = new SimpleXMLElement("<currency rate='{$currInfo['rate']}' live='{$currInfo['live']}'></currency>");
 		$currency->addChild('code', $currInfo['code']);
@@ -93,7 +100,7 @@
 		return ucwords(strtolower(rtrim(preg_replace($pattern, $replacement, $locName))));
 	}
 
-//Will call the fixer api to retrive an up to date rates file and calls combineFiles() to combine the rates and currencies files together
+	//Will call the fixer api to retrive an up to date rates file and calls combineFiles() to combine the rates and currencies files together
 	function updateRatesFile($timeLastUpdated){
 			$apiConfig = getItemFromConfig("api");
 			//@ symbol to supress warnings generated from file_get_contents in case server is having issues talking to other host names, this would breach API key
@@ -134,6 +141,7 @@
 			return true;
 	}
 
+	//Replaces timestamp in file config filename placeholder
 	function replaceTimestamp($filePath, $timestamp){
 		return str_replace("{timestamp}", $timestamp, $filePath);
 	}

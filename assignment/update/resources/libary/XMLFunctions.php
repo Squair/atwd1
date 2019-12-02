@@ -9,6 +9,7 @@
 		public $dom;
 		public $filePath;
 		
+		//This function takes a function as its argument, and can call other functions within the case, it'll return the instance of this object after each function allowing you to chain functions one after another.
 		public static function invoke(callable $fn){
 			$f = $fn(new static());
 			
@@ -19,6 +20,7 @@
 			return $f;
 		}
 		
+		//Sets the targetting xml file for operation and will try to create it through some means if it doesnt exist
 		public function setFilePath($filePathType){
 			$filePathLocs = getItemFromConfig("filepaths");
 			$filePath = ROOT_PATH . $filePathLocs->xml->{$filePathType};
@@ -56,6 +58,7 @@
 			return $this;
 		}
         
+		//Handles logic for creation of files if they cant be found
         private function tryCreateFile($fileType, $filePath){			               
 			$api = getItemFromConfig("api");
 
@@ -77,13 +80,14 @@
 			return false;
         }
 		
+		//Adds specific attribute with a specific value to an element 
         public function addAttributeToElement($element, $attributeName, $attributeValue){
             $element->setAttribute($attributeName, $attributeValue);
             return $this;
         }
         
+		//Will replace an element located with an Xpath query and replace with a new element thats passed in
 		public function updateXmlElement($xpathQuery, $newElement) {
-			
 			$elements = $this->findElements($xpathQuery);
 			
 			if (!is_null($elements->item(0)))
@@ -95,6 +99,7 @@
 			return $this;
 		}
 		
+		//Will print out a formated version of the member dom
 		public function printElements($dom){
 			header('Content-type: text/xml');
 			$dom->preserveWhiteSpace = false;
@@ -102,6 +107,7 @@
 			echo $dom->saveXML();
 		}
 		
+		//Will convert JSON into xml, used in GET response if format is requested as xml
 		public function createXmlFromJson($jsonData){
 			$jsonArray = json_decode($jsonData, true);
 			$convertedXml = $this->array_to_xml($jsonArray);
@@ -149,6 +155,7 @@
 			return $dom->xpath($xpathquery);
 		}
 		
+		//Checks an element of that name exists in the dom tree
 		public function checkElementExists($elementName){
 			if ($this->dom->getElementsByTagName($elementName)->length == 0){
 				return false;
@@ -157,6 +164,7 @@
 			}
 		}		
 		
+		//Checks a series of elements against an array of values, if one doesn't exist, return false. Used in checking currency codes exist
 		public function checkElementValue($elementName, $values){
 			$elements = $this->dom->getElementsByTagName($elementName);
 			$elementArr = array();
@@ -170,6 +178,7 @@
 			}
 		}			
 		
+		//Check if an elements attribute value is set to a specific value
 		public function checkAttributeValues($elements, $attrName, $value){
 			foreach ($elements as $element){
 				if ($element->getAttribute($attrName) != $value){
@@ -179,6 +188,7 @@
 			return true;
 		}
 		
+		//Return an array parent nodes for a series of elements identified by name
 		public function getParentNodesOfValues($elementName, $values){
 			$parentNodes = array();
 
@@ -189,25 +199,30 @@
 			return $parentNodes;
 		}
 		
+		//Return the parent node of an element specified by name
 		public function getParentNodeOfValue($elementName, $value){
 			return $this->findElements("//{$elementName}[.='{$value}']/parent::*")[0];
 		}		
 
+		//Set the dom and instantiate a new domdocument
 		private function setDom(){
 			$this->dom = new domdocument('1.0');
 		}
 		
+		//Called to ensure the dom is formatted
 		private function formatDom(){
 			$this->dom->preserveWhiteSpace = false;
 			$this->dom->formatOutput = true;
 		}
 		
+		//Loads the dom into memory based off the file path set
 		private function loadDom(){
 			$this->formatDom();
 			$this->dom->load($this->filePath);
 			return $this;
 		}
 		
+		//Overwrites the xml file at the located filePath with the dom thats in memory
 		private function saveDom()
 		{
 			$this->dom->save($this->filePath);

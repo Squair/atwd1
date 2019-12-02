@@ -17,13 +17,15 @@ $(document).ready(function () {
 		}
 	});
 
+	//When form is submitted, set the url to send request to and serialise the form data,, set the text area to the response
 	$('#paramsForm').submit(function (event) {
 		event.preventDefault();
-        $('input[action]')
+		$('input[action]')
 		let action = $('#radioSelect:checked').val();
 		//Get the checked radio buttton and send request to update.php if not a get request, or get.php if it is.
 		let url = action != "get" ? "../index.php?action=" + action : "../../index.php";
 
+		//Serialise form data and go to url
 		$.ajax({
 			type: "GET",
 			data: $(this).serialize(),
