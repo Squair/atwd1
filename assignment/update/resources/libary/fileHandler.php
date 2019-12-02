@@ -48,18 +48,15 @@
 				$ccyNm = $match->CcyNm;
             }
 			
-            if (isset($rateCurrenciesXml)){
-                $live = $rateCurrenciesXml->xpath("//currency[code={$currency}]@live")->item(0)->nodeValue;
-            } else {
-                $live = 1;
-            }
-            
+			//Get previous live attribute value to carry over to new file
+			$live = !isset($rateCurrenciesXml) ? 1 : $rateCurrenciesXml->xpath("//*[code='{$currency}']/@live")[0];
+													  
             $currInfo = array(
                 'rate' => $ratesXml->rates->{$currency},
                 'code' => $currency,
                 'curr' => $ccyNm,
                 'loc' => implode(", ", $locArr),
-				'live' => $live
+				'live' => (string) $live
             );
 			
 			//Build up combined file using both information from rates and currencies file.
