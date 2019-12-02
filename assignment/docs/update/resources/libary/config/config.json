@@ -1,0 +1,21 @@
+{
+	"filepaths": {
+		"xml": {
+			"rates": "xml//rates{timestamp}.xml",
+			"ratesOld": "xml//rates{timestamp}.xml",
+			"ratesGlob": "xml//rates",
+			"currencies": "xml//currencies.xml",
+			"rateCurrencies": "xml//rateCurrencies.xml"
+		}
+	},
+	"api": {
+		"fixer": {
+			"endpoint": "http://data.fixer.io//api//latest?access_key=c7b9ee1360da17ab5521317d88786345&format=1",
+			"updateRate": 7200
+
+		},
+		"ISOCurrencies": {
+			"endpoint": "https://www.currency-iso.org/dam/downloads/lists/list_one.xml"
+		}
+	}
+}
